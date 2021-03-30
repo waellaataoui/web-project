@@ -40,7 +40,7 @@ class Experience
     /**
      * @ORM\ManyToOne(targetEntity=cv::class)
      */
-    private $relation;
+    private $cv_id;
 
     public function getId(): ?int
     {
@@ -95,14 +95,14 @@ class Experience
         return $this;
     }
 
-    public function getRelation(): ?cv
+    public function getCvId(): ?cv
     {
-        return $this->relation;
+        return $this->cv_id;
     }
 
-    public function setRelation(?cv $relation): self
+    public function setCvId(?cv $cv_id): self
     {
-        $this->relation = $relation;
+        $this->cv_id = $cv_id;
 
         return $this;
     }

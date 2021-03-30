@@ -70,15 +70,10 @@ class JobSeeker
      */
     private $feedbacks;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Test::class)
-     */
-    private $score;
 
     public function __construct()
     {
         $this->feedbacks = new ArrayCollection();
-        $this->score = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,18 +190,6 @@ class JobSeeker
     }
 
 
-
-    public function getRate(): ?Rate
-    {
-        return $this->rate;
-    }
-
-    public function setRate(?Rate $rate): self
-    {
-        $this->rate = $rate;
-
-        return $this;
-    }
 
     /**
      * @return Collection|FeedBack[]

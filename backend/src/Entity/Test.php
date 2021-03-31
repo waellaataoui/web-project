@@ -23,9 +23,17 @@ class Test
     private $question = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity=skill::class, inversedBy="notetest")
+     * @ORM\ManyToOne(targetEntity=Skill::class, inversedBy="tests")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $relation;
+    private $skill_id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $level;
+
+
 
     public function getId(): ?int
     {
@@ -44,14 +52,26 @@ class Test
         return $this;
     }
 
-    public function getRelation(): ?skill
+    public function getSkillId(): ?Skill
     {
-        return $this->relation;
+        return $this->skill_id;
     }
 
-    public function setRelation(?skill $relation): self
+    public function setSkillId(?Skill $skill_id): self
     {
-        $this->relation = $relation;
+        $this->skill_id = $skill_id;
+
+        return $this;
+    }
+
+    public function getLevel(): ?string
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?string $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }

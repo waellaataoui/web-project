@@ -24,20 +24,21 @@ class CV
      */
     private $owner;
 
-    /**
-     * @ORM\OneToMany(targetEntity=skill::class, mappedBy="skills")
-     */
-    private $relation;
+    
 
     /**
-     * @ORM\OneToMany(targetEntity=formation::class, mappedBy="formation")
+     * @ORM\OneToMany(targetEntity=Skill::class, mappedBy="cv")
      */
-    private $OneToMany;
+    private $skills;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $formations = [];
 
     public function __construct()
     {
-        $this->relation = new ArrayCollection();
-        $this->OneToMany = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,61 +69,43 @@ class CV
     }
 
     /**
-     * @return Collection|skill[]
+     * @return Collection|Skill[]
      */
-    public function getRelation(): Collection
+    public function getSkills(): Collection
     {
-        return $this->relation;
+        return $this->skills;
     }
 
-    public function addRelation(skill $relation): self
+    public function addSkill(Skill $skill): self
     {
-        if (!$this->relation->contains($relation)) {
-            $this->relation[] = $relation;
-            $relation->setSkills($this);
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+            $skill->setCv($this);
         }
 
         return $this;
     }
 
-    public function removeRelation(skill $relation): self
+    public function removeSkill(Skill $skill): self
     {
-        if ($this->relation->removeElement($relation)) {
+        if ($this->skills->removeElement($skill)) {
             // set the owning side to null (unless already changed)
-            if ($relation->getSkills() === $this) {
-                $relation->setSkills(null);
+            if ($skill->getCv() === $this) {
+                $skill->setCv(null);
             }
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|formation[]
-     */
-    public function getOneToMany(): Collection
+    public function getFormations(): ?array
     {
-        return $this->OneToMany;
+        return $this->formations;
     }
 
-    public function addOneToMany(formation $oneToMany): self
+    public function setFormations(?array $formations): self
     {
-        if (!$this->OneToMany->contains($oneToMany)) {
-            $this->OneToMany[] = $oneToMany;
-            $oneToMany->setFormation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOneToMany(formation $oneToMany): self
-    {
-        if ($this->OneToMany->removeElement($oneToMany)) {
-            // set the owning side to null (unless already changed)
-            if ($oneToMany->getFormation() === $this) {
-                $oneToMany->setFormation(null);
-            }
-        }
+        $this->formations = $formations;
 
         return $this;
     }

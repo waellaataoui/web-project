@@ -66,14 +66,10 @@ class JobSeeker
 
 
     /**
-     * @ORM\OneToOne(targetEntity=Rate::class, cascade={"persist", "remove"})
-     */
-    private $rate;
-
-    /**
      * @ORM\OneToMany(targetEntity=FeedBack::class, mappedBy="jobSeeker", orphanRemoval=true)
      */
     private $feedbacks;
+
 
     public function __construct()
     {
@@ -195,18 +191,6 @@ class JobSeeker
 
 
 
-    public function getRate(): ?Rate
-    {
-        return $this->rate;
-    }
-
-    public function setRate(?Rate $rate): self
-    {
-        $this->rate = $rate;
-
-        return $this;
-    }
-
     /**
      * @return Collection|FeedBack[]
      */
@@ -233,6 +217,30 @@ class JobSeeker
                 $feedback->setJobSeeker(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Test[]
+     */
+    public function getScore(): Collection
+    {
+        return $this->score;
+    }
+
+    public function addScore(Test $score): self
+    {
+        if (!$this->score->contains($score)) {
+            $this->score[] = $score;
+        }
+
+        return $this;
+    }
+
+    public function removeScore(Test $score): self
+    {
+        $this->score->removeElement($score);
 
         return $this;
     }

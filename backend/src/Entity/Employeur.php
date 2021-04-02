@@ -54,9 +54,15 @@ class Employeur
      */
     private $posts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="employeur", orphanRemoval=true)
+     */
+    private $reviews;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +166,36 @@ class Employeur
             // set the owning side to null (unless already changed)
             if ($post->getEmployeur() === $this) {
                 $post->setEmployeur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setEmployeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getEmployeur() === $this) {
+                $review->setEmployeur(null);
             }
         }
 

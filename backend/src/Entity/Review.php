@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\FeedBackRepository;
+use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=FeedBackRepository::class)
+ * @ORM\Entity(repositoryClass=ReviewRepository::class)
  */
-class FeedBack
+class Review
 {
     /**
      * @ORM\Id
@@ -28,13 +28,13 @@ class FeedBack
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=JobSeeker::class, inversedBy="feedbacks")
+     * @ORM\ManyToOne(targetEntity=Employeur::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $jobSeeker;
+    private $employeur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Employeur::class)
+     * @ORM\ManyToOne(targetEntity=JobSeeker::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $writer;
@@ -68,24 +68,24 @@ class FeedBack
         return $this;
     }
 
-    public function getJobSeeker(): ?JobSeeker
+    public function getEmployeur(): ?Employeur
     {
-        return $this->jobSeeker;
+        return $this->employeur;
     }
 
-    public function setJobSeeker(?JobSeeker $jobSeeker): self
+    public function setEmployeur(?Employeur $employeur): self
     {
-        $this->jobSeeker = $jobSeeker;
+        $this->employeur = $employeur;
 
         return $this;
     }
 
-    public function getWriter(): ?Employeur
+    public function getWriter(): ?JobSeeker
     {
         return $this->writer;
     }
 
-    public function setWriter(?Employeur $writer): self
+    public function setWriter(?JobSeeker $writer): self
     {
         $this->writer = $writer;
 

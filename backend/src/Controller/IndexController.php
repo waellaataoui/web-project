@@ -9,16 +9,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/index", name="index")
+     * @Route("/api/logout", name="logout",methods={"POST"})
      */
-    // public function index(): Response
-    // {
-    //     return $this->json([
-    //         'message' => 'Welcome to your new controller!',
-    //         'path' => 'src/Controller/IndexController.php',
-    //     ]);
-    // }
-    // try to create a jobseeker : mix between 2 repos, use transaction
-    // and use Form type (without cv_id )  for validation then .setCv() 
-    // then save cv and user
+    public function logout(): Response
+    {
+        unset($_COOKIE['BEARER']);
+        unset($_COOKIE['REFRESH_TOKEN']);
+        setcookie("BEARER", '', time() - 3000, "/");
+        setcookie("REFRESH_TOKEN", '', time() - 3000, "/");
+
+        return $this->json([
+            'message' => 'Success'
+
+        ], Response::HTTP_OK);
+    }
 }

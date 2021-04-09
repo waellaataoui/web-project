@@ -7,10 +7,12 @@ use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessRespon
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use JMS\Serializer\SerializerBuilder;
+
+
 
 class AuthenticationSuccessListener
 {
+    private $serializer;
 
     private $jwtTokenTTL;
 
@@ -19,6 +21,7 @@ class AuthenticationSuccessListener
     public function __construct($ttl)
     {
         $this->jwtTokenTTL = $ttl;
+        $this->serializer = \JMS\Serializer\SerializerBuilder::create()->build();
     }
 
     /**
@@ -36,8 +39,8 @@ class AuthenticationSuccessListener
         $tokenJWT = $data['token'];
         unset($data['token']);
         unset($data['refresh_token']);
-
-        $data['user'] =  $user;
+        $jsonContent = $this->serializer->serialize($user, 'json');
+        $data['user'] =  json_decode($jsonContent);
 
 
         $event->setData($data);

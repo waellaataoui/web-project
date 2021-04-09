@@ -1,26 +1,26 @@
 security:
   encoders:
     App\Entity\JobSeeker:
-        algorithm: argon2i
+      algorithm: argon2i
 
     App\Entity\Employeur:
-        algorithm: argon2i
+      algorithm: argon2i
 
   providers:
-     all_users:
-          chain:
-            providers: ['jobseeker', 'employeur']
-     jobseeker:
-          entity: { class: App\Entity\JobSeeker, property: email }
-     employeur:
-          entity: { class: App\Entity\Employeur, property: email }
+    all_users:
+      chain:
+        providers: ["jobseeker", "employeur"]
+    jobseeker:
+      entity: { class: App\Entity\JobSeeker, property: email }
+    employeur:
+      entity: { class: App\Entity\Employeur, property: email }
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
 
     jobseeker_login:
-      pattern:  ^/api/login/jobseeker
+      pattern: ^/api/login/jobseeker
       stateless: true
       anonymous: true
       provider: jobseeker
@@ -65,6 +65,7 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/api/login/jobseeker, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/login/employeur, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     # - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    # - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    # - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -19,8 +21,12 @@ class EmployeurType extends AbstractType
   {
     $builder
       ->add('fullName', TextType::class)
-      ->add('isCompany', TextType::class)
-      ->add('password', TextType::class, [
+      ->add('isCompany', ChoiceType::class, [
+        'choices' => [
+          1 => true,
+          0 => false
+        ]
+      ])->add('password', TextType::class, [
         'constraints' => [
           new NotNull([
             'message' => 'password cannot be blank',
@@ -32,7 +38,6 @@ class EmployeurType extends AbstractType
         ]
       ])
       ->add('phoneNumber', TextType::class)
-      ->add('username', TextType::class)
       ->add('email', EmailType::class, [
         'constraints' => [
           new NotNull([

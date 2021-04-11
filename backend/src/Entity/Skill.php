@@ -29,19 +29,22 @@ class Skill
      */
     private $testCount;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Test::class, mappedBy="relation")
-     */
-    private $notetest;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cv::class, inversedBy="relation")
+     * @ORM\OneToMany(targetEntity=Test::class, mappedBy="skill_id")
      */
-    private $skills;
+    private $tests;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CV::class, inversedBy="skills")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $cv;
 
     public function __construct()
     {
         $this->notetest = new ArrayCollection();
+        $this->tests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,44 +76,46 @@ class Skill
         return $this;
     }
 
+
+
     /**
      * @return Collection|Test[]
      */
-    public function getNotetest(): Collection
+    public function getTests(): Collection
     {
-        return $this->notetest;
+        return $this->tests;
     }
 
-    public function addNotetest(Test $notetest): self
+    public function addTest(Test $test): self
     {
-        if (!$this->notetest->contains($notetest)) {
-            $this->notetest[] = $notetest;
-            $notetest->setRelation($this);
+        if (!$this->tests->contains($test)) {
+            $this->tests[] = $test;
+            $test->setSkillId($this);
         }
 
         return $this;
     }
 
-    public function removeNotetest(Test $notetest): self
+    public function removeTest(Test $test): self
     {
-        if ($this->notetest->removeElement($notetest)) {
+        if ($this->tests->removeElement($test)) {
             // set the owning side to null (unless already changed)
-            if ($notetest->getRelation() === $this) {
-                $notetest->setRelation(null);
+            if ($test->getSkillId() === $this) {
+                $test->setSkillId(null);
             }
         }
 
         return $this;
     }
 
-    public function getSkills(): ?Cv
+    public function getCv(): ?CV
     {
-        return $this->skills;
+        return $this->cv;
     }
 
-    public function setSkills(?Cv $skills): self
+    public function setCv(?CV $cv): self
     {
-        $this->skills = $skills;
+        $this->cv = $cv;
 
         return $this;
     }

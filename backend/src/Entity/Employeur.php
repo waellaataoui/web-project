@@ -6,11 +6,13 @@ use App\Repository\EmployeurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=EmployeurRepository::class)
  */
-class Employeur
+class Employeur implements UserInterface
 {
     /**
      * @ORM\Id
@@ -36,6 +38,7 @@ class Employeur
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Exclude()
      */
     private $password;
 
@@ -48,15 +51,25 @@ class Employeur
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
+    /**
+     * @ORM\Column(type="json",nullable=true)
+     */
+    private $roles = [];
 
     /**
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="employeur", orphanRemoval=true)
      */
     private $posts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="employeur", orphanRemoval=true)
+     */
+    private $reviews;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,6 +102,10 @@ class Employeur
     }
 
     public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+    public function getUsername(): ?string
     {
         return $this->email;
     }
@@ -164,5 +181,59 @@ class Employeur
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setEmployeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getEmployeur() === $this) {
+                $review->setEmployeur(null);
+            }
+        }
+
+        return $this;
+    }
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

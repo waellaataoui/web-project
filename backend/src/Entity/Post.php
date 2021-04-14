@@ -33,6 +33,18 @@ class Post
      */
     private $employeur;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $datepub;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $tags = [];
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +82,30 @@ class Post
     public function setEmployeur(?Employeur $employeur): self
     {
         $this->employeur = $employeur;
+
+        return $this;
+    }
+
+    public function getDatepub(): ?\DateTimeInterface
+    {
+        return $this->datepub;
+    }
+
+    public function setDatepub(\DateTimeInterface $datepub): self
+    {
+        $this->datepub = $datepub;
+
+        return $this;
+    }
+
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?array $tags): self
+    {
+        $this->tags = $tags;
 
         return $this;
     }

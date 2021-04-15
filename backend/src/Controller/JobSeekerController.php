@@ -85,4 +85,38 @@ class JobSeekerController extends AbstractFOSRestController
       return $this->handleView($this->view($response, Response::HTTP_INTERNAL_SERVER_ERROR));
     }
   }
+
+  public function updateJobSeekerProfile(Request $request)
+  {
+      
+      // $jobSeeker = $this->getUser();
+
+      $IdJobSeeker = $request->get('id');
+
+      $jobSeeker = $this->getDoctrine()->getRepository(JobSeeker::class)->findOneBy(['id' => $IdJobSeeker]);
+
+      if (!$jobSeeker) {
+          throw new NotFoundHttpException('jobSeeker not found');
+      }
+
+      
+
+      $form = $this->buildForm(JobSeekerType::class, $jobSeeker, [
+          'method' => $request->getMethod(),
+      ]);
+
+      $form->handleRequest($request);
+
+      if (!$form->isSubmitted() || !$form->isValid()) {
+          return $this->respond($form, Response::HTTP_BAD_REQUEST);
+      }
+
+      /** @var JobSeeker $jobSeeker */
+      $jobSeeker = $form->getData();
+
+      $this->getDoctrine()->getManager()->persist($jobSeeker);
+      $this->getDoctrine()->getManager()->flush();
+
+      return $this->respond($jobSeeker);
+  }
 }

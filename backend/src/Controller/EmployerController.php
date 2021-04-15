@@ -10,6 +10,8 @@ use App\Entity\Employeur;
 use App\Form\EmployeurType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 /**
  * @Route("api", name="api_")
@@ -31,7 +33,7 @@ class EmployerController extends AbstractFOSRestController
      *  @return JsonResponse
      */
 
-    public function getEmploerAction()
+    public function getEmployeurAction()
     {
         $repository = $this->getDoctrine()->getRepository(Employeur::class);
         $Employeurs = $repository->findall();
@@ -79,5 +81,40 @@ class EmployerController extends AbstractFOSRestController
             $response["errors"] = $errors;
             return $this->handleView($this->view($response, Response::HTTP_INTERNAL_SERVER_ERROR));
         }
+    }
+
+    public function updateEmployeurProfile(Request $request)
+    {
+
+        // $employeur = $this->getUser();
+
+        $IdEmployeur = $request->get('id');
+
+        $employeur = $this->getDoctrine()->getRepository(Employeur::class)->findOneBy(['id' => $IdEmployeur]);
+
+        if (!$employeur) {
+            throw new NotFoundHttpException('Employeur not found');
+        }
+
+        
+
+        $form = $this->buildForm(EmployeurType::class, $employeur, [
+            'method' => $request->getMethod(),
+        ]);
+
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->respond($form, Response::HTTP_BAD_REQUEST);
+        }
+
+        /** @var Employeur $employeur */
+        $employeur = $form->getData();
+
+        $this->getDoctrine()->getManager()->persist($employeur);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->respond($employeur);
+        
     }
 }

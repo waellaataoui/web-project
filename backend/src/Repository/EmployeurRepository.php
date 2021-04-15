@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Employeur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Employeur|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,11 +15,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class EmployeurRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Employeur::class);
+        $this->manager = $manager;
     }
+    public function updateEmployeur(Employeur $employeur, $data)
+    {
+        isset($data['isCompany']) ?  $isCompany = $data['isCompany'] : $isCompany = null;
 
+        empty($data['fullName']) ? true : $employeur->setFullName($data['fullName']);
+        is_null($isCompany) ? true : $employeur->setIsCompany($data['isCompany']);
+        empty($data['phoneNumber']) ? true : $employeur->setPhoneNumber($data['phoneNumber']);
+        $this->manager->flush();
+    }
     // /**
     //  * @return Employeur[] Returns an array of Employeur objects
     //  */

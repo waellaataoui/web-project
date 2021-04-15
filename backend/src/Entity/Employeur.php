@@ -11,9 +11,12 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=EmployeurRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Employeur implements UserInterface
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -32,7 +35,7 @@ class Employeur implements UserInterface
     private $isCompany;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,unique=true)
      */
     private $email;
 

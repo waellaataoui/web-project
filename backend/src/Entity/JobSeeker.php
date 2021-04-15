@@ -11,9 +11,12 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=JobSeekerRepository::class)
+ * @ORM\HasLifecycleCallbacks() 
  */
 class JobSeeker implements UserInterface
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -61,7 +64,7 @@ class JobSeeker implements UserInterface
     /**
      * @ORM\Column(type="json",nullable=true)
      */
-     private $roles = [];
+    private $roles = [];
     /**
      * @ORM\Column(type="array", nullable=true)
      */

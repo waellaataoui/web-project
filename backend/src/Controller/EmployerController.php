@@ -65,7 +65,7 @@ class EmployerController extends AbstractFOSRestController
             } catch (\Exception $e) {
                 // throw $e;
                 $this->getDoctrine()->getConnection()->rollback();
-                if (str_contains($e->getMessage(), "email")) {
+                if (str_contains($e->getMessage(), "unique")) {
                     $response["errors"] = ["email already in use"];
                     return $this->handleView($this->view($response, Response::HTTP_BAD_REQUEST));
                 } else
@@ -82,39 +82,56 @@ class EmployerController extends AbstractFOSRestController
             return $this->handleView($this->view($response, Response::HTTP_INTERNAL_SERVER_ERROR));
         }
     }
+    // /**
+    //  * @Route("/employeurs ", name="newEmployeur", methods={"PATCH"})
+    //  * @return Response
+    //  */
+    // public function updateEmployeurProfile(Request $request)
+    // {
 
-    public function updateEmployeurProfile(Request $request)
+    //     $employeur = $this->getUser();
+    //     $response = [];
+    //     dump($employeur);
+    //     $this->getDoctrine()->getRepository(Employeur::class)->
+    //     // $IdEmployeur = $request->get('id');
+
+    //     // $employeur = $this->getDoctrine()->getRepository(Employeur::class)->findOneBy(['id' => $IdEmployeur]);
+
+    //     // if (!$employeur) {
+    //     //     throw new NotFoundHttpException('Employeur not found');
+    //     // }
+
+    //     $form = $this->createForm(EmployeurType::class, $employeur);
+    //     $form->handleRequest($request);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+
+    //         /** @var Employeur $employeur */
+    //         $employeur = $form->getData();
+
+    //         $this->getDoctrine()->getManager()->persist($employeur);
+    //         $this->getDoctrine()->getManager()->flush();
+
+    //         return $this->handleView($this->view($employeur, Response::HTTP_OK));
+    //     } else {
+    //         $errors = [];
+    //         foreach ($form->getErrors(true, true) as $formError) {
+    //             $errors[] = $formError->getMessage();
+    //         }
+    //         $response["errors"] = $errors;
+    //         // dump($response);
+    //         return $this->handleView($this->view($response, Response::HTTP_BAD_REQUEST));
+    //     }
+    // }
+    /**
+     * @Route("/employeurs", name="update_employeur", methods={"PUT"})
+     */
+    public function update(Request $request): JsonResponse
     {
+        $employeur = $this->getUser();
+        $data = json_decode($request->getContent(), true);
+        //this works even if its underlined with red
+        $this->getDoctrine()->getRepository(Employeur::class)->updateEmployeur($employeur, $data);
 
-        // $employeur = $this->getUser();
-
-        $IdEmployeur = $request->get('id');
-
-        $employeur = $this->getDoctrine()->getRepository(Employeur::class)->findOneBy(['id' => $IdEmployeur]);
-
-        if (!$employeur) {
-            throw new NotFoundHttpException('Employeur not found');
-        }
-
-        
-
-        $form = $this->buildForm(EmployeurType::class, $employeur, [
-            'method' => $request->getMethod(),
-        ]);
-
-        $form->handleRequest($request);
-
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->respond($form, Response::HTTP_BAD_REQUEST);
-        }
-
-        /** @var Employeur $employeur */
-        $employeur = $form->getData();
-
-        $this->getDoctrine()->getManager()->persist($employeur);
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->respond($employeur);
-        
+        return new JsonResponse(['status' => 'customer updated!']);
     }
 }

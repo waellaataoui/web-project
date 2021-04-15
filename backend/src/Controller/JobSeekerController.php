@@ -86,37 +86,16 @@ class JobSeekerController extends AbstractFOSRestController
     }
   }
 
-  public function updateJobSeekerProfile(Request $request)
+  /**
+   * @Route("/jobseekers", name="update_jobseeker", methods={"PUT"})
+   */
+  public function update(Request $request): JsonResponse
   {
-      
-      // $jobSeeker = $this->getUser();
+    $jobSeeker = $this->getUser();
+    $data = json_decode($request->getContent(), true);
+    //this works even if its underlined with red
+    $this->getDoctrine()->getRepository(JobSeeker::class)->updatejobSeeker($jobSeeker, $data);
 
-      $IdJobSeeker = $request->get('id');
-
-      $jobSeeker = $this->getDoctrine()->getRepository(JobSeeker::class)->findOneBy(['id' => $IdJobSeeker]);
-
-      if (!$jobSeeker) {
-          throw new NotFoundHttpException('jobSeeker not found');
-      }
-
-      
-
-      $form = $this->buildForm(JobSeekerType::class, $jobSeeker, [
-          'method' => $request->getMethod(),
-      ]);
-
-      $form->handleRequest($request);
-
-      if (!$form->isSubmitted() || !$form->isValid()) {
-          return $this->respond($form, Response::HTTP_BAD_REQUEST);
-      }
-
-      /** @var JobSeeker $jobSeeker */
-      $jobSeeker = $form->getData();
-
-      $this->getDoctrine()->getManager()->persist($jobSeeker);
-      $this->getDoctrine()->getManager()->flush();
-
-      return $this->respond($jobSeeker);
+    return new JsonResponse(['status' => 'job seeker updated!']);
   }
 }

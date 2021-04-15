@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\JobSeeker;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method JobSeeker|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,11 +15,21 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class JobSeekerRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, JobSeeker::class);
+        $this->manager = $manager;
     }
+    public function updatejobSeeker(JobSeeker $jobSeeker, $data)
+    {
 
+        empty($data['firstName']) ? true : $jobSeeker->setfirstName($data['firstName']);
+        empty($data['lastName']) ? true : $jobSeeker->setlastName($data['lastName']);
+        empty($data['phoneNumber']) ? true : $jobSeeker->setPhoneNumber($data['phoneNumber']);
+        $this->manager->flush();
+    }
     // /**
     //  * @return JobSeeker[] Returns an array of JobSeeker objects
     //  */

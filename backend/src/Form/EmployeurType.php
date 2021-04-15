@@ -20,11 +20,22 @@ class EmployeurType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('fullName', TextType::class)
+      ->add('fullName', TextType::class, ['constraints' => [
+        new NotNull([
+          'message' => 'full name cant be blank',
+        ]),
+
+      ]])
       ->add('isCompany', ChoiceType::class, [
         'choices' => [
           1 => true,
           0 => false
+        ],
+        'constraints' => [
+          new NotNull([
+            'message' => 'user type cant be blank',
+          ]),
+
         ]
       ])->add('password', TextType::class, [
         'constraints' => [

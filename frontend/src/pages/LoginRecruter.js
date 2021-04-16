@@ -3,7 +3,7 @@ import axios from "axios"
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { setUser } from "../store/authSlice"
-const Login = () => {
+const LoginRecruter = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -12,15 +12,14 @@ const Login = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-                // todo: logout user before loggin in again
-
+        // todo: logout user before loggin in again
         try {
-            const res = await axios.post("/login/jobseeker", {
+            const res = await axios.post("/login/employeur", {
                 username: email,
                 password
             })
             dispatch(setUser(res.data.user))
-            history.push("/")
+            history.push("/recruter")
 
         } catch (error) {
             console.log(error.response.data);
@@ -40,4 +39,4 @@ const Login = () => {
         </div>
     )
 }
-export default Login;
+export default LoginRecruter;

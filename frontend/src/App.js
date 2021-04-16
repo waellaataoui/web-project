@@ -11,18 +11,13 @@ import './assets/css/themify-icons.css'
 import './assets/css/slick.css'
 import './assets/css/style.css';
 import './assets/css/nice-select.css'
-
-
-// import $ from 'jquery';
 import { useEffect, useState } from "react"
 import AppRouter from "./routers/AppRouter";
-import loadJQuery from "./components/LoadJQuery";
 import { useDispatch } from 'react-redux';
 import { setUser } from './store/authSlice'
 
 import axios from "axios";
 function App() {
-  // const [scriptloading, setScriptLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
@@ -44,17 +39,9 @@ function App() {
 
     }
     fetchUser();
-    // loadJQuery(() => {
-    //   setScriptLoading(false);
-    // });
 
-    const jQuery = document.getElementById("jquery")
-    // jQuery.src = "/js/jquery-1.12.4.min.js";
-    // document.body.appendChild(jQuery);
-    // const bootstrap = document.createElement("script");
-    // bootstrap.src = "/js/bootstrap.min.js";
-    // bootstrap.defer = true;
-    // document.body.appendChild(bootstrap);
+
+    const jQuery = document.getElementById("jquery");
     const niceSelect = document.createElement("script");
     niceSelect.src = "/js/jquery.nice-select.min.js";
 

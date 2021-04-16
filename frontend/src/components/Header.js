@@ -6,9 +6,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/authSlice'
 
 const Header = () => {
-    const user = useSelector(state => state.auth.user)
+    let user = useSelector(state => state.auth.user)
     const dispatch = useDispatch();
     const history = useHistory();
+    const path = history.location.pathname.includes("recruter") ? "/" : "/recruter"
+    const homePath =  history.location.pathname.includes("recruter") ? "/recruter" : "/"
+    if (path == "/") {
+        if (user && user.username) user = null;
+    }
+    if (path == "/recruter") {
+        if (user && user.full_name) user = null;
+    }
+    const changeSection = () => {
+        // logout here
+        window.location = path;
+    }
     const logout = async () => {
         try {
             const res = await axios.post("/logout")
@@ -17,8 +29,8 @@ const Header = () => {
         } catch (error) {
             console.log(error);
         }
-
     }
+  
     return (
         <header>
             <div className="header-area header-transparrent">
@@ -27,7 +39,7 @@ const Header = () => {
                         <div className="row align-items-center">
                             <div className="col-lg-3 col-md-2">
                                 <div className="logo">
-                                    <a href="index.html"><img src={Logo} alt="" /></a>
+                                    <Link to={homePath}><img src={Logo} alt="" /></Link>
                                 </div>
                             </div>
                             <div className="col-lg-9 col-md-9">
@@ -35,9 +47,11 @@ const Header = () => {
                                     <div className="main-menu">
                                         <nav className="d-none d-lg-block">
                                             <ul id="navigation">
-                                                <li><a href="index.html">Home</a></li>
-                                                <li><a href="job_listing.html">Find a Jobs </a></li>
-                                                <li><a href="about.html">About</a></li>
+                                                <li><Link to={homePath} >Home</Link></li>
+                                            
+                                                {homePath=="/recruter"? <li><Link to="#">Find Profiles </Link></li> :
+                                                <li><Link to="#">Find  Jobs </Link></li>  }
+                                                <li><Link to="about.html">About</Link></li>
                                                 <li><a href="#">Page</a>
                                                     <ul className="submenu">
                                                         <li><a href="blog.html">Blog</a></li>
@@ -46,13 +60,22 @@ const Header = () => {
                                                         <li><a href="job_details.html">job Details</a></li>
                                                     </ul>
                                                 </li>
-                                                {/* <li><Link to="/" className="btn head-btn1">I'm a recruter</Link></li> */}
+                                                {path=="/" ?
+                                                    <li><button onClick={changeSection} className="btn head-btn2">Get Hired</button></li>
+                                                    : <li><button onClick={changeSection} to="/recruter" className="btn head-btn2">I'm a recruter</button></li>
+
+                                                }
                                             </ul>
                                         </nav>
                                     </div>
                                     <div className="header-btn d-none f-right d-lg-block">
-                                        {user ? <button className="btn head-btn1" onClick={logout}>logout</button> : <><Link to="/register" className="btn head-btn1">Register</Link>
-                                            <Link to="/login" className="btn head-btn2">Login</Link> </>}
+                                        {user ? <button className="btn head-btn1" onClick={logout}>logout</button> :
+                                            <><Link to={path=="/" ?
+                                                "/recruter/register"
+                                                : "/register"} className="btn head-btn1">Register</Link>
+                                                <Link to={path=="/" ?
+                                                    "/recruter/login"
+                                                    : "/login"} className="btn head-btn1">Login</Link> </>}
                                     </div>
                                 </div>
                             </div>

@@ -4,7 +4,6 @@ import Header from "../components/Header"
 const Home = () => {
     return (
         <div>
-            <Header></Header>
             <main>
 
                 <div className="slider-area ">

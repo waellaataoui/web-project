@@ -32,6 +32,7 @@ class IndexController extends AbstractFOSRestController
     public function checkAuth(): Response
     {
         $user = $this->getUser();
+
         if (!$user) {
             return $this->json([
                 'message' => 'not logged in'

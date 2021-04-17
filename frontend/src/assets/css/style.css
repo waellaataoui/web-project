@@ -7520,3 +7520,22 @@ form.search-box .search-form a {
     font-size:14px;
     height:80%;
 }
+.button-wrapper{
+	margin-left:50px;
+	display:flex;
+}
+@media(max-width: 768px){
+	.button-wrapper{
+		flex-direction:column;
+		    justify-content: center;
+    align-items: center;
+	margin-left:0;
+	}
+	.button-wrapper a{
+		padding:27px 44px;
+	}
+		.slicknav_nav li button {
+width: 100%;
+    margin: 10px 0;	}
+
+}

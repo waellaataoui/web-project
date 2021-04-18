@@ -24,7 +24,7 @@ class PostType extends AbstractType
           ]),
           new Length([
             'min' => 5,
-            'minMessage' => 'password is too short',
+            'minMessage' => 'title is too short',
           ]),
         ]
       ])

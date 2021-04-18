@@ -85,4 +85,17 @@ class JobSeekerController extends AbstractFOSRestController
       return $this->handleView($this->view($response, Response::HTTP_INTERNAL_SERVER_ERROR));
     }
   }
+
+  /**
+   * @Route("/jobseekers", name="update_jobseeker", methods={"PUT"})
+   */
+  public function update(Request $request): JsonResponse
+  {
+    $jobSeeker = $this->getUser();
+    $data = json_decode($request->getContent(), true);
+    //this works even if its underlined with red
+    $this->getDoctrine()->getRepository(JobSeeker::class)->updatejobSeeker($jobSeeker, $data);
+
+    return new JsonResponse(['status' => 'job seeker updated!']);
+  }
 }

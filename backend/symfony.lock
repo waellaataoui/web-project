@@ -1,4 +1,7 @@
 {
+    "burgov/key-value-form-bundle": {
+        "version": "1.6.1"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },

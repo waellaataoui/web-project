@@ -4,8 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c0dc955b05ee70df1fc48e21aaeb349",
+    "content-hash": "be16c0459476cf957e08528bc02412ab",
     "packages": [
+        {
+            "name": "burgov/key-value-form-bundle",
+            "version": "1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Burgov/KeyValueFormBundle.git",
+                "reference": "575b2fcec7777d94171edc8b95b422f28a166924"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Burgov/KeyValueFormBundle/zipball/575b2fcec7777d94171edc8b95b422f28a166924",
+                "reference": "575b2fcec7777d94171edc8b95b422f28a166924",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/form": "^2.3|^3.0|^4.0|^5.0"
+            },
+            "conflict": {
+                "symfony/form": "2.8.1"
+            },
+            "type": "bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Burgov\\Bundle\\KeyValueFormBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A form type for managing key-value pairs",
+            "support": {
+                "issues": "https://github.com/Burgov/KeyValueFormBundle/issues",
+                "source": "https://github.com/Burgov/KeyValueFormBundle/tree/1.6.1"
+            },
+            "time": "2020-03-09T13:24:04+00:00"
+        },
         {
             "name": "composer/package-versions-deprecated",
             "version": "1.11.99.1",
@@ -6727,7 +6770,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "burgov/key-value-form-bundle": 0
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -6,11 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\JobSeeker;
 use App\Entity\Post;
+use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
 
 class PostType extends AbstractType
 {
@@ -39,14 +41,22 @@ class PostType extends AbstractType
           ]),
         ]
       ])
-      ->add('tags', TextType::class)
+     // ->add('tags', KeyValueType::class, array('value_type' => TextType::class))
+      ->add('price', TextType::class, [
+        'constraints' => [
+          new NotNull([
+            'message' => 'price cannot be blank',
+          ]),
+        ]
+      ])
       ->add('save', SubmitType::class);
   }
   public function configureOptions(OptionsResolver $resolver)
   {
     $resolver->setDefaults(array(
       'data_class' => Post::class,
-      'csrf_protection' => false
+      'csrf_protection' => false,
+      'allow_extra_fields' => true
     ));
   }
 }

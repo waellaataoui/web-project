@@ -37,15 +37,16 @@ class Post
     private $employeur;
 
     /**
-     * @ORM\Column(type="date")
-     */
-    private $datepub;
-
-    /**
      * @ORM\Column(type="array", nullable=true)
      */
     private $tags = [];
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
+  
 
 
     public function getId(): ?int
@@ -89,18 +90,6 @@ class Post
         return $this;
     }
 
-    public function getDatepub(): ?\DateTimeInterface
-    {
-        return $this->datepub;
-    }
-
-    public function setDatepub(\DateTimeInterface $datepub): self
-    {
-        $this->datepub = $datepub;
-
-        return $this;
-    }
-
     public function getTags(): ?array
     {
         return $this->tags;
@@ -112,4 +101,17 @@ class Post
 
         return $this;
     }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
 }

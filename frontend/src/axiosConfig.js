@@ -1,6 +1,6 @@
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8000/api"; // <- api url
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true; //yab3eth cookies m3a request
 axios.interceptors.response.use(
     function (response) {
         // 200 type responses, this should be left as it is

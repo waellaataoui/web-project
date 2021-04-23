@@ -36,6 +36,19 @@ class Post
      */
     private $employeur;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $tags = [];
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
+  
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,4 +89,29 @@ class Post
 
         return $this;
     }
+
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?array $tags): self
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
 }

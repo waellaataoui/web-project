@@ -9,9 +9,13 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\PostRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 
 /**
@@ -19,6 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractFOSRestController
 {
+
     /**
      * @Route("/posts", name="getPosts" ,methods={"GET"})
      *  @return JsonResponse
@@ -30,6 +35,71 @@ class PostController extends AbstractFOSRestController
         $posts = $repository->findall();
         return $this->handleView($this->view($posts)); //returns json
     }
+
+
+    /**
+     * @Route("/deletepost", name="DeletePostsAction" ,methods={"DELETE"})
+     *  @return JsonResponse
+     */
+
+    public function DeletePostsAction()
+    {
+        //mana3rach bil id wela bil get user courant
+    }
+
+    /**
+     * @Route("/post/{tag}", name="getPostByTag" ,methods={"GET"})
+     *  @return JsonResponse
+     */
+    public function getPostByTag(String $tag, PostRepository $repository)
+    {
+        $post = $repository->findByTag($tag);
+        return $this->handleView($this->view($post)); //returns json
+    }
+
+    /**
+     * @Route("/postsHight", name="getPostHighThenPriceWithTag" ,methods={"GET"})
+     *  @return JsonResponse
+     */
+    public function getPostHighThenPriceWithTag(Request $request, PostRepository $repository)
+    {
+        $tag =  $request->query->get('tag');
+        $price =  $request->query->get('price');
+
+        if (!$tag && $price) {
+            $postsResult = $repository->findPriceHigherThen($price);
+        }
+        if ($tag && !$price) {
+            $postsResult = $repository->findByTag($tag);
+        }
+        if ($tag && $price) {
+            $postsResult = $repository->findPriceHigherThenWithTag($price, $tag);
+        }
+        return $this->handleView($this->view($postsResult)); //returns json
+    }
+
+    /**
+     * @Route("/postsLow", name="getPostLowThenPriceWithTag" ,methods={"GET"})
+     *  @return JsonResponse
+     */
+    public function getPostLowThenPriceWithTag(Request $request, PostRepository $repository)
+    {
+        $tag =  $request->query->get('tag');
+        $price =  $request->query->get('price');
+
+        if (!$tag && $price) {
+            $postsResult = $repository->findPriceLowerThen($price);
+        }
+        if ($tag && !$price) {
+            $postsResult = $repository->findBy($tag);
+        }
+        if ($tag && $price) {
+            $postsResult = $repository->findPriceLowerThenWithTag($price, $tag);
+        }
+        return $this->handleView($this->view($postsResult)); //returns json
+    }
+
+
 
     /**
      * @Route("/post", name="newPost", methods={"POST"})

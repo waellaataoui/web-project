@@ -30,8 +30,11 @@ class PostController extends AbstractFOSRestController
      */
 
     public function getPostsAction()
-    {
+    {   // ahaya l fonction
         $repository = $this->getDoctrine()->getRepository(Post::class);
+        // nedi lena l fonction mta3 repository tnjm ta3ml wa7da jdida
+        //sameha findWithFilters mithel w a3taha l request->query lkol comme parametre
+        //w fel fonction heki traka7 les tests mta3ek
         $posts = $repository->findall();
         return $this->handleView($this->view($posts)); //returns json
     }
@@ -63,7 +66,8 @@ class PostController extends AbstractFOSRestController
      */
     public function getPostHighThenPriceWithTag(Request $request, PostRepository $repository)
     {
-        $tag =  $request->query->get('tag');
+        $tag = explode(",", $request->query->get('tag'));
+
         $price =  $request->query->get('price');
 
         if (!$tag && $price) {
@@ -76,6 +80,7 @@ class PostController extends AbstractFOSRestController
             $postsResult = $repository->findPriceHigherThenWithTag($price, $tag);
         }
         return $this->handleView($this->view($postsResult)); //returns json
+
     }
 
     /**
@@ -84,14 +89,16 @@ class PostController extends AbstractFOSRestController
      */
     public function getPostLowThenPriceWithTag(Request $request, PostRepository $repository)
     {
-        $tag =  $request->query->get('tag');
+
+        $tag = explode(",", $request->query->get('tag'));
+
         $price =  $request->query->get('price');
 
         if (!$tag && $price) {
             $postsResult = $repository->findPriceLowerThen($price);
         }
         if ($tag && !$price) {
-            $postsResult = $repository->findBy($tag);
+            $postsResult = $repository->findByTag($tag);
         }
         if ($tag && $price) {
             $postsResult = $repository->findPriceLowerThenWithTag($price, $tag);
@@ -118,6 +125,7 @@ class PostController extends AbstractFOSRestController
 
             try {
                 $post->setEmployeur($this->getUser());
+                if ($data["tags"])   $post->setTags($data["tags"]);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($post);
                 $em->flush();

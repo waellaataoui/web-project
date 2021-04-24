@@ -19,10 +19,10 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-     /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
+    /**
+     * @return Post[] Returns an array of Post objects
+     */
+
     public function findPriceLowerThen($price)
     {
         return $this->createQueryBuilder('p')
@@ -30,76 +30,88 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('price', $price)
             ->orderBy('p.price', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
 
     /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-      public function findPriceHigherThen($price)
-      {
-          return $this->createQueryBuilder('p')
-              ->andWhere('p.price >= :price')
-              ->setParameter('price', $price)
-              ->orderBy('p.price', 'ASC')
-              ->getQuery()
-              ->getResult()
-          ;
-      }
+     * @return Post[] Returns an array of Post objects
+     */
 
-      /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-      public function findPriceHigherThenWithTag($price,$tag)
-      {
-          return $this->createQueryBuilder('p')
-              ->where('p.tags = :tag')
-              ->andWhere('p.price >= :price ')
-              ->setParameter('price', $price)
-              ->setParameter('tag', $tag)
-              ->orderBy('p.price', 'ASC')
-              ->getQuery()
-              ->getResult()
-          ;
-      }
-
-       /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-      public function findPriceLowerThenWithTag($price,$tag)
-      {
-          return $this->createQueryBuilder('p')
-              ->where('p.tags = :tag')
-              ->andWhere('p.price <= :price ')
-              ->setParameter('price', $price)
-              ->setParameter('tag', $tag)
-              ->orderBy('p.price', 'ASC')
-              ->getQuery()
-              ->getResult()
-          ;
-      }
-
-    /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-    public function findByTag($value)
+    public function findPriceHigherThen($price)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.tags = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-           // ->setMaxResults(10)
+            ->andWhere('p.price >= :price')
+            ->setParameter('price', $price)
+            ->orderBy('p.price', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    
+
+    /**
+     * @return Post[] Returns an array of Post objects
+     */
+
+    public function findPriceHigherThenWithTag($price, $tags)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $valueNo = 0;
+        foreach ($tags as $value) {
+            $qb->andWhere('p.tags like :value' . $valueNo);
+            $qb->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
+            $valueNo++;
+        }
+
+        return $qb
+            ->andWhere('p.price >= :price ')
+            ->setParameter('price', $price)
+            ->orderBy('p.price', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Post[] Returns an array of Post objects
+     */
+
+    public function findPriceLowerThenWithTag($price, $tags)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $valueNo = 0;
+        foreach ($tags as $value) {
+            $qb->andWhere('p.tags like :value' . $valueNo);
+            $qb->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
+            $valueNo++;
+        }
+
+        return $qb
+            ->andWhere('p.price <= :price ')
+            ->setParameter('price', $price)
+            ->orderBy('p.price', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Post[] Returns an array of Post objects
+     */
+
+    public function findByTag($tags)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $valueNo = 0;
+        foreach ($tags as $value) {
+            $qb->andWhere('p.tags like :value' . $valueNo);
+            $qb->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
+            $valueNo++;
+        }
+
+        return $qb
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     // /**
     //  * @return Post[] Returns an array of Post objects

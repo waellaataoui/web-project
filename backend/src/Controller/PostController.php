@@ -29,6 +29,7 @@ class PostController extends AbstractFOSRestController
      *  @return JsonResponse
      */
 
+
     public function getPostsAction(Request $request, PostRepository $repository)
     {
         if ($request->query->get('min') || $request->query->get('max') || $request->query->get('tag'))
@@ -51,20 +52,14 @@ class PostController extends AbstractFOSRestController
             ];
         }
         return new JsonResponse($result);
+
     }
 
 
+  
     /**
-     * @Route("/deletepost", name="DeletePostsAction" ,methods={"DELETE"})
-     *  @return JsonResponse
-     */
 
-    public function DeletePostsAction()
-    {
-        //mana3rach bil id wela bil get user courant
-    }
 
-    /**
      * @Route("/post", name="newPost", methods={"POST"})
      * @return Response
      * @throws \Exception
@@ -73,6 +68,7 @@ class PostController extends AbstractFOSRestController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent(), true);
+
         $post = new Post();
         $post->setTitle($data['title']);
         $post->setDescription($data['description']);
@@ -84,6 +80,7 @@ class PostController extends AbstractFOSRestController
             $result = [];
             foreach ($violations as $violation) {
                 $result[] = $violation->getPropertyPath() . ': ' . $violation->getMessage();
+
             }
             return new JsonResponse($result, Response::HTTP_BAD_REQUEST);
         }

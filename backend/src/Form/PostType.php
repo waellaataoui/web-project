@@ -41,7 +41,8 @@ class PostType extends AbstractType
           ]),
         ]
       ])
-     // ->add('tags', KeyValueType::class, array('value_type' => TextType::class))
+      // ->add('tags', KeyValueType::class, array('value_type' => TextType::class))
+      // ->add('tags', TextType::class)
       ->add('price', TextType::class, [
         'constraints' => [
           new NotNull([

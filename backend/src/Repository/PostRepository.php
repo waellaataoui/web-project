@@ -21,10 +21,12 @@ class PostRepository extends ServiceEntityRepository
 
 
 
+
     /**
      * @return Post[] Returns an array of Post objects
      */
     public function findByPriceAndTag(int $min = null, int $max = null, $tag = null)
+
     {
 
         $result = $this->createQueryBuilder('p');
@@ -44,12 +46,13 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
+
         return $result;
     }
 
 
 
-
+ 
 
     // /**
     //  * @return Post[] Returns an array of Post objects

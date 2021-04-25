@@ -31,8 +31,9 @@ class PostController extends AbstractFOSRestController
 
     public function getPostsAction(Request $request, PostRepository $repository)
     {
-        if ($request->query->get('min') || $request->query->get('max') || $request->query->get('tag'))
-            $posts = $repository->findByPriceAndTag($request->query->get('min'), $request->query->get('max'), $request->query->get('tag'));
+        $tag = explode(",", $request->query->get('tag'));
+        if ($request->query->get('min') || $request->query->get('max') || $tag)
+            $posts = $repository->findByPriceAndTag($request->query->get('min'), $request->query->get('max'), $tag);
         else
             $posts = $repository->findAll();
 
@@ -78,6 +79,9 @@ class PostController extends AbstractFOSRestController
         $post->setDescription($data['description']);
         $post->setTags($data['tags']);
         $post->setPrice($data['price']);
+        $post->setCategory($data['category']);
+        $post->setJobType($data['jobType']);
+        $post->setLocation($data['location']);
         $post->setEmployeur($this->getUser());
         $violations = $validator->validate($post);
         if (count($violations) > 0) {

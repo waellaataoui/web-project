@@ -35,9 +35,14 @@ class PostRepository extends ServiceEntityRepository
             $result = $result->andWhere('p.price <= :max')->setParameter('max', $max);
         }
         if (!is_null($tag)) {
+            $valueNo = 0;
+            foreach ($tag as $value) {
+                $result->andWhere('p.tags like :value' . $valueNo);
+                $result->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
+                $valueNo++;
+            }
             // $result = $result->andWhere('p.tags IN (:tag)')->setParameter('tag', $tag);
-            $result = $result->andWhere($result->expr()->like('p.tags', ':tag'))->setParameter('tag', '%' . $tag . '%');
-            
+            //$result = $result->andWhere($result->expr()->like('p.tags', ':tag'))->setParameter('tag', '%' . $tag . '%');
         }
         $result = $result
             ->orderBy('p.price', 'ASC')

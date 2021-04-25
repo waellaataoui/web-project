@@ -60,7 +60,7 @@ class Employeur implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="employeur", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="employeur", orphanRemoval=true, fetch="EXTRA_LAZY")
      */
     private $posts;
 

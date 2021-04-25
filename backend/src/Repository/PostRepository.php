@@ -19,87 +19,37 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-     /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-    public function findPriceLowerThen($price)
+
+
+    /**
+     * @return Post[] Returns an array of Post objects
+     */
+    public function findByPriceAndTag(int $min = null, int $max = null, $tag = null)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.price <= :price')
-            ->setParameter('price', $price)
+
+        $result = $this->createQueryBuilder('p');
+        if (!is_null($min)) {
+            $result = $result->andWhere('p.price >= :min')->setParameter('min', $min);
+        }
+        if (!is_null($max)) {
+            $result = $result->andWhere('p.price <= :max')->setParameter('max', $max);
+        }
+        if (!is_null($tag)) {
+            // $result = $result->andWhere('p.tags IN (:tag)')->setParameter('tag', $tag);
+            $result = $result->andWhere($result->expr()->like('p.tags', ':tag'))->setParameter('tag', '%' . $tag . '%');
+            
+        }
+        $result = $result
             ->orderBy('p.price', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+
+        return $result;
     }
 
 
-    /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-      public function findPriceHigherThen($price)
-      {
-          return $this->createQueryBuilder('p')
-              ->andWhere('p.price >= :price')
-              ->setParameter('price', $price)
-              ->orderBy('p.price', 'ASC')
-              ->getQuery()
-              ->getResult()
-          ;
-      }
 
-      /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-      public function findPriceHigherThenWithTag($price,$tag)
-      {
-          return $this->createQueryBuilder('p')
-              ->where('p.tags = :tag')
-              ->andWhere('p.price >= :price ')
-              ->setParameter('price', $price)
-              ->setParameter('tag', $tag)
-              ->orderBy('p.price', 'ASC')
-              ->getQuery()
-              ->getResult()
-          ;
-      }
 
-       /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-      public function findPriceLowerThenWithTag($price,$tag)
-      {
-          return $this->createQueryBuilder('p')
-              ->where('p.tags = :tag')
-              ->andWhere('p.price <= :price ')
-              ->setParameter('price', $price)
-              ->setParameter('tag', $tag)
-              ->orderBy('p.price', 'ASC')
-              ->getQuery()
-              ->getResult()
-          ;
-      }
-
-    /**
-      * @return Post[] Returns an array of Post objects
-      */
-    
-    public function findByTag($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.tags = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-           // ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    
 
     // /**
     //  * @return Post[] Returns an array of Post objects

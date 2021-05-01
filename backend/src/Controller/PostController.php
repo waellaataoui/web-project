@@ -33,34 +33,56 @@ class PostController extends AbstractFOSRestController
     public function getPostsAction(Request $request, PostRepository $repository)
     {
         $tag = explode(",", $request->query->get('tag'));
-        if ($request->query->get('min') || $request->query->get('max') || $tag)
-            $posts = $repository->findByPriceAndTag($request->query->get('min'), $request->query->get('max'), $tag);
-        else
+        if ($request->query->get('min') || $request->query->get('max') || $tag || $request->query->get('location') || $request->query->get('category') ||  $request->query->get('jobType'))
+            $posts = $repository->findByParams(
+                $request->query->get('min'),
+                $request->query->get('max'),
+                $tag,
+                $request->query->get('location'),
+                $request->query->get('category'),
+                $request->query->get('jobType'),
+            );
+        else {
+            dump("no filter!");
             $posts = $repository->findAll();
+        }
 
         $result = [];
         foreach ($posts as $post) {
+
             $result[] = [
                 'id' => $post->getId(),
                 'description' => $post->getDescription(),
                 'title' => $post->getTitle(),
                 'tags' => $post->getTags(),
                 'price' => $post->getPrice(),
+                'category' => $post->getCategory(),
+                'jobType' => $post->getJobType(),
+                'location' => $post->getLocation(),
+                'createdAt' =>  $post->getCreatedAt()->getTimestamp(),
                 'employeur' => [
                     'id' => $post->getEmployeur()->getId(),
                     'fullname' => $post->getEmployeur()->getFullName(),
+                    'avatar' => $post->getEmployeur()->getAvatar()
                 ],
             ];
         }
-        return new JsonResponse($result);
 
+        return new JsonResponse($result);
     }
 
 
-  
     /**
+     * @Route("/deletepost", name="DeletePostsAction" ,methods={"DELETE"})
+     *  @return JsonResponse
+     */
 
+    public function DeletePostsAction()
+    {
+        //mana3rach bil id wela bil get user courant
+    }
 
+    /**
      * @Route("/post", name="newPost", methods={"POST"})
      * @return Response
      * @throws \Exception
@@ -69,7 +91,6 @@ class PostController extends AbstractFOSRestController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $data = json_decode($request->getContent(), true);
-
         $post = new Post();
         $post->setTitle($data['title']);
         $post->setDescription($data['description']);
@@ -84,7 +105,6 @@ class PostController extends AbstractFOSRestController
             $result = [];
             foreach ($violations as $violation) {
                 $result[] = $violation->getPropertyPath() . ': ' . $violation->getMessage();
-
             }
             return new JsonResponse($result, Response::HTTP_BAD_REQUEST);
         }

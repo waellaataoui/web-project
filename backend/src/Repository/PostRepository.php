@@ -25,18 +25,31 @@ class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[] Returns an array of Post objects
      */
-    public function findByPriceAndTag(int $min = null, int $max = null, $tag = null)
+    public function findByParams($min,  $max, $tag = null, string $location = null, string $category = null, string $jobType = null)
 
     {
 
+        // dump($min);
+        // dump(empty($min));
+
         $result = $this->createQueryBuilder('p');
-        if (!is_null($min)) {
+        if (!empty($min)) {
             $result = $result->andWhere('p.price >= :min')->setParameter('min', $min);
         }
-        if (!is_null($max)) {
+        if (!empty($max)) {
             $result = $result->andWhere('p.price <= :max')->setParameter('max', $max);
         }
-        if (!is_null($tag)) {
+        if (!empty($location)) {
+            $result = $result->andWhere('p.location = :loc')->setParameter('loc', $location);
+        }
+        if (!empty($jobType)) {
+            $result = $result->andWhere('p.jobType = :type')->setParameter('type', $jobType);
+        }
+        if (!empty($category)) {
+
+            $result = $result->andWhere('p.category = :categ')->setParameter('categ', strtolower($category));
+        }
+        if ((!empty($max)) && count($tag) > 0) {
             $valueNo = 0;
             foreach ($tag as $value) {
                 $result->andWhere('p.tags like :value' . $valueNo);
@@ -57,7 +70,7 @@ class PostRepository extends ServiceEntityRepository
 
 
 
- 
+
 
     // /**
     //  * @return Post[] Returns an array of Post objects

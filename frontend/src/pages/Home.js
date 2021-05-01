@@ -1,6 +1,11 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 import Header from "../components/Header"
+import Hero from "../assets/img/hero/h1_hero.jpg"
+import Test from "../assets/img/gallery/cv_bg.jpg"
+import Job from "../components/Job"
+
+
 const Home = () => {
     return (
         <div>
@@ -8,7 +13,7 @@ const Home = () => {
 
                 <div className="slider-area ">
                     <div className="slider-active">
-                        <div className="single-slider slider-height d-flex align-items-center" data-background="assets/img/hero/h1_hero.jpg">
+                        <div className="single-slider slider-height d-flex align-items-center" style={{backgroundImage: `url(${Hero}` }}>
                             <div className="container">
                                 <div className="row">
                                     <div className="col-xl-6 col-lg-9 col-md-10">
@@ -49,7 +54,7 @@ const Home = () => {
                             <div className="col-lg-12">
                                 <div className="section-tittle text-center">
                                     <span>FEATURED TOURS Packages</span>
-                                    <h2>Browse Top Categories </h2>
+                                    <h2>Browse Categories </h2>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +65,7 @@ const Home = () => {
                                         <span className="flaticon-tour"></span>
                                     </div>
                                     <div className="services-cap">
-                                        <h5><a href="job_listing.html">Design & Creative</a></h5>
+                                        <h5><a href="job_listing.html">Machine Learning</a></h5>
                                         <span>(653)</span>
                                     </div>
                                 </div>
@@ -71,7 +76,7 @@ const Home = () => {
                                         <span className="flaticon-cms"></span>
                                     </div>
                                     <div className="services-cap">
-                                        <h5><a href="job_listing.html">Design & Development</a></h5>
+                                        <h5><a href="job_listing.html">Web Development</a></h5>
                                         <span>(658)</span>
                                     </div>
                                 </div>
@@ -82,7 +87,7 @@ const Home = () => {
                                         <span className="flaticon-report"></span>
                                     </div>
                                     <div className="services-cap">
-                                        <h5><a href="job_listing.html">Sales & Marketing</a></h5>
+                                        <h5><a href="job_listing.html">Data Science</a></h5>
                                         <span>(658)</span>
                                     </div>
                                 </div>
@@ -93,7 +98,7 @@ const Home = () => {
                                         <span className="flaticon-app"></span>
                                     </div>
                                     <div className="services-cap">
-                                        <h5><a href="job_listing.html">Mobile Application</a></h5>
+                                        <h5><a href="job_listing.html">Mobile Developement</a></h5>
                                         <span>(658)</span>
                                     </div>
                                 </div>
@@ -104,7 +109,7 @@ const Home = () => {
                                         <span className="flaticon-helmet"></span>
                                     </div>
                                     <div className="services-cap">
-                                        <h5><a href="job_listing.html">Construction</a></h5>
+                                        <h5><a href="job_listing.html">Cyber Security</a></h5>
                                         <span>(658)</span>
                                     </div>
                                 </div>
@@ -126,7 +131,7 @@ const Home = () => {
                                         <span className="flaticon-real-estate"></span>
                                     </div>
                                     <div className="services-cap">
-                                        <h5><a href="job_listing.html">Real Estate</a></h5>
+                                        <h5><a href="job_listing.html">Networking</a></h5>
                                         <span>(658)</span>
                                     </div>
                                 </div>
@@ -137,7 +142,7 @@ const Home = () => {
                                         <span className="flaticon-content"></span>
                                     </div>
                                     <div className="services-cap">
-                                        <h5><a href="job_listing.html">Content Writer</a></h5>
+                                        <h5><a href="job_listing.html">Management IT</a></h5>
                                         <span>(658)</span>
                                     </div>
                                 </div>
@@ -152,111 +157,22 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="online-cv cv-bg section-overly pt-90 pb-120" data-background="assets/img/gallery/cv_bg.jpg">
+                <div className="online-cv cv-bg section-overly pt-90 pb-120" style={{backgroundImage: `url(${Test}` }}>
                     <div className="container">
                         <div className="row justify-content-center">
                             <div className="col-xl-10">
                                 <div className="cv-caption text-center">
                                     <p className="pera1">FEATURED TOURS Packages</p>
-                                    <p className="pera2"> Make a Difference with Your Online Resume!</p>
-                                    <a href="#" className="border-btn2 border-btn4">Upload your cv</a>
+                                    <p className="pera2"> Make a Difference with Your Verified Resume!</p>
+                                    <a href="#" className="border-btn2 border-btn4">Verify Your Skills</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <section className="featured-job-area feature-padding">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="section-tittle text-center">
-                                    <span>Recent Job</span>
-                                    <h2>Featured Jobs</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row justify-content-center">
-                            <div className="col-xl-10">
-                                <div className="single-job-items mb-30">
-                                    <div className="job-items">
-                                        <div className="company-img">
-                                            <a href="job_details.html"><img src="assets/img/icon/job-list1.png" alt="" /></a>
-                                        </div>
-                                        <div className="job-tittle">
-                                            <a href="job_details.html"><h4>Digital Marketer</h4></a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i className="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="items-link f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <div className="single-job-items mb-30">
-                                    <div className="job-items">
-                                        <div className="company-img">
-                                            <a href="job_details.html"><img src="assets/img/icon/job-list2.png" alt="" /></a>
-                                        </div>
-                                        <div className="job-tittle">
-                                            <a href="job_details.html"><h4>Digital Marketer</h4></a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i className="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="items-link f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <div className="single-job-items mb-30">
-                                    <div className="job-items">
-                                        <div className="company-img">
-                                            <a href="job_details.html"><img src="assets/img/icon/job-list3.png" alt="" /></a>
-                                        </div>
-                                        <div className="job-tittle">
-                                            <a href="job_details.html"><h4>Digital Marketer</h4></a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i className="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="items-link f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <div className="single-job-items mb-30">
-                                    <div className="job-items">
-                                        <div className="company-img">
-                                            <a href="job_details.html"><img src="assets/img/icon/job-list4.png" alt="" /></a>
-                                        </div>
-                                        <div className="job-tittle">
-                                            <a href="job_details.html"><h4>Digital Marketer</h4></a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i className="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="items-link f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+              { // featured jobs 
+              }
+              <Job />
                 <div className="apply-process-area apply-bg pt-150 pb-150" data-background="assets/img/gallery/how-applybg.png">
                     <div className="container">
                         <div className="row">

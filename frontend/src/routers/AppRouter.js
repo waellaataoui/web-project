@@ -5,6 +5,7 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import LoginRecruter from '../pages/LoginRecruter'
 import RecruterHome from '../pages/RecruterHome'
+import JobListing from '../pages/JobListing'
 
 const AppRouter = () => {
   return (
@@ -16,6 +17,7 @@ const AppRouter = () => {
           <Route path="/login" component={Login} />
           <Route path="/recruter" component={RecruterHome} exact={true} />
           <Route path="/recruter/login" component={LoginRecruter} />
+          <Route path="/JobListing" component={JobListing} />
 
           {/* <Route path="/exp/:id" component={exp} /> */}
 

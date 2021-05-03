@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const JobFilters = (props) => {
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
   const [jobType, setjobType] = useState({
@@ -18,7 +20,7 @@ const JobFilters = (props) => {
     jobType.type = 0;
     //getjobtype();
   };
-  // ki t7adher servicek tcopy esm l fct getjobtype
+
   const getjobType = () => {
     var tab = "";
     Object.keys(jobType).map((element) => {
@@ -30,12 +32,12 @@ const JobFilters = (props) => {
       function (value) {
         console.log(value.data); // "Success"
       },
-      function (value) {
-        // not called
-      }
+    
     );
   };
-
+  useEffect(() => {
+    props.fetchJobs(min, max, category, location);
+  }, [min, max, category, location]);
   return (
     <>
       <div className="row">
@@ -63,8 +65,8 @@ const JobFilters = (props) => {
           <div className="select-job-items2">
             <select onChange={(e) => setCategory(e.target.value)} name="select">
               <option value="">All Category</option>
-              <option value="Web Developemen">Web Developement</option>
-              <option value="Mobile Developement">Mobile Developement</option>
+              <option value="Web Development">Web Development</option>
+              <option value="Mobile Development">Mobile Development</option>
               <option value="Cyber Security">Cyber Security</option>
               <option value="Machine Learning">Machine Learning</option>
               <option value="Data Science">Data Science</option>

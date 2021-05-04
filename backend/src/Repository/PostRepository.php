@@ -29,7 +29,7 @@ class PostRepository extends ServiceEntityRepository
 
     {
 
-        // dump($min);
+        //  dump(strtolower($category));
         // dump(empty($min));
 
         $result = $this->createQueryBuilder('p');
@@ -40,14 +40,14 @@ class PostRepository extends ServiceEntityRepository
             $result = $result->andWhere('p.price <= :max')->setParameter('max', $max);
         }
         if (!empty($location)) {
-            $result = $result->andWhere('p.location = :loc')->setParameter('loc', $location);
+            $result = $result->andWhere('p.location = :loc')->setParameter('loc', strtolower($location));
         }
         if (!empty($jobType)) {
             $result = $result->andWhere('p.jobType = :type')->setParameter('type', $jobType);
         }
         if (!empty($category)) {
 
-            $result = $result->andWhere('p.category = :categ')->setParameter('categ', strtolower($category));
+            $result = $result->andWhere('p.category like :cate')->setParameter('cate', '%' . strtolower($category) . '%');
         }
         if ((!empty($max)) && count($tag) > 0) {
             $valueNo = 0;
@@ -59,6 +59,7 @@ class PostRepository extends ServiceEntityRepository
             // $result = $result->andWhere('p.tags IN (:tag)')->setParameter('tag', $tag);
             //$result = $result->andWhere($result->expr()->like('p.tags', ':tag'))->setParameter('tag', '%' . $tag . '%');
         }
+        //dump($result->getQuery());
         $result = $result
             ->orderBy('p.price', 'ASC')
             ->getQuery()

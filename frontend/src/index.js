@@ -6,7 +6,6 @@ import { Provider } from 'react-redux'
 import store from './store'
 import "./axiosConfig.js";
 import reportWebVitals from './reportWebVitals';
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

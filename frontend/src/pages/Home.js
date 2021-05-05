@@ -1,7 +1,15 @@
 import React from 'react'
-import { Link } from "react-router-dom"
-import Header from "../components/Header"
+import Select from 'react-select'
+import Subscriptions from '../components/Subscriptions'
 const Home = () => {
+    const options = [
+        { value: 'Tunis', label: 'Tunis' },
+        { value: 'Sousse', label: 'Sousse' },
+        { value: 'Sfax', label: 'Sfax' },
+        { value: 'Monastir', label: 'Monastir' },
+        { value: 'Mahdia', label: 'Mahdia' },
+        { value: 'Gabes', label: 'Gabes' },
+    ]
     return (
         <div>
             <main>
@@ -24,26 +32,26 @@ const Home = () => {
                                                 <input type="text" placeholder="Job Tittle or keyword" />
                                             </div>
                                             <div className="select-form">
-                                                <div className="select-itms">
-                                                    <select name="select" id="select1">
-                                                        <option value="">Location BD</option>
-                                                        <option value="">Location PK</option>
-                                                        <option value="">Location US</option>
-                                                        <option value="">Location UK</option>
-                                                    </select>
-                                                </div>
+
+                                                <Select className="react-select"
+                                                    classNamePrefix="react-select"
+                                                    placeholder="Location"
+                                                    options={options} />
+
                                             </div>
+
                                             <div className="search-form">
                                                 <a href="#">Find job</a>
                                             </div>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="our-services section-pad-t30">
+                <div className="our-services">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-12">
@@ -356,85 +364,10 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="support-company-area support-padding fix">
-                    <div className="container">
-                        <div className="row align-items-center">
-                            <div className="col-xl-6 col-lg-6">
-                                <div className="right-caption">
-                                    <div className="section-tittle section-tittle2">
-                                        <span>What we are doing</span>
-                                        <h2>24k Talented people are getting Jobs</h2>
-                                    </div>
-                                    <div className="support-caption">
-                                        <p className="pera-top">Mollit anim laborum duis au dolor in voluptate velit ess cillum dolore eu lore dsu quality mollit anim laborumuis au dolor in voluptate velit cillum.</p>
-                                        <p>Mollit anim laborum.Duis aute irufg dhjkolohr in re voluptate velit esscillumlore eu quife nrulla parihatur. Excghcepteur signjnt occa cupidatat non inulpadeserunt mollit aboru. temnthp incididbnt ut labore mollit anim laborum suis aute.</p>
-                                        <a href="about.html" className="btn post-btn">Post a job</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xl-6 col-lg-6">
-                                <div className="support-location-img">
-                                    <img src="assets/img/service/support-img.jpg" alt="" />
-                                    <div className="support-img-cap text-center">
-                                        <p>Since</p>
-                                        <span>1994</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="home-blog-area blog-h-padding">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="section-tittle text-center">
-                                    <span>Our latest blog</span>
-                                    <h2>Our recent news</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xl-6 col-lg-6 col-md-6">
-                                <div className="home-blog-single mb-30">
-                                    <div className="blog-img-cap">
-                                        <div className="blog-img">
-                                            <img src="assets/img/blog/home-blog1.jpg" alt="" />
-                                            <div className="blog-date text-center">
-                                                <span>24</span>
-                                                <p>Now</p>
-                                            </div>
-                                        </div>
-                                        <div className="blog-cap">
-                                            <p>|   Properties</p>
-                                            <h3><a href="single-blog.html">Footprints in Time is perfect House in Kurashiki</a></h3>
-                                            <a href="#" className="more-btn">Read more »</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xl-6 col-lg-6 col-md-6">
-                                <div className="home-blog-single mb-30">
-                                    <div className="blog-img-cap">
-                                        <div className="blog-img">
-                                            <img src="assets/img/blog/home-blog2.jpg" alt="" />
-                                            <div className="blog-date text-center">
-                                                <span>24</span>
-                                                <p>Now</p>
-                                            </div>
-                                        </div>
-                                        <div className="blog-cap">
-                                            <p>|   Properties</p>
-                                            <h3><a href="single-blog.html">Footprints in Time is perfect House in Kurashiki</a></h3>
-                                            <a href="#" className="more-btn">Read more »</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div className="subscriptions">
 
+                    <Subscriptions></Subscriptions>
+                </div>
             </main>
             <footer>
                 <div className="footer-area footer-bg footer-padding">
@@ -495,8 +428,11 @@ const Home = () => {
                                                 <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                                                     method="get" className="subscribe_form relative mail_part">
                                                     <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
-                                                        className="placeholder hide-on-focus" onFocus="this.placeholder = ''"
-                                                        onBlur="this.placeholder = ' Email Address '" />
+                                                        className="placeholder hide-on-focus"
+                                                    //  onFocus="this.placeholder = ''"
+                                                    // onBlur="this.placeholder = ' Email Address '" 
+
+                                                    />
                                                     <div className="form-icon">
                                                         <button type="submit" name="submit" id="newsletter-submit"
                                                             className="email_icon newsletter-submit button-contactForm"><img src="assets/img/icon/form.png" alt="" /></button>

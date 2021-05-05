@@ -8,7 +8,7 @@
       'overflow': 'visible'
     });
     //nice select
-    $('select').niceSelect();
+    // $('select').niceSelect();
   });
 
 
@@ -213,7 +213,7 @@
 
 
   /* 10. WOW active */
-  new WOW().init();
+  // new WOW().init();
 
   /* 11. Datepicker */
 

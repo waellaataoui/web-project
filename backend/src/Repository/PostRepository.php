@@ -19,98 +19,58 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    /**
-     * @return Post[] Returns an array of Post objects
-     */
 
-    public function findPriceLowerThen($price)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.price <= :price')
-            ->setParameter('price', $price)
-            ->orderBy('p.price', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
 
 
     /**
      * @return Post[] Returns an array of Post objects
      */
+    public function findByParams($min,  $max, $tag = null, string $location = null, string $category = null, string $jobType = null)
 
-    public function findPriceHigherThen($price)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.price >= :price')
-            ->setParameter('price', $price)
-            ->orderBy('p.price', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
 
-    /**
-     * @return Post[] Returns an array of Post objects
-     */
+        //  dump(strtolower($category));
+        // dump(empty($min));
 
-    public function findPriceHigherThenWithTag($price, $tags)
-    {
-        $qb = $this->createQueryBuilder('p');
-        $valueNo = 0;
-        foreach ($tags as $value) {
-            $qb->andWhere('p.tags like :value' . $valueNo);
-            $qb->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
-            $valueNo++;
+        $result = $this->createQueryBuilder('p');
+        if (!empty($min)) {
+            $result = $result->andWhere('p.price >= :min')->setParameter('min', $min);
         }
+        if (!empty($max)) {
+            $result = $result->andWhere('p.price <= :max')->setParameter('max', $max);
+        }
+        if (!empty($location)) {
+            $result = $result->andWhere('p.location = :loc')->setParameter('loc', strtolower($location));
+        }
+        if (!empty($jobType)) {
+            $result = $result->andWhere('p.jobType = :type')->setParameter('type', $jobType);
+        }
+        if (!empty($category)) {
 
-        return $qb
-            ->andWhere('p.price >= :price ')
-            ->setParameter('price', $price)
+            $result = $result->andWhere('p.category like :cate')->setParameter('cate', '%' . strtolower($category) . '%');
+        }
+        if ((!empty($max)) && count($tag) > 0) {
+            $valueNo = 0;
+            foreach ($tag as $value) {
+                $result->andWhere('p.tags like :value' . $valueNo);
+                $result->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
+                $valueNo++;
+            }
+            // $result = $result->andWhere('p.tags IN (:tag)')->setParameter('tag', $tag);
+            //$result = $result->andWhere($result->expr()->like('p.tags', ':tag'))->setParameter('tag', '%' . $tag . '%');
+        }
+        //dump($result->getQuery());
+        $result = $result
             ->orderBy('p.price', 'ASC')
             ->getQuery()
             ->getResult();
+
+
+        return $result;
     }
 
-    /**
-     * @return Post[] Returns an array of Post objects
-     */
 
-    public function findPriceLowerThenWithTag($price, $tags)
-    {
-        $qb = $this->createQueryBuilder('p');
-        $valueNo = 0;
-        foreach ($tags as $value) {
-            $qb->andWhere('p.tags like :value' . $valueNo);
-            $qb->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
-            $valueNo++;
-        }
 
-        return $qb
-            ->andWhere('p.price <= :price ')
-            ->setParameter('price', $price)
-            ->orderBy('p.price', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @return Post[] Returns an array of Post objects
-     */
-
-    public function findByTag($tags)
-    {
-        $qb = $this->createQueryBuilder('p');
-        $valueNo = 0;
-        foreach ($tags as $value) {
-            $qb->andWhere('p.tags like :value' . $valueNo);
-            $qb->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
-            $valueNo++;
-        }
-
-        return $qb
-            ->orderBy('p.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
 
 
     // /**

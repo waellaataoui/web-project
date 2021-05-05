@@ -25,7 +25,7 @@ class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[] Returns an array of Post objects
      */
-    public function findByParams($min,  $max, $tag = null, string $location = null, string $category = null, string $jobType = null)
+    public function findByParams($min ,  $max, $tag = null, string $location = null, string $category = null,  $jobType = null)
 
     {
 
@@ -42,22 +42,20 @@ class PostRepository extends ServiceEntityRepository
         if (!empty($location)) {
             $result = $result->andWhere('p.location = :loc')->setParameter('loc', strtolower($location));
         }
-        if (!empty($jobType)) {
-            $result = $result->andWhere('p.jobType = :type')->setParameter('type', $jobType);
+        if ((!empty($jobType)) && count($jobType) > 0) {
+            $result = $result->andWhere('p.jobType IN (:type)')->setParameter('type', $jobType);
         }
         if (!empty($category)) {
 
             $result = $result->andWhere('p.category like :cate')->setParameter('cate', '%' . strtolower($category) . '%');
         }
-        if ((!empty($max)) && count($tag) > 0) {
+        if ((!empty($tag)) && count($tag) > 0) {
             $valueNo = 0;
             foreach ($tag as $value) {
                 $result->andWhere('p.tags like :value' . $valueNo);
                 $result->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
                 $valueNo++;
             }
-            // $result = $result->andWhere('p.tags IN (:tag)')->setParameter('tag', $tag);
-            //$result = $result->andWhere($result->expr()->like('p.tags', ':tag'))->setParameter('tag', '%' . $tag . '%');
         }
         //dump($result->getQuery());
         $result = $result

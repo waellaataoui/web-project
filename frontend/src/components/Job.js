@@ -6,6 +6,8 @@ const Job = (props) => {
 
   var date = new Date("2021-04-29 17:12:50");
   var now = new Date().getTime() / 1000;
+
+  
   /*     const fetchPosts =     async (min="",max=
     "",category="",location="") => {
 
@@ -22,6 +24,7 @@ const Job = (props) => {
   useEffect(() => {
     console.log("job list component", props.jobs);
   }, []);
+
   return (
     <div>
       {props.jobs.map((job, index) => (
@@ -48,8 +51,8 @@ const Job = (props) => {
               </div>
             </div>
             <div className="items-link items-link2 f-right">
-              <a href="job_details.html">{job.jobType} </a>
-              <span>{(now - date.getTime() / 1000) / 3600} </span>
+              <a href="job_details.html"> </a>
+              <span>{job.jobType}</span>
             </div>
             <br />
           </div>

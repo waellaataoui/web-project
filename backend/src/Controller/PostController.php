@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -33,17 +34,21 @@ class PostController extends AbstractFOSRestController
     public function getPostsAction(Request $request, PostRepository $repository)
     {
         $tag = explode(",", $request->query->get('tag'));
-        if ($request->query->get('min') || $request->query->get('max') || $tag || $request->query->get('location') || $request->query->get('category') ||  $request->query->get('jobType'))
+        $jobType =  explode(",", $request->query->get('jobType'));
+        if ($request->query->get('min') || $request->query->get('max') || (count($tag)>1) || $request->query->get('location') || $request->query->get('category') ||  (count($jobType)>1)){
             $posts = $repository->findByParams(
                 $request->query->get('min'),
                 $request->query->get('max'),
                 $tag,
                 $request->query->get('location'),
                 $request->query->get('category'),
-                $request->query->get('jobType'),
+                $jobType,
             );
+           // dump("filters");
+           // dump($request->query->get('min'), $request->query->get('max'), $tag, $request->query->get('location'), $request->query->get('category'), count($jobType) );
+        }
         else {
-            dump("no filter!");
+           // dump("no filter!");
             $posts = $repository->findAll();
         }
 

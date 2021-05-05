@@ -3,15 +3,17 @@ import axios from "axios";
 import JobFilters from "./JobFilters";
 import Job from "./Job";
 const Jobs = () => {
+  
   const [jobs, setJobs] = useState([]);
   const fetchJobs = async (
     min = "",
     max = "",
     category = "",
-    location = ""
+    location = "",
+    jobType = ""
   ) => {
     const res = await axios.get(
-      `/posts?min=${min}&max=${max}&category=${category}&location=${location} `
+      `/posts?min=${min}&max=${max}&category=${category}&location=${location}&jobType=${jobType} `
     );
     console.log(res.data);
     setJobs(res.data);

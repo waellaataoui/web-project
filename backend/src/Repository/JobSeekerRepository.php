@@ -30,22 +30,21 @@ class JobSeekerRepository extends ServiceEntityRepository
         empty($data['phoneNumber']) ? true : $jobSeeker->setPhoneNumber($data['phoneNumber']);
         $this->manager->flush();
     }
-    // /**
-    //  * @return JobSeeker[] Returns an array of JobSeeker objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('j.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+
+    // /*
+    //   * @return JobSeeker[] Returns an array of JobSeeker objects
+    //   */
+
+    // public function findByExampleField($value)
+    // {
+    //     return $this->createQueryBuilder('j')
+    //         ->andWhere('j.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->orderBy('j.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
     /*
     public function findOneBySomeField($value): ?JobSeeker

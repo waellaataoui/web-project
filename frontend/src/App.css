@@ -6,7 +6,34 @@
   height: 40vmin;
   pointer-events: none;
 }
-
+.select {
+  width: 100%;
+  /* background: #fff; */
+  /* border-radius: 0px; */
+  /* height: 100%; */
+  padding: 11px 19px 11px 10px;
+  color: #616875;
+  /* line-height: 54px; */
+  border: 0;
+}
+.react-select__control {
+  height: 70px;
+  border: none !important;
+}
+.react-select {
+  padding: 0;
+}
+.react-select__menu {
+  height: 100%;
+  /* min-height: max-content; */
+}
+.react-select__menu-list {
+  z-index: 99999;
+  height: 100%;
+}
+.react-select__option {
+  z-index: 100000000000;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

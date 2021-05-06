@@ -54,7 +54,7 @@ const Header = () => {
                                                 <li><Link to={homePath} >Home</Link></li>
 
                                                 {homePath == "/recruter" ? <li><Link to="#">Find Profiles </Link></li> :
-                                                    <li><Link to="#">Find  Jobs </Link></li>}
+                                                    <li><Link to="/jobListing">Find  Jobs </Link></li>}
                                                 <li><Link to="about.html">About</Link></li>
                                                 <li><a href="#">Page</a>
                                                     <ul className="submenu">

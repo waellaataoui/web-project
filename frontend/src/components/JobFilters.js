@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import Select from 'react-select'
+
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
@@ -10,21 +11,31 @@ const JobFilters = (props) => {
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
   const [jobType, setjobType] = useState([
-    {id: 1, value: "Part Time", isChecked: false},
-    {id: 2, value: "Full Time", isChecked: false},
-    {id: 3, value: "Remote", isChecked: false},
-    {id: 4, value: "Internship", isChecked: false}]
+    { id: 1, value: "Part Time", isChecked: false },
+    { id: 2, value: "Full Time", isChecked: false },
+    { id: 3, value: "Remote", isChecked: false },
+    { id: 4, value: "Internship", isChecked: false }]
   );
+  const categories = [
+    { "value": "", "label": "All Categories" },
+
+    { "value": "Web Development", "label": "Web Development" },
+    { "value": "Mobile Development", "label": "Mobile Development" },
+    { "value": "Cyber Security", "label": "Cyber Security" },
+    { "value": "Machine Learning", "label": "Machine Learning" },
+    { "value": "Data Science", "label": "Data Science" },
+    { "value": "Networking", "label": "Networking" },
+    { "value": "Management IT", "label": "Management IT" }]
   const [typeValue, setTypeValue] = useState("");
-  
+
 
   const updatejobType = (e) => {
 
-    
-    const types= jobType.map(type => {
+
+    const types = jobType.map(type => {
       if (type.value === e.target.value)
-        type.isChecked =  e.target.checked
-      return type  
+        type.isChecked = e.target.checked
+      return type
     })
     setjobType(types);
     console.log(jobType);
@@ -32,17 +43,17 @@ const JobFilters = (props) => {
 
   };
 
- 
+
 
   useEffect(() => {
     let str = "";
-    jobType.forEach(type=>{
-      if (type.isChecked){
+    jobType.forEach(type => {
+      if (type.isChecked) {
         str += type.value + ",";
       }
     })
     console.log(str);
-    
+
     props.fetchJobs(min, max, category, location, str);
   }, [min, max, category, location, jobType]);
 
@@ -89,35 +100,31 @@ const JobFilters = (props) => {
           </div>
 
           <div className="select-job-items2">
-            <select onChange={(e) => setCategory(e.target.value)} name="select">
-              <option value="">All Category</option>
-              <option value="Web Development">Web Development</option>
-              <option value="Mobile Development">Mobile Development</option>
-              <option value="Cyber Security">Cyber Security</option>
-              <option value="Machine Learning">Machine Learning</option>
-              <option value="Data Science">Data Science</option>
-              <option value="Networking">Networking</option>
-              <option value="Management IT">Management IT</option>
-            </select>
+
+            <Select
+              placeholder="All Categories"
+              onChange={(selected) => setCategory(selected.value)}
+              defaultValue="All Category"
+              options={categories} />
           </div>
 
           <div className="select-Categories pt-80 pb-50">
             <div className="small-section-tittle2">
               <h4>Job Type</h4>
             </div>
-            
-            {jobType.map(type=>(
+
+            {jobType.map(type => (
               <>
                 <label className="container">
-              {type.value}
-              <input
-                type="checkbox"
-                key={type.id}
-                onChange ={updatejobType}
-                value = {type.value}
-              />
-              <span className="checkmark"></span>
-            </label>
+                  {type.value}
+                  <input
+                    type="checkbox"
+                    key={type.id}
+                    onChange={updatejobType}
+                    value={type.value}
+                  />
+                  <span className="checkmark"></span>
+                </label>
               </>
 
             ))}
@@ -216,9 +223,24 @@ const JobFilters = (props) => {
                   <Slider
                     value={value}
                     min={0}
-                    max={3000}
+                    max={10000}
                     onChange={handleChange}
                     valueLabelDisplay="auto"
+                    marks={[
+                      {
+                        value: 0,
+                        label: '0$',
+                      },
+                      {
+                        value: 5000,
+                        label: '5k',
+                      },
+                      {
+                        value: 10000,
+                        label: '10k',
+                      },
+
+                    ]}
                     aria-labelledby="range-slider"
                     getAriaValueText={valuetext}
                   />

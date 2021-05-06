@@ -81,6 +81,21 @@ class JobSeeker implements UserInterface
      */
     private $feedbacks;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $stripeId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $subsciptionId;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $subscription_end_at;
+
 
     public function __construct()
     {
@@ -278,5 +293,41 @@ class JobSeeker implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getStripeId(): ?string
+    {
+        return $this->stripeId;
+    }
+
+    public function setStripeId(?string $stripeId): self
+    {
+        $this->stripeId = $stripeId;
+
+        return $this;
+    }
+
+    public function getSubsciptionId(): ?string
+    {
+        return $this->subsciptionId;
+    }
+
+    public function setSubsciptionId(?string $subsciptionId): self
+    {
+        $this->subsciptionId = $subsciptionId;
+
+        return $this;
+    }
+
+    public function getSubscriptionEndAt(): ?\DateTimeInterface
+    {
+        return $this->subscription_end_at;
+    }
+
+    public function setSubscriptionEndAt(?\DateTimeInterface $subscription_end_at): self
+    {
+        $this->subscription_end_at = $subscription_end_at;
+
+        return $this;
     }
 }

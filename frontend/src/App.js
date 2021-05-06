@@ -41,10 +41,12 @@ function App() {
     fetchUser();
 
 
-    const jQuery = document.getElementById("jquery");
+    // const jQuery = document.getElementById("jquery");
     const niceSelect = document.createElement("script");
+    const scrollUp = document.createElement("script");
+    scrollUp.src = "/js/jquery.scrollUp.min.js";
+    document.body.appendChild(scrollUp);
     niceSelect.src = "/js/jquery.nice-select.min.js";
-
     document.body.appendChild(niceSelect);
     const sticky = document.createElement("script");
     sticky.src = "/js/jquery.sticky.js";
@@ -61,9 +63,7 @@ function App() {
     const paroller = document.createElement("script");
     paroller.src = "/js/jquery.paroller.min.js";
     document.body.appendChild(paroller);
-    const scrollUp = document.createElement("script");
-    scrollUp.src = "/js/jquery.scrollUp.min.js";
-    document.body.appendChild(scrollUp);
+
     const onePageNav = document.createElement("script");
     onePageNav.src = "/js/one-page-nav-min.js";
     document.body.appendChild(onePageNav);
@@ -77,13 +77,14 @@ function App() {
 
     const main = document.createElement("script");
     main.src = "/js/main.js";
-    main.defer = true;
+    //  main.defer = true;
     document.body.appendChild(main);
+
     return () => {
-      document.body.removeChild(jQuery);
       document.body.removeChild(niceSelect);
     }
   }, [
+
   ])
   return (
     (loading) ? <p> loading.. </p> : <>

@@ -33,9 +33,15 @@ class PostController extends AbstractFOSRestController
 
     public function getPostsAction(Request $request, PostRepository $repository)
     {
-        $tag = explode(",", $request->query->get('tag'));
-        $jobType =  explode(",", $request->query->get('jobType'));
-        if ($request->query->get('min') || $request->query->get('max') || (count($tag)>1) || $request->query->get('location') || $request->query->get('category') ||  (count($jobType)>1)){
+        $tag= null;
+        $jobType= null;
+        if ($request->query->get('tag') ){
+            $tag = explode(",", $request->query->get('tag'));
+        }
+        if ($request->query->get('jobType'))  
+            $jobType =  explode(",", $request->query->get('jobType'));
+
+        if ($request->query->get('min') || $request->query->get('max') || $tag || $request->query->get('location') || $request->query->get('category') ||  $jobType){
             $posts = $repository->findByParams(
                 $request->query->get('min'),
                 $request->query->get('max'),
@@ -45,10 +51,11 @@ class PostController extends AbstractFOSRestController
                 $jobType,
             );
            // dump("filters");
-           // dump($request->query->get('min'), $request->query->get('max'), $tag, $request->query->get('location'), $request->query->get('category'), count($jobType) );
+            //dump($request->query->get('min'), $request->query->get('max'), $tag, $request->query->get('location'), $request->query->get('category'), count($jobType) );
+
         }
         else {
-           // dump("no filter!");
+          // dump("no filter!");
             $posts = $repository->findAll();
         }
 

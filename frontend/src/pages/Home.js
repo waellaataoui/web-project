@@ -1,11 +1,27 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Hero from "../assets/img/hero/h1_hero.jpg";
 import Test from "../assets/img/gallery/cv_bg.jpg";
 import Job from "../components/Job";
+import axios from "axios";
 
 const Home = () => {
+
+  const [jobs, setJobs] = useState([]);
+ 
+  const fetchjobs = async () => {
+    const res = await axios.get(
+      `/posts `
+    );
+    console.log(res.data);
+    setJobs(res.data);
+  };
+  useEffect(() => {
+    fetchjobs();
+    
+  })
+  
   return (
     <div>
       <main>
@@ -203,7 +219,7 @@ const Home = () => {
         {
           // featured jobs
         }
-        <Job />
+        <Job jobs={jobs} />
         <div
           className="apply-process-area apply-bg pt-150 pb-150"
           data-background="assets/img/gallery/how-applybg.png"

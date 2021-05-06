@@ -1,43 +1,69 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Slider from "@material-ui/core/Slider";
 
 const JobFilters = (props) => {
   const [min, setMin] = useState("");
   const [max, setMax] = useState("");
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
-  const [jobType, setjobType] = useState({
-    fullTime: 0,
-    partTime: 0,
-    remote: 0,
-    internship: 0,
-  });
-  const seetjobType = (type) => {
-    jobType.type = 1;
-    //getjobtype();
-  };
-  const resetjobType = (type) => {
-    jobType.type = 0;
-    //getjobtype();
+  const [jobType, setjobType] = useState([
+    {id: 1, value: "Part Time", isChecked: false},
+    {id: 2, value: "Full Time", isChecked: false},
+    {id: 3, value: "Remote", isChecked: false},
+    {id: 4, value: "Internship", isChecked: false}]
+  );
+  const [typeValue, setTypeValue] = useState("");
+  
+
+  const updatejobType = (e) => {
+
+    
+    const types= jobType.map(type => {
+      if (type.value === e.target.value)
+        type.isChecked =  e.target.checked
+      return type  
+    })
+    setjobType(types);
+    console.log(jobType);
+    //console.log(e.target.value);
+
   };
 
-  const getjobType = () => {
-    var tab = "";
-    Object.keys(jobType).map((element) => {
-      if (jobType.element == 1) {
-        tab = tab + jobType.element + ",";
-      }
-    });
-    Promise.resolve(axios.get("/posts?jobType=" + tab)).then(
-      function (value) {
-        console.log(value.data); // "Success"
-      },
-    
-    );
-  };
+ 
+
   useEffect(() => {
-    props.fetchJobs(min, max, category, location);
-  }, [min, max, category, location]);
+    let str = "";
+    jobType.forEach(type=>{
+      if (type.isChecked){
+        str += type.value + ",";
+      }
+    })
+    console.log(str);
+    
+    props.fetchJobs(min, max, category, location, str);
+  }, [min, max, category, location, jobType]);
+
+  // bellow is for filter salary part
+  const useStyles = makeStyles({
+    root: {
+      width: 180,
+    },
+  });
+  const classes = useStyles();
+  const [value, setValue] = useState([20, 37]);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setMin(newValue[0]);
+    setMax(newValue[1]);
+    console.log(min, max);
+  };
+  function valuetext(value) {
+    return `${value}`;
+  }
+
   return (
     <>
       <div className="row">
@@ -79,62 +105,22 @@ const JobFilters = (props) => {
             <div className="small-section-tittle2">
               <h4>Job Type</h4>
             </div>
-            <label className="container">
-              Full Time
+            
+            {jobType.map(type=>(
+              <>
+                <label className="container">
+              {type.value}
               <input
                 type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    seetjobType("fullTime");
-                  } else {
-                    resetjobType("fullTime");
-                  }
-                }}
+                key={type.id}
+                onChange ={updatejobType}
+                value = {type.value}
               />
               <span className="checkmark"></span>
             </label>
-            <label className="container">
-              Part Time
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    seetjobType("partTime");
-                  } else {
-                    resetjobType("partTime");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              Remote
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    seetjobType("remote");
-                  } else {
-                    resetjobType("remote");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              Internship
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    seetjobType("internship");
-                  } else {
-                    resetjobType("internship");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
+              </>
+
+            ))}
           </div>
         </div>
 
@@ -179,37 +165,12 @@ const JobFilters = (props) => {
               <option value="Zaghouan">Zaghouan</option>
             </select>
           </div>
-
-          <div className="select-Categories pt-80 pb-50">
-            <div className="small-section-tittle2">
-              <h4>Experience</h4>
-            </div>
-            <label className="container">
-              1-2 Years
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              2-3 Years
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              3-6 Years
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              6-more..
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-          </div>
         </div>
 
         <div className="single-listing">
           <div className="select-Categories pb-50">
             <div className="small-section-tittle2">
+              <br></br>
               <h4>Posted Within</h4>
             </div>
             <label className="container">
@@ -251,27 +212,16 @@ const JobFilters = (props) => {
             </div>
             <div className="widgets_inner">
               <div className="range_item">
-                <div id="slider-range"></div>
-                <input type="text" className="js-range-slider" value="" />
-                <div className="d-flex align-items-center">
-                  <div className="price_text">
-                    <p>Price :</p>
-                  </div>
-                  <div className="price_value d-flex justify-content-center">
-                    <input
-                      type="text"
-                      className="js-input-from"
-                      id="amount"
-                      readonly
-                    />
-                    <span>to</span>
-                    <input
-                      type="text"
-                      className="js-input-to"
-                      id="amount"
-                      readonly
-                    />
-                  </div>
+                <div className={classes.root}>
+                  <Slider
+                    value={value}
+                    min={0}
+                    max={3000}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="range-slider"
+                    getAriaValueText={valuetext}
+                  />
                 </div>
               </div>
             </div>

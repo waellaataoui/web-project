@@ -1,6 +1,8 @@
-import React, {useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Header from "../components/Header";
+import React, { useState, useEffect } from "react";
+import Select from 'react-select'
+
+import Subscriptions from '../components/Subscriptions'
+
 import Hero from "../assets/img/hero/h1_hero.jpg";
 import Test from "../assets/img/gallery/cv_bg.jpg";
 import Job from "../components/Job";
@@ -9,7 +11,14 @@ import axios from "axios";
 const Home = () => {
 
   const [jobs, setJobs] = useState([]);
- 
+  const options = [
+    { value: 'Tunis', label: 'Tunis' },
+    { value: 'Sousse', label: 'Sousse' },
+    { value: 'Sfax', label: 'Sfax' },
+    { value: 'Monastir', label: 'Monastir' },
+    { value: 'Mahdia', label: 'Mahdia' },
+    { value: 'Gabes', label: 'Gabes' },
+  ]
   const fetchjobs = async () => {
     const res = await axios.get(
       `/posts `
@@ -19,9 +28,9 @@ const Home = () => {
   };
   useEffect(() => {
     fetchjobs();
-    
-  })
-  
+
+  }, [])
+
   return (
     <div>
       <main>
@@ -49,14 +58,11 @@ const Home = () => {
                         />
                       </div>
                       <div className="select-form">
-                        <div className="select-itms">
-                          <select name="select" id="select1">
-                            <option value="">Location BD</option>
-                            <option value="">Location PK</option>
-                            <option value="">Location US</option>
-                            <option value="">Location UK</option>
-                          </select>
-                        </div>
+                        <Select className="react-select"
+                          classNamePrefix="react-select"
+                          placeholder="Location"
+                          isClearable
+                          options={options} />
                       </div>
                       <div className="search-form">
                         <a href="#">Find job</a>
@@ -355,108 +361,11 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="support-company-area support-padding fix">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-xl-6 col-lg-6">
-                <div className="right-caption">
-                  <div className="section-tittle section-tittle2">
-                    <span>What we are doing</span>
-                    <h2>24k Talented people are getting Jobs</h2>
-                  </div>
-                  <div className="support-caption">
-                    <p className="pera-top">
-                      Mollit anim laborum duis au dolor in voluptate velit ess
-                      cillum dolore eu lore dsu quality mollit anim laborumuis
-                      au dolor in voluptate velit cillum.
-                    </p>
-                    <p>
-                      Mollit anim laborum.Duis aute irufg dhjkolohr in re
-                      voluptate velit esscillumlore eu quife nrulla parihatur.
-                      Excghcepteur signjnt occa cupidatat non inulpadeserunt
-                      mollit aboru. temnthp incididbnt ut labore mollit anim
-                      laborum suis aute.
-                    </p>
-                    <a href="about.html" className="btn post-btn">
-                      Post a job
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-6 col-lg-6">
-                <div className="support-location-img">
-                  <img src="assets/img/service/support-img.jpg" alt="" />
-                  <div className="support-img-cap text-center">
-                    <p>Since</p>
-                    <span>1994</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="subscriptions">
+
+          <Subscriptions></Subscriptions>
         </div>
-        <div className="home-blog-area blog-h-padding">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="section-tittle text-center">
-                  <span>Our latest blog</span>
-                  <h2>Our recent news</h2>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-xl-6 col-lg-6 col-md-6">
-                <div className="home-blog-single mb-30">
-                  <div className="blog-img-cap">
-                    <div className="blog-img">
-                      <img src="assets/img/blog/home-blog1.jpg" alt="" />
-                      <div className="blog-date text-center">
-                        <span>24</span>
-                        <p>Now</p>
-                      </div>
-                    </div>
-                    <div className="blog-cap">
-                      <p>| Properties</p>
-                      <h3>
-                        <a href="single-blog.html">
-                          Footprints in Time is perfect House in Kurashiki
-                        </a>
-                      </h3>
-                      <a href="#" className="more-btn">
-                        Read more »
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-6 col-lg-6 col-md-6">
-                <div className="home-blog-single mb-30">
-                  <div className="blog-img-cap">
-                    <div className="blog-img">
-                      <img src="assets/img/blog/home-blog2.jpg" alt="" />
-                      <div className="blog-date text-center">
-                        <span>24</span>
-                        <p>Now</p>
-                      </div>
-                    </div>
-                    <div className="blog-cap">
-                      <p>| Properties</p>
-                      <h3>
-                        <a href="single-blog.html">
-                          Footprints in Time is perfect House in Kurashiki
-                        </a>
-                      </h3>
-                      <a href="#" className="more-btn">
-                        Read more »
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </main>
       <footer>
         <div className="footer-area footer-bg footer-padding">
@@ -600,17 +509,7 @@ const Home = () => {
             <div className="footer-border">
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-xl-10 col-lg-10 ">
-                  <div className="footer-copy-right">
-                    Copyright &copy;
-                    <script>
-                      document.write(new Date().getFullYear());
-                    </script>{" "}
-                    All rights reserved | This template is made with{" "}
-                    <i className="fa fa-heart" aria-hidden="true"></i> by{" "}
-                    <a href="https://colorlib.com" target="_blank">
-                      Colorlib
-                    </a>
-                  </div>
+
                 </div>
                 <div className="col-xl-2 col-lg-2">
                   <div className="footer-social f-right">

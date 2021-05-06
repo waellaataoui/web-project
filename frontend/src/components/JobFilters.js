@@ -9,39 +9,41 @@ const JobFilters = (props) => {
   const [max, setMax] = useState("");
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
-  const [jobType, setjobType] = useState("");
-  var tab = ""
+  const [jobType, setjobType] = useState([
+    {id: 1, value: "Part Time", isChecked: false},
+    {id: 2, value: "Full Time", isChecked: false},
+    {id: 3, value: "Remote", isChecked: false},
+    {id: 4, value: "Internship", isChecked: false}]
+  );
+  const [typeValue, setTypeValue] = useState("");
+  
 
-  const updatejobType = (id) => {
+  const updatejobType = (e) => {
+
     
-    switch (id){
-      case 1:
-        tab +=  "full time" + ",";
-        break;
-        
-      case 2:
-        tab +=  "part time" + ",";
-        break;
-      case 3:
-        tab +=  "remote" + ",";  
-        break;
-      case 4:
-        tab += "internship" + "," ;  
-        break;
-      default:
-        console.log("this case is default");
-        break;  
-    }
-    setjobType(tab);
-    console.log("job type " , tab);
+    const types= jobType.map(type => {
+      if (type.value === e.target.value)
+        type.isChecked =  e.target.checked
+      return type  
+    })
+    setjobType(types);
+    console.log(jobType);
+    //console.log(e.target.value);
 
   };
 
  
 
   useEffect(() => {
+    let str = "";
+    jobType.forEach(type=>{
+      if (type.isChecked){
+        str += type.value + ",";
+      }
+    })
+    console.log(str);
     
-    props.fetchJobs(min, max, category, location, jobType);
+    props.fetchJobs(min, max, category, location, str);
   }, [min, max, category, location, jobType]);
 
   // bellow is for filter salary part
@@ -103,67 +105,22 @@ const JobFilters = (props) => {
             <div className="small-section-tittle2">
               <h4>Job Type</h4>
             </div>
-            <label className="container">
-              Full Time
+            
+            {jobType.map(type=>(
+              <>
+                <label className="container">
+              {type.value}
               <input
                 type="checkbox"
-                key={jobType.id}
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    updatejobType(1);
-                    console.log("Full Time is selected");
-                  } else {
-                    console.log("Full Time is not selected");
-                  }
-                }}
+                key={type.id}
+                onChange ={updatejobType}
+                value = {type.value}
               />
               <span className="checkmark"></span>
             </label>
-            <label className="container">
-              Part Time
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    updatejobType(2);
-                    console.log("Part Time is selected");
-                  } else {
-                    console.log("Part Time is not selected");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              Remote
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    updatejobType(3);
-                    console.log("remote is selected");
-                  } else {
-                    console.log("remote is not selected");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              Internship
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    updatejobType(4);
-                    console.log("Internship is selected");
-                  } else {
-                    console.log("Internship is not selected");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
+              </>
+
+            ))}
           </div>
         </div>
 

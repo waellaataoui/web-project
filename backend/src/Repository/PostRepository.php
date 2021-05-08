@@ -60,6 +60,7 @@ class PostRepository extends ServiceEntityRepository
         //dump($result->getQuery());
         $result = $result
             ->orderBy('p.price', 'ASC')
+            ->orderBy('p.createdAt', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -68,7 +69,15 @@ class PostRepository extends ServiceEntityRepository
     }
 
 
-
+    public function findOneById($id): ?Post
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
 
     // /**

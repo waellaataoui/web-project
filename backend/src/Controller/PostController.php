@@ -83,6 +83,39 @@ class PostController extends AbstractFOSRestController
     }
 
 
+     /**
+     * @Route("/post/{id}", name="getPostById" ,methods={"GET"})
+     *  @return JsonResponse
+     */
+    public function getPostById(int $id, PostRepository $repository){
+        $post= null;
+        if ($id){
+            $post = $repository->findOneById($id);
+           // dump($post);
+        }
+        $result[] = [
+            'id' => $post->getId(),
+            'description' => $post->getDescription(),
+            'title' => $post->getTitle(),
+            'tags' => $post->getTags(),
+            'price' => $post->getPrice(),
+            'category' => $post->getCategory(),
+            'jobType' => $post->getJobType(),
+            'location' => $post->getLocation(),
+            'createdAt' =>  $post->getCreatedAt()->getTimestamp(),
+            
+            'employeur' => [
+                'id' => $post->getEmployeur()->getId(),
+                'fullname' => $post->getEmployeur()->getFullName(),
+                'avatar' => $post->getEmployeur()->getAvatar(),
+                'email' => $post->getEmployeur()->getEmail(),
+                'isCompany' => $post->getEmployeur()->getIsCompany(),
+                'phoneNumber' => $post->getEmployeur()->getPhoneNumber()
+            ],
+        ];
+        return new JsonResponse($result);
+    }
+
     /**
      * @Route("/deletepost", name="DeletePostsAction" ,methods={"DELETE"})
      *  @return JsonResponse

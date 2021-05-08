@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
 const Job = (props) => {
-  // const [data, setData] = useState([])
-
-  var date = new Date("2021-04-29 17:12:50");
-  var now = new Date().getTime() / 1000;
-
   
   /*     const fetchPosts =     async (min="",max=
     "",category="",location="") => {
@@ -22,6 +18,7 @@ const Job = (props) => {
     }, []) */
 
   useEffect(() => {
+    
     console.log("job list component", props.jobs);
   }, []);
 
@@ -51,8 +48,8 @@ const Job = (props) => {
               </div>
             </div>
             <div className="items-link items-link2 f-right">
-              <a href="job_details.html"> </a>
-              <span>{job.jobType}</span>
+              <Link to={{pathname: `/jobDetails/${job.id}`}}>{job.jobType} </Link>
+              <span>{ ((new Date().getTime()) - (new Date(props.jobs.getCreatedAt).getTime())) / (1000 * 60 * 60 * 24)}</span>
             </div>
             <br />
           </div>

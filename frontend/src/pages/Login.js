@@ -12,7 +12,7 @@ const Login = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-                // todo: logout user before loggin in again
+        // todo: logout user before loggin in again
 
         try {
             const res = await axios.post("/login/jobseeker", {
@@ -33,7 +33,7 @@ const Login = () => {
             login
             <form onSubmit={submit}>
                 {error && <p> {error} </p>}
-                <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="email"></input>
+                <input id="email" type="email" autoComplete="on" onChange={(e) => setEmail(e.target.value)} placeholder="email"></input>
                 <input onChange={(e) => setPassword(e.target.value)} placeholder="password" type="password" ></input>
                 <button type="submit"> login</button>
             </form>

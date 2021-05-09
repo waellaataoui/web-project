@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Select from 'react-select'
+import { useTranslation } from 'react-i18next';
 
 import Subscriptions from '../components/Subscriptions'
 
@@ -10,7 +11,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 
 const Home = () => {
-
+  const { t, i18n } = useTranslation("homePage");
   const [jobs, setJobs] = useState([]);
   const options = [
     { value: 'Tunis', label: 'Tunis' },
@@ -43,9 +44,9 @@ const Home = () => {
             >
               <div className="container">
                 <div className="row">
-                  <div className="col-xl-6 col-lg-9 col-md-10">
+                  <div className="col-lg-9 col-md-10">
                     <div className="hero__caption">
-                      <h1>Find the most exciting startup jobs</h1>
+                      <h1>{t('title')} </h1>
                     </div>
                   </div>
                 </div>
@@ -368,7 +369,7 @@ const Home = () => {
         </div>
 
       </main>
-     <Footer />
+      <Footer />
     </div>
   );
 };

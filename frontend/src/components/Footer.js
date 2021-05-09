@@ -87,8 +87,6 @@ const Footer = () => {
                           id="newsletter-form-email"
                           placeholder="Email Address"
                           className="placeholder hide-on-focus"
-                          onFocus="this.placeholder = ''"
-                          onBlur="this.placeholder = ' Email Address '"
                         />
                         <div className="form-icon">
                           <button

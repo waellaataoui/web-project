@@ -5540,6 +5540,9 @@ del {
   align-items: center;
   justify-content: space-between;
 }
+.main-menu {
+  width: 100%;
+}
 
 .header-area .main-menu ul li {
   display: inline-block;
@@ -5554,6 +5557,7 @@ del {
   font-family: "Barlow", sans-serif;
   display: block;
   font-size: 16px;
+  text-align: center;
   position: relative;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;

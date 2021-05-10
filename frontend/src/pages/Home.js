@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Select from 'react-select'
+import Select from "react-select";
 
-import Subscriptions from '../components/Subscriptions'
+import Subscriptions from "../components/Subscriptions";
 
 import Hero from "../assets/img/hero/h1_hero.jpg";
 import Test from "../assets/img/gallery/cv_bg.jpg";
@@ -10,27 +10,23 @@ import axios from "axios";
 import Footer from "../components/Footer";
 
 const Home = () => {
-
   const [jobs, setJobs] = useState([]);
   const options = [
-    { value: 'Tunis', label: 'Tunis' },
-    { value: 'Sousse', label: 'Sousse' },
-    { value: 'Sfax', label: 'Sfax' },
-    { value: 'Monastir', label: 'Monastir' },
-    { value: 'Mahdia', label: 'Mahdia' },
-    { value: 'Gabes', label: 'Gabes' },
-  ]
+    { value: "Tunis", label: "Tunis" },
+    { value: "Sousse", label: "Sousse" },
+    { value: "Sfax", label: "Sfax" },
+    { value: "Monastir", label: "Monastir" },
+    { value: "Mahdia", label: "Mahdia" },
+    { value: "Gabes", label: "Gabes" },
+  ];
   const fetchjobs = async () => {
-    const res = await axios.get(
-      `/posts `
-    );
+    const res = await axios.get(`/posts `);
     console.log(res.data);
     setJobs(res.data);
   };
   useEffect(() => {
     fetchjobs();
-
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -59,11 +55,13 @@ const Home = () => {
                         />
                       </div>
                       <div className="select-form">
-                        <Select className="react-select"
+                        <Select
+                          className="react-select"
                           classNamePrefix="react-select"
                           placeholder="Location"
                           isClearable
-                          options={options} />
+                          options={options}
+                        />
                       </div>
                       <div className="search-form">
                         <a href="#">Find job</a>
@@ -226,7 +224,25 @@ const Home = () => {
         {
           // featured jobs
         }
-        <Job jobs={jobs} />
+        <section className="featured-job-area feature-padding">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="section-tittle text-center">
+                  <span>Recent Job</span>
+                  <h2>Featured Jobs</h2>
+                </div>
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-xl-10">
+                <Job jobs={jobs} />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div
           className="apply-process-area apply-bg pt-150 pb-150"
           data-background="assets/img/gallery/how-applybg.png"
@@ -363,12 +379,10 @@ const Home = () => {
           </div>
         </div>
         <div className="subscriptions">
-
           <Subscriptions></Subscriptions>
         </div>
-
       </main>
-     <Footer />
+      <Footer />
     </div>
   );
 };

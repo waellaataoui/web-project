@@ -87,6 +87,26 @@ class JobSeekerController extends AbstractFOSRestController
   }
 
   /**
+   * @Route("/jobseekerInterest/{interest}", name="addJobSeekerInterest" ,methods={"GET"})
+   *  @return JsonResponse
+   */
+  public function addJobSeekerInterest(string $interest){
+    if ($this->getUser()){
+      $jobSeeker = $this->getUser();
+      $jobSeeker->setFieldsOfInterests($interest);
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($jobSeeker);
+      
+      return $this->handleView($this->view($jobSeeker, Response::HTTP_CREATED));
+    }else{
+      dump($this->getUser());
+      $response["errors"] = ["User is not authentified"];
+      return $this->handleView($this->view($response, Response::HTTP_UNAUTHORIZED));
+    }
+  }
+
+
+  /**
    * @Route("/jobseekers", name="update_jobseeker", methods={"PUT"})
    */
   public function update(Request $request): JsonResponse

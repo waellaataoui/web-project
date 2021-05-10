@@ -24,7 +24,7 @@ class CV
      */
     private $owner;
 
-    
+
 
     /**
      * @ORM\OneToMany(targetEntity=Skill::class, mappedBy="cv")
@@ -32,7 +32,7 @@ class CV
     private $skills;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
     private $formations = [];
 

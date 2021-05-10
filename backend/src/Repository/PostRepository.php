@@ -33,6 +33,7 @@ class PostRepository extends ServiceEntityRepository
         // dump(empty($min));
 
         $result = $this->createQueryBuilder('p');
+        
         if (!empty($min)) {
             $result = $result->andWhere('p.price >= :min')->setParameter('min', $min);
         }
@@ -68,6 +69,14 @@ class PostRepository extends ServiceEntityRepository
         return $result;
     }
 
+    /**
+     * @return Post[] Returns an array of Post objects
+     */
+    public function findByRecomanded($array){
+        if (!empty($array)){
+            
+        }
+    }
 
     public function findOneById($id): ?Post
     {

@@ -20,7 +20,8 @@ const Jobs = () => {
   };
   return (
     <>
-      <div className="job-listing-area pt-120 pb-120">
+    
+      <div className="job-listing-area pt-120 pb-120 ">
         <div className="container">
           <div className="row">
             <div className="col-xl-3 col-lg-3 col-md-4">
@@ -89,6 +90,7 @@ const Jobs = () => {
           </div>
         </div>
       </div>
+      
     </>
   );
 };

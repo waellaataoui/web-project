@@ -22,10 +22,12 @@ class JobSeekerController extends AbstractFOSRestController
    * @var UserPasswordEncoderInterface
    */
   private $passwordEncoder;
+  
 
   public function __construct(UserPasswordEncoderInterface $passwordEncoder)
   {
     $this->passwordEncoder = $passwordEncoder;
+    
   }
 
   /**
@@ -46,6 +48,7 @@ class JobSeekerController extends AbstractFOSRestController
    */
   public function postJobSeekerAction(Request $request)
   {
+    //dump($this->getUser());
     $jobSeeker = new JobSeeker();
     $cv = new CV();
     $form = $this->createForm(JobSeekerType::class, $jobSeeker);
@@ -89,11 +92,16 @@ class JobSeekerController extends AbstractFOSRestController
   /**
    * @Route("/jobseekerInterest/{interest}", name="addJobSeekerInterest" ,methods={"GET"})
    *  @return JsonResponse
+   *  @throws \Exception
    */
   public function addJobSeekerInterest(string $interest){
+    dump($this->getToken());
     if ($this->getUser()){
+      dump($this->getUser());
       $jobSeeker = $this->getUser();
-      $jobSeeker->setFieldsOfInterests($interest);
+      $tab = $jobSeeker->getFieldsOfInterests();
+      array_push($tab , $interest);
+      $jobSeeker->setFieldsOfInterests($tab);
       $em = $this->getDoctrine()->getManager();
       $em->persist($jobSeeker);
       

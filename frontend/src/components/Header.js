@@ -4,8 +4,10 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/authSlice'
-
+import { useTranslation } from 'react-i18next';
+import LanguagePicker from "./LanguagePicker"
 const Header = () => {
+    const { t } = useTranslation();
     let user = useSelector(state => state.auth.user)
     const dispatch = useDispatch();
     const history = useHistory();
@@ -51,46 +53,40 @@ const Header = () => {
                                     <div className="main-menu">
                                         <nav className="d-none d-lg-block">
                                             <ul id="navigation">
-                                                <li><Link to={homePath} >Home</Link></li>
+                                                <li><Link to={homePath} > {t("header.home")} </Link></li>
 
-                                                {homePath == "/recruter" ? <li><Link to="#">Find Profiles </Link></li> :
-                                                    <li><Link to="/jobListing">Find  Jobs </Link></li>}
-                                                <li><Link to="about.html">About</Link></li>
-                                                <li><a href="#">Page</a>
+                                                {homePath == "/recruter" ? <li><Link to="#">{t("header.profiles")}</Link></li> :
+                                                    <li><Link to="/jobListing"> {t("header.find")}  </Link></li>}
+                                                <li><Link to="about.html"> {t("header.about")} </Link></li>
+                                                {/* <li><a href="#">Page</a>
                                                     <ul className="submenu">
                                                         <li><a href="blog.html">Blog</a></li>
                                                         <li><a href="single-blog.html">Blog Details</a></li>
                                                         <li><a href="elements.html">Elements</a></li>
                                                         <li><a href="job_details.html">job Details</a></li>
                                                     </ul>
-                                                </li>
+                                                </li> */}
                                                 {path == "/" ?
-                                                    <li><button to={path} onClick={changeSection} className="btn head-btn2">Get Hired</button></li>
-                                                    : <li> <button to={path} onClick={changeSection} className="btn head-btn2">I'm a recruter</button> </li>
+                                                    <li><button to={path} onClick={changeSection} className="btn head-btn2"> {t("header.jobSeeker")} </button></li>
+                                                    : <li> <button to={path} onClick={changeSection} className="btn head-btn2"> {t("header.recruter")} </button> </li>
 
                                                 }
                                                 <div className="button-wrapper">
-                                                    {user ? <button className="btn head-btn1" onClick={logout}>logout</button> :
+                                                    {user ? <button className="btn head-btn1" onClick={logout}>{t("header.logout")}</button> :
                                                         <><Link to={path == "/" ?
                                                             "/recruter/register"
-                                                            : "/register"} className="btn head-btn1">Register</Link>
+                                                            : "/register"} className="btn head-btn1">{t("header.register")}</Link>
                                                             <Link to={path == "/" ?
                                                                 "/recruter/login"
-                                                                : "/login"} className="btn head-btn1">Login</Link> </>}
+                                                                : "/login"} className="btn head-btn1">{t("header.login")}</Link> </>}
                                                 </div>
+
+                                                <LanguagePicker></LanguagePicker>
+
                                             </ul>
                                         </nav>
                                     </div>
-                                    {/* here */}
-                                    {/* <div className="header-btn d-none f-right d-lg-block">
-                                        {user ? <button className="btn head-btn1" onClick={logout}>logout</button> :
-                                            <><Link to={path=="/" ?
-                                                "/recruter/register"
-                                                : "/register"} className="btn head-btn1">Register</Link>
-                                                <Link to={path=="/" ?
-                                                    "/recruter/login"
-                                                    : "/login"} className="btn head-btn1">Login</Link> </>}
-                                    </div> */}
+
                                 </div>
                             </div>
                             <div className="col-12">

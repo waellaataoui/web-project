@@ -35,7 +35,7 @@ class PostController extends AbstractFOSRestController
     {
         $array = [];
         if ($this->getUser()){ //hedhi rahi if authentified < mahouch 3amil des filtres donc bech nzidha fil condition
-            //dump($this->getUser());
+            dump($this->getUser());
             $array = $this->getUser()->getFieldsOfInterests();
             $array += $this->getUser()->getCv()->getSkills()->getFormations();
 

@@ -95,7 +95,7 @@ class JobSeekerController extends AbstractFOSRestController
    *  @throws \Exception
    */
   public function addJobSeekerInterest(string $interest){
-    dump($this->getToken());
+    dump($this->getUser());
     if ($this->getUser()){
       dump($this->getUser());
       $jobSeeker = $this->getUser();

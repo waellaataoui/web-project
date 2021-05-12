@@ -68,7 +68,7 @@
   flex-direction: column;
   align-items: center;
   padding: 30px 10px;
-  margin-left:auto;
+  margin-left: auto;
 }
 .dropdown {
   position: relative;
@@ -126,4 +126,10 @@
     display: block !important;
     cursor: pointer !important;
   }
+}
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }

@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import Lottie from "lottie-react";
+import spinner from "./assets/loading.json";
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux'
@@ -11,7 +13,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Suspense fallback="loading">
+    <Suspense fallback={<div className="loading" >  <Lottie animationData={spinner} /></div>}>
 
       <Provider store={store}>
         <App />

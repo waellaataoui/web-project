@@ -33,6 +33,15 @@ class PostController extends AbstractFOSRestController
 
     public function getPostsAction(Request $request, PostRepository $repository)
     {
+        $array = [];
+        if ($this->getUser()){ //hedhi rahi if authentified < mahouch 3amil des filtres donc bech nzidha fil condition
+            dump($this->getUser());
+            $array = $this->getUser()->getFieldsOfInterests();
+            $array += $this->getUser()->getCv()->getSkills()->getFormations();
+
+            $posts = $repository->findByRecomanded($array);
+        }
+        
         $tag = null;
         $jobType = null;
         if ($request->query->get('tag')) {
@@ -55,6 +64,7 @@ class PostController extends AbstractFOSRestController
 
         } else {
             // dump("no filter!");
+
             $posts = $repository->findAll();
         }
 

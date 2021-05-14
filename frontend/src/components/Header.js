@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/authSlice'
 import { useTranslation } from 'react-i18next';
 import LanguagePicker from "./LanguagePicker"
+
 const Header = () => {
     const { t } = useTranslation();
     let user = useSelector(state => state.auth.user)

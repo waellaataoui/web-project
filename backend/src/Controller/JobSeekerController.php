@@ -22,12 +22,11 @@ class JobSeekerController extends AbstractFOSRestController
    * @var UserPasswordEncoderInterface
    */
   private $passwordEncoder;
-  
+
 
   public function __construct(UserPasswordEncoderInterface $passwordEncoder)
   {
     $this->passwordEncoder = $passwordEncoder;
-    
   }
 
   /**
@@ -94,19 +93,20 @@ class JobSeekerController extends AbstractFOSRestController
    *  @return JsonResponse
    *  @throws \Exception
    */
-  public function addJobSeekerInterest(string $interest){
-    dump($this->getToken());
-    if ($this->getUser()){
+  public function addJobSeekerInterest(string $interest)
+  {
+    //dump($this->getUser());
+    if ($this->getUser()) {
       dump($this->getUser());
       $jobSeeker = $this->getUser();
       $tab = $jobSeeker->getFieldsOfInterests();
-      array_push($tab , $interest);
+      array_push($tab, $interest);
       $jobSeeker->setFieldsOfInterests($tab);
       $em = $this->getDoctrine()->getManager();
       $em->persist($jobSeeker);
-      
+
       return $this->handleView($this->view($jobSeeker, Response::HTTP_CREATED));
-    }else{
+    } else {
       dump($this->getUser());
       $response["errors"] = ["User is not authentified"];
       return $this->handleView($this->view($response, Response::HTTP_UNAUTHORIZED));

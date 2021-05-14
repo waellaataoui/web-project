@@ -32,7 +32,7 @@ class PostController extends AbstractFOSRestController
 
 
     public function getPostsAction(Request $request, PostRepository $repository)
-    {
+    {   /*
         $array = [];
         if ($this->getUser()){ //hedhi rahi if authentified < mahouch 3amil des filtres donc bech nzidha fil condition
             dump($this->getUser());
@@ -40,7 +40,7 @@ class PostController extends AbstractFOSRestController
             $array += $this->getUser()->getCv()->getSkills()->getFormations();
 
             $posts = $repository->findByRecomanded($array);
-        }
+        }*/
         
         $tag = null;
         $jobType = null;

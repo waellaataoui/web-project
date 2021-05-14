@@ -95,7 +95,7 @@ class JobSeekerController extends AbstractFOSRestController
    */
   public function addJobSeekerInterest(string $interest)
   {
-    if ($this->getUser()) {
+ if ($this->getUser()) {
       $jobSeeker = $this->getUser();
       $tab = $jobSeeker->getFieldsOfInterests();
       array_push($tab, $interest);

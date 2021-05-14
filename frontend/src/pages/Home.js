@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import Select from 'react-select'
-import { useTranslation } from 'react-i18next';
+import Select from "react-select";
+import { useTranslation } from "react-i18next";
 
 import Subscriptions from "../components/Subscriptions";
 
@@ -10,11 +10,19 @@ import Test from "../assets/img/gallery/cv_bg.jpg";
 import Job from "../components/Job";
 import axios from "axios";
 import Footer from "../components/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../store/authSlice";
 
 const Home = () => {
 
+  let user = useSelector((state) => state.auth.user);
+
   const { t, i18n } = useTranslation("homePage");
+
   const [jobs, setJobs] = useState([]);
+  const [location, setLocation] = useState("");
+  const [interest, setInterest] = useState("");
+
   const options = [
     { value: "Tunis", label: "Tunis" },
     { value: "Sousse", label: "Sousse" },
@@ -32,6 +40,22 @@ const Home = () => {
     fetchjobs();
   }, []);
 
+  const handlelocation = (selectedOption) => {
+    setLocation(selectedOption.value);
+  }
+
+  const handlechange = (e) => {
+    setInterest(e.target.value);
+    console.log(e.target.value);
+  }
+
+  const handleclick = () => {
+    if (user){
+      const res = axios.get(`/jobseekerInterest/${interest}`);
+    }
+    const res2= axios.get(`/posts?tag=${interest}&location=${location}`);
+  };
+
   return (
     <div>
       <main>
@@ -45,7 +69,7 @@ const Home = () => {
                 <div className="row">
                   <div className="col-lg-9 col-md-10">
                     <div className="hero__caption">
-                      <h1>{t('title')} </h1>
+                      <h1>{t("title")} </h1>
                     </div>
                   </div>
                 </div>
@@ -56,6 +80,7 @@ const Home = () => {
                         <input
                           type="text"
                           placeholder="Job Tittle or keyword"
+                          onChange={handlechange}
                         />
                       </div>
                       <div className="select-form">
@@ -65,10 +90,13 @@ const Home = () => {
                           placeholder="Location"
                           isClearable
                           options={options}
+                          onChange={handlelocation}
                         />
                       </div>
                       <div className="search-form">
-                        <a href="#">Find job</a>
+                        <a href="#" onClick={handleclick}>
+                          Find job
+                        </a>
                       </div>
                     </form>
                   </div>
@@ -316,7 +344,7 @@ const Home = () => {
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
                           <img
-                            src="assets/img/testmonial/testimonial-founder.png"
+                            src=""
                             alt=""
                           />
                           <span>Margaret Lawson</span>
@@ -338,7 +366,7 @@ const Home = () => {
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
                           <img
-                            src="assets/img/testmonial/testimonial-founder.png"
+                            src=""
                             alt=""
                           />
                           <span>Margaret Lawson</span>
@@ -360,7 +388,7 @@ const Home = () => {
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
                           <img
-                            src="assets/img/testmonial/testimonial-founder.png"
+                            src=""
                             alt=""
                           />
                           <span>Margaret Lawson</span>

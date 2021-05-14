@@ -26,17 +26,18 @@ const Job = (props) => {
     <div>
       {props.jobs.map((job, index) => (
         <div key={index}>
-          <div className="single-job-items mb-30">
+          <div className="single-job-items mb-30" >
+            
             <div className="job-items">
               <div className="company-img">
-                <a href="#">
+                <Link to={{pathname: `/jobDetails/${job.id}`}}>
                   <img src="assets/img/icon/job-list4.png" alt=""></img>
-                </a>
+                </Link>
               </div>
               <div className="job-tittle job-tittle2">
-                <a href="#">
+                <Link to={{pathname: `/jobDetails/${job.id}`}}>
                   <h4> {job.title}</h4>
-                </a>
+                </Link>
                 <ul>
                   <li>{job.employeur.fullname}</li>
                   <li>
@@ -47,11 +48,13 @@ const Job = (props) => {
                 </ul>
               </div>
             </div>
+            
             <div className="items-link items-link2 f-right">
               <Link to={{pathname: `/jobDetails/${job.id}`}}>{job.jobType} </Link>
-              <span>{ ((new Date().getTime()) - (new Date(props.jobs.getCreatedAt).getTime())) / (1000 * 60 * 60 * 24)}</span>
+              <span>{new Date(job.createdAt * 1000).toDateString()}</span>
             </div>
             <br />
+            
           </div>
         </div>
       ))}

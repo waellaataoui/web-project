@@ -95,19 +95,16 @@ class JobSeekerController extends AbstractFOSRestController
    */
   public function addJobSeekerInterest(string $interest)
   {
-    //dump($this->getUser());
-    if ($this->getUser()) {
-      dump($this->getUser());
+ if ($this->getUser()) {
       $jobSeeker = $this->getUser();
       $tab = $jobSeeker->getFieldsOfInterests();
       array_push($tab, $interest);
       $jobSeeker->setFieldsOfInterests($tab);
       $em = $this->getDoctrine()->getManager();
-      $em->persist($jobSeeker);
+      $em->flush();
 
-      return $this->handleView($this->view($jobSeeker, Response::HTTP_CREATED));
+      return $this->handleView($this->view($jobSeeker, Response::HTTP_OK));
     } else {
-      dump($this->getUser());
       $response["errors"] = ["User is not authentified"];
       return $this->handleView($this->view($response, Response::HTTP_UNAUTHORIZED));
     }

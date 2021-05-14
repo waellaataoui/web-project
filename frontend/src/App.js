@@ -15,7 +15,8 @@ import { useEffect, useState } from "react"
 import AppRouter from "./routers/AppRouter";
 import { useDispatch } from 'react-redux';
 import { setUser } from './store/authSlice'
-
+import Lottie from "lottie-react";
+import spinner from "./assets/loading.json";
 import axios from "axios";
 function App() {
   const [loading, setLoading] = useState(true);
@@ -87,7 +88,7 @@ function App() {
 
   ])
   return (
-    (loading) ? <p> loading.. </p> : <>
+    (loading) ? <div className="loading" >  <Lottie animationData={spinner} /></div> : <>
       <AppRouter />
     </>
   );

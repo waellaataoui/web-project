@@ -41,7 +41,7 @@ class PostController extends AbstractFOSRestController
 
             $posts = $repository->findByRecomanded($array);
         }*/
-        
+
         $tag = null;
         $jobType = null;
         if ($request->query->get('tag')) {
@@ -50,13 +50,18 @@ class PostController extends AbstractFOSRestController
         if ($request->query->get('jobType'))
             $jobType =  explode(",", $request->query->get('jobType'));
 
-        if ($request->query->get('min') || $request->query->get('max') || $tag || $request->query->get('location') || $request->query->get('category') ||  $jobType) {
+        if (
+            $request->query->get('min') || $request->query->get('max')
+            || $tag || $request->query->get('location')
+            || $request->query->get('category') ||  $jobType || $request->query->get('search')
+        ) {
             $posts = $repository->findByParams(
                 $request->query->get('min'),
                 $request->query->get('max'),
                 $tag,
                 $request->query->get('location'),
                 $request->query->get('category'),
+                $request->query->get('search'),
                 $jobType
             );
             // dump("filters");
@@ -93,15 +98,16 @@ class PostController extends AbstractFOSRestController
     }
 
 
-     /**
+    /**
      * @Route("/post/{id}", name="getPostById" ,methods={"GET"})
      *  @return JsonResponse
      */
-    public function getPostById(int $id, PostRepository $repository){
-        $post= null;
-        if ($id){
+    public function getPostById(int $id, PostRepository $repository)
+    {
+        $post = null;
+        if ($id) {
             $post = $repository->findOneById($id);
-           // dump($post);
+            // dump($post);
         }
         $result[] = [
             'id' => $post->getId(),
@@ -113,7 +119,7 @@ class PostController extends AbstractFOSRestController
             'jobType' => $post->getJobType(),
             'location' => $post->getLocation(),
             'createdAt' =>  $post->getCreatedAt()->getTimestamp(),
-            
+
             'employeur' => [
                 'id' => $post->getEmployeur()->getId(),
                 'fullname' => $post->getEmployeur()->getFullName(),

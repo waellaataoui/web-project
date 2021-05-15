@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-
+import { useHistory } from "react-router";
 import Subscriptions from "../components/Subscriptions";
 
 import Hero from "../assets/img/hero/h1_hero.jpg";
@@ -12,8 +12,8 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/authSlice";
-
 const Home = () => {
+  const history = useHistory();
 
   let user = useSelector((state) => state.auth.user);
 
@@ -41,7 +41,7 @@ const Home = () => {
   }, []);
 
   const handlelocation = (selectedOption) => {
-    setLocation(selectedOption.value);
+    setLocation(selectedOption.value.toLowerCase());
   }
 
   const handlechange = (e) => {
@@ -50,10 +50,10 @@ const Home = () => {
   }
 
   const handleclick = () => {
-    if (user){
+    if (user) {
       const res = axios.get(`/jobseekerInterest/${interest}`);
     }
-    const res2= axios.get(`/posts?tag=${interest}&location=${location}`);
+    history.push(`/jobListing?query=${interest}&location=${location}`)
   };
 
   return (
@@ -94,7 +94,7 @@ const Home = () => {
                         />
                       </div>
                       <div className="search-form">
-                        <a href="#" onClick={handleclick}>
+                        <a onClick={handleclick}>
                           Find job
                         </a>
                       </div>

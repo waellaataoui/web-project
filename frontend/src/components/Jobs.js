@@ -2,30 +2,30 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import JobFilters from "./JobFilters";
 import Job from "./Job";
-const Jobs = () => {
-  
+const Jobs = ({ query, loc }) => {
   const [jobs, setJobs] = useState([]);
   const fetchJobs = async (
+    search = "",
     min = "",
     max = "",
     category = "",
     location = "",
     jobType = ""
   ) => {
+    if (location === "") location = loc || "";
     const res = await axios.get(
-      `/posts?min=${min}&max=${max}&category=${category}&location=${location}&jobType=${jobType} `
+      `/posts?search=${search}&min=${min}&max=${max}&category=${category}&location=${location}&jobType=${jobType} `
     );
-    console.log(res.data);
     setJobs(res.data);
   };
   return (
     <>
-    
+
       <div className="job-listing-area pt-120 pb-120 ">
         <div className="container">
           <div className="row">
             <div className="col-xl-3 col-lg-3 col-md-4">
-              <JobFilters fetchJobs={fetchJobs}></JobFilters>
+              <JobFilters query={query} fetchJobs={fetchJobs}></JobFilters>
             </div>
             <div className="col-xl-9 col-lg-9 col-md-8">
               <section className="featured-job-area">
@@ -90,7 +90,7 @@ const Jobs = () => {
           </div>
         </div>
       </div>
-      
+
     </>
   );
 };

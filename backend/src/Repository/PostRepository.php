@@ -25,15 +25,14 @@ class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[] Returns an array of Post objects
      */
-    public function findByParams($min ,  $max, $tag = null, string $location = null, string $category = null,  $jobType = null)
+    public function findByParams($min,  $max, $tag = null, string $location = null, string $category = null, $search = null, $jobType = null)
 
     {
 
         //  dump(strtolower($category));
         // dump(empty($min));
-
         $result = $this->createQueryBuilder('p');
-        
+
         if (!empty($min)) {
             $result = $result->andWhere('p.price >= :min')->setParameter('min', $min);
         }
@@ -49,6 +48,11 @@ class PostRepository extends ServiceEntityRepository
         if (!empty($category)) {
 
             $result = $result->andWhere('p.category like :cate')->setParameter('cate', '%' . strtolower($category) . '%');
+        }
+
+        if (!empty($search)) {
+
+            $result = $result->andWhere('p.title like :search')->setParameter('search', '%' . strtolower($search) . '%');
         }
         if ((!empty($tag)) && count($tag) > 0) {
             $valueNo = 0;
@@ -72,9 +76,9 @@ class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[] Returns an array of Post objects
      */
-    public function findByRecomanded($array){
-        if (!empty($array)){
-            
+    public function findByRecomanded($array)
+    {
+        if (!empty($array)) {
         }
     }
 
@@ -84,8 +88,7 @@ class PostRepository extends ServiceEntityRepository
             ->andWhere('p.id = :val')
             ->setParameter('val', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
 

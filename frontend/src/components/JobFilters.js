@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Select from 'react-select'
 
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 
 const JobFilters = (props) => {
@@ -10,6 +9,7 @@ const JobFilters = (props) => {
   const [max, setMax] = useState("");
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
+  const [query, setQuery] = useState(props.query || "");
   const [jobType, setjobType] = useState([
     { id: 1, value: "Part Time", isChecked: false },
     { id: 2, value: "Full Time", isChecked: false },
@@ -18,7 +18,6 @@ const JobFilters = (props) => {
   );
   const categories = [
     { "value": "", "label": "All Categories" },
-
     { "value": "Web Development", "label": "Web Development" },
     { "value": "Mobile Development", "label": "Mobile Development" },
     { "value": "Cyber Security", "label": "Cyber Security" },
@@ -28,9 +27,16 @@ const JobFilters = (props) => {
     { "value": "Management IT", "label": "Management IT" }]
   const [typeValue, setTypeValue] = useState("");
 
+  const resetFilters = () => {
+    setCategory("");
+    setLocation("");
+    setMax("");
+    setMin("");
+    setQuery("");
 
+
+  }
   const updatejobType = (e) => {
-
 
     const types = jobType.map(type => {
       if (type.value === e.target.value)
@@ -38,8 +44,6 @@ const JobFilters = (props) => {
       return type
     })
     setjobType(types);
-    console.log(jobType);
-    //console.log(e.target.value);
 
   };
 
@@ -52,10 +56,9 @@ const JobFilters = (props) => {
         str += type.value + ",";
       }
     })
-    console.log(str);
 
-    props.fetchJobs(min, max, category, location, str);
-  }, [min, max, category, location, jobType]);
+    props.fetchJobs(query, min, max, category, location, str);
+  }, [query, min, max, category, location, jobType]);
 
   // bellow is for filter salary part
   const useStyles = makeStyles({
@@ -69,7 +72,6 @@ const JobFilters = (props) => {
     setValue(newValue);
     setMin(newValue[0]);
     setMax(newValue[1]);
-    console.log(min, max);
   };
   function valuetext(value) {
     return `${value}`;
@@ -92,7 +94,7 @@ const JobFilters = (props) => {
           </div>
         </div>
       </div>
-
+      <button className="btn" onClick={resetFilters}>reset filters</button>
       <div className="job-category-listing mb-50">
         <div className="single-listing">
           <div className="small-section-tittle2">
@@ -114,7 +116,7 @@ const JobFilters = (props) => {
             </div>
 
             {jobType.map(type => (
-              <>
+              <div key={type.id} >
                 <label className="container">
                   {type.value}
                   <input
@@ -125,7 +127,7 @@ const JobFilters = (props) => {
                   />
                   <span className="checkmark"></span>
                 </label>
-              </>
+              </div>
 
             ))}
           </div>

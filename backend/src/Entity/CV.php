@@ -31,14 +31,30 @@ class CV
      */
     private $skills;
 
+
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\OneToMany(targetEntity=Formation::class, mappedBy="cv")
      */
-    private $formations = [];
+    private $forma;
+        /**
+     * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="cv")
+     */
+    private $exper;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Langue::class, mappedBy="cv")
+     */
+    private $lang;
+
+
+
 
     public function __construct()
     {
         $this->skills = new ArrayCollection();
+        $this->forma = new ArrayCollection();
+        $this->lang = new ArrayCollection();
+        $this->exper = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,16 +113,35 @@ class CV
 
         return $this;
     }
-
-    public function getFormations(): ?array
+        /**
+     * @return Collection|Experience[]
+     */
+    public function getExper(): Collection
     {
-        return $this->formations;
+        return $this->exper;
     }
 
-    public function setFormations(?array $formations): self
+    public function addExp(Experience $exp): self
     {
-        $this->formations = $formations;
+        if (!$this->exper->contains($exp)) {
+            $this->exper[] = $exp;
+            $exp->setCv($this);
+        }
 
         return $this;
     }
+
+    public function removeExperience(Experience $exp): self
+    {
+        if ($this->exper->removeElement($exp)) {
+            // set the owning side to null (unless already changed)
+            if ($exp->getCv() === $this) {
+                $exp->setCv(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

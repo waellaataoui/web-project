@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ExperienceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -39,9 +41,20 @@ class Experience
     private $dateF;
 
     /**
-     * @ORM\ManyToOne(targetEntity=cv::class)
+     * @ORM\OneToMany(targetEntity=CV::class, mappedBy="relation", orphanRemoval=true)
      */
-    private $cv_id;
+    private $exper;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CV::class, inversedBy="RELATION")
+     */
+    private $i;
+
+    public function __construct()
+    {
+        $this->exper = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -96,15 +109,46 @@ class Experience
         return $this;
     }
 
-    public function getCvId(): ?cv
+    /**
+     * @return Collection|CV[]
+     */
+    public function getExper(): Collection
     {
-        return $this->cv_id;
+        return $this->exper;
     }
 
-    public function setCvId(?cv $cv_id): self
+    public function addExper(CV $exper): self
     {
-        $this->cv_id = $cv_id;
+        if (!$this->exper->contains($exper)) {
+            $this->exper[] = $exper;
+            $exper->setRelation($this);
+        }
 
         return $this;
     }
+
+    public function removeExper(CV $exper): self
+    {
+        if ($this->exper->removeElement($exper)) {
+            // set the owning side to null (unless already changed)
+            if ($exper->getRelation() === $this) {
+                $exper->setRelation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getI(): ?CV
+    {
+        return $this->i;
+    }
+
+    public function setI(?CV $i): self
+    {
+        $this->i = $i;
+
+        return $this;
+    }
+
 }

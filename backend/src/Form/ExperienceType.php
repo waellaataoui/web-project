@@ -11,23 +11,23 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Score;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use App\Entity\Experience;
 
-class ScoreType extends AbstractType
+class ExperienceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('owner', NumberType::class)
-            ->add('test_id', NumberType::class)
-            ->add('score', NumberType::class)
+            ->add('posteExp', TextType::class)
+            ->add('description', TextType::class)
+            ->add('dateD', TextType::class)
+            ->add('dateF', TextType::class)
             ->add('save', SubmitType::class);
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Score::class,
+            'data_class' => Experience::class,
             'csrf_protection' => false
         ));
     }

@@ -16,6 +16,7 @@ const Home = () => {
   const history = useHistory();
 
   let user = useSelector((state) => state.auth.user);
+  let content;
 
   const { t, i18n } = useTranslation("homePage");
 
@@ -36,24 +37,43 @@ const Home = () => {
     console.log(res.data);
     setJobs(res.data);
   };
+
+  const setcontent = () => {
+    if (user)
+      content = (
+        <div className="section-tittle text-center">
+          <span>Your fit Jobs</span>
+          <h2>Recomanded Jobs</h2>
+        </div>
+      );
+    else
+      content = (
+        <div className="section-tittle text-center">
+          <span>Recent Job</span>
+          <h2>Featured Jobs</h2>
+        </div>
+      );
+  };
+
   useEffect(() => {
+    setcontent();
     fetchjobs();
   }, []);
 
   const handlelocation = (selectedOption) => {
     setLocation(selectedOption.value.toLowerCase());
-  }
+  };
 
   const handlechange = (e) => {
     setInterest(e.target.value);
     console.log(e.target.value);
-  }
+  };
 
   const handleclick = () => {
     if (user) {
       const res = axios.get(`/jobseekerInterest/${interest}`);
     }
-    history.push(`/jobListing?query=${interest}&location=${location}`)
+    history.push(`/jobListing?query=${interest}&location=${location}`);
   };
 
   return (
@@ -94,9 +114,7 @@ const Home = () => {
                         />
                       </div>
                       <div className="search-form">
-                        <a onClick={handleclick}>
-                          Find job
-                        </a>
+                        <a onClick={handleclick}>Find job</a>
                       </div>
                     </form>
                   </div>
@@ -260,10 +278,9 @@ const Home = () => {
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
-                <div className="section-tittle text-center">
-                  <span>Recent Job</span>
-                  <h2>Featured Jobs</h2>
-                </div>
+                {
+                  //3aweni ya wael
+                }
               </div>
             </div>
 
@@ -343,10 +360,7 @@ const Home = () => {
                     <div className="testimonial-caption ">
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
-                          <img
-                            src=""
-                            alt=""
-                          />
+                          <img src="" alt="" />
                           <span>Margaret Lawson</span>
                           <p>Creative Director</p>
                         </div>
@@ -365,10 +379,7 @@ const Home = () => {
                     <div className="testimonial-caption ">
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
-                          <img
-                            src=""
-                            alt=""
-                          />
+                          <img src="" alt="" />
                           <span>Margaret Lawson</span>
                           <p>Creative Director</p>
                         </div>
@@ -387,10 +398,7 @@ const Home = () => {
                     <div className="testimonial-caption ">
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
-                          <img
-                            src=""
-                            alt=""
-                          />
+                          <img src="" alt="" />
                           <span>Margaret Lawson</span>
                           <p>Creative Director</p>
                         </div>

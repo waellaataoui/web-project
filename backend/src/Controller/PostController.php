@@ -26,21 +26,57 @@ class PostController extends AbstractFOSRestController
 {
 
     /**
+     * @Route("/postsRecomanded", name="getRecomanded" ,methods={"GET"})
+     *  @return JsonResponse
+     */
+    public function getRecomanded(PostRepository $repository)
+    {
+        $array = [];
+        if ($this->getUser()) { 
+            $array = $this->getUser()->getFieldsOfInterests();
+            $userCV = $this->getUser()->getCv();
+            $userSkills = $userCV -> getFormations();
+            
+            $array += $userSkills;
+            $posts = null;
+            if (!empty($array)) {
+                $posts = $repository->findByTags($array);
+                
+            }
+            
+        }
+        $result = [];
+        foreach ($posts as $post) {
+
+            $result[] = [
+                'id' => $post->getId(),
+                'description' => $post->getDescription(),
+                'title' => $post->getTitle(),
+                'tags' => $post->getTags(),
+                'price' => $post->getPrice(),
+                'category' => $post->getCategory(),
+                'jobType' => $post->getJobType(),
+                'location' => $post->getLocation(),
+                'createdAt' =>  $post->getCreatedAt()->getTimestamp(),
+                'employeur' => [
+                    'id' => $post->getEmployeur()->getId(),
+                    'fullname' => $post->getEmployeur()->getFullName(),
+                    'avatar' => $post->getEmployeur()->getAvatar()
+                ],
+            ];
+        }
+
+         return new JsonResponse($result);
+    }
+
+    /**
      * @Route("/posts", name="getPosts" ,methods={"GET"})
      *  @return JsonResponse
      */
 
 
     public function getPostsAction(Request $request, PostRepository $repository)
-    {   /*
-        $array = [];
-        if ($this->getUser()){ //hedhi rahi if authentified < mahouch 3amil des filtres donc bech nzidha fil condition
-            dump($this->getUser());
-            $array = $this->getUser()->getFieldsOfInterests();
-            $array += $this->getUser()->getCv()->getSkills()->getFormations();
-
-            $posts = $repository->findByRecomanded($array);
-        }*/
+    {   
 
         $tag = null;
         $jobType = null;

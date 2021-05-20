@@ -32,7 +32,7 @@ export class Experience extends Component {
             <div className="col-12">
               <h2 className="contact-title">Put Your Experience</h2>
             </div>
-            <hr/>
+            <hr />
             <div className="col-lg-8">
               <form
                 className="form-contact contact_form"
@@ -70,6 +70,12 @@ export class Experience extends Component {
                       />
                     </div>
                   </div>
+                  <p></p>
+                  <label>
+                    *Date start :
+                    --------------------------------------------------------------------------------------------------
+                    *Date end:
+                  </label>
                   <div className="col-sm-6">
                     <div className="form-group">
                       <input

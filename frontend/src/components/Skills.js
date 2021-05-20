@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import About from "../assets/img/hero/about.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 export class Skills extends Component {
   render() {
@@ -20,7 +20,7 @@ export class Skills extends Component {
                 <div className="row">
                   <div className="col-xl-12">
                     <div className="hero-cap text-center">
-                      <h2>your CV</h2>
+                      <h2>SKILL</h2>
                     </div>
                   </div>
                 </div>
@@ -45,27 +45,12 @@ export class Skills extends Component {
                     <div className="form-group">
                       <input
                         className="form-control"
-                        name="poste"
-                        id="poste"
+                        name="skill"
+                        id="skill"
                         type="text"
                         onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = 'Enter your working position'"
-                        placeholder="Enter your working position"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-group">
-                      <textarea
-                        className="form-control w-100"
-                        name="description"
-                        id="description"
-                        cols={30}
-                        rows={9}
-                        onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = 'Enter description'"
-                        placeholder=" Enter description"
-                        defaultValue={""}
+                        onblur="this.placeholder = 'Enter your skill'"
+                        placeholder="Enter your skill"
                       />
                     </div>
                   </div>
@@ -73,27 +58,37 @@ export class Skills extends Component {
                     <div className="form-group">
                       <input
                         className="form-control valid"
-                        name="datestart"
-                        id="datestart"
-                        type="date"
+                        name="laguage"
+                        id="laguage"
+                        type="text"
                         onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = 'Enter  start date'"
-                        placeholder="Enter Start date
-"
+                        onblur="this.placeholder = 'Enter your laguage"
+                        placeholder="Enter your laguage"
                       />
+                    </div>
+                  </div>
+
+                  <div className="col-sm-6">
+                    <div className="form-group">
+                      <select>
+                        <option value=""> Enter your skill </option>
+                        <option value="ReactJs">ReactJs</option>
+                        <option value="Javacript">Javacript</option>
+                        <option value=" Angular">Angular</option>
+                        <option value="Java">Java</option>
+                        <option value="JEE">JEE</option>
+                        <option value=" PHP">PHP</option>
+                      </select>
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <input
-                        className="form-control valid"
-                        name="dateend"
-                        id="dateend"
-                        type="date"
-                        onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = 'Enter end date'"
-                        placeholder="Enter end date"
-                      />
+                      <select>
+                        <option value=""> Enter your Language </option>
+                        <option value="frensh">Frensh</option>
+                        <option value="Engkish">Engkish</option>
+                        <option value=" Arabic">Arabic</option>
+                      </select>
                     </div>
                   </div>
                 </div>

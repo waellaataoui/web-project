@@ -60,10 +60,10 @@ class EmployerController extends AbstractFOSRestController
                 $em->flush();
                 $this->getDoctrine()->getConnection()->commit();
                 return $this->handleView($this->view($employeur, Response::HTTP_CREATED));
-            } catch (\Exception $e) 
+            } catch (\Exception $e) {
                 // throw $e;
                 $this->getDoctrine()->getConnection()->rollback();
-                if (str_contains($e->getMessage(), "email")) {
+                if (str_contains($e->getMessage(), "unique")) {
                     $response["errors"] = ["email already in use"];
                     return $this->handleView($this->view($response, Response::HTTP_BAD_REQUEST));
                 } else

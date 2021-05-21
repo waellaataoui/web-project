@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
 const Job = (props) => {
-  // const [data, setData] = useState([])
 
-  var date = new Date("2021-04-29 17:12:50");
-  var now = new Date().getTime() / 1000;
   /*     const fetchPosts =     async (min="",max=
     "",category="",location="") => {
 
@@ -20,23 +18,22 @@ const Job = (props) => {
     }, []) */
 
   useEffect(() => {
+
     console.log("job list component", props.jobs);
   }, []);
+
   return (
     <div>
       {props.jobs.map((job, index) => (
-        <div key={index}>
-          <div className="single-job-items mb-30">
+        <Link to={{ pathname: `/jobDetails/${job.id}` }} key={index}>
+          <div className="single-job-items mb-30" >
+
             <div className="job-items">
               <div className="company-img">
-                <a href="#">
-                  <img src="assets/img/icon/job-list4.png" alt=""></img>
-                </a>
+                <img src="assets/img/icon/job-list4.png" alt=""></img>
               </div>
               <div className="job-tittle job-tittle2">
-                <a href="#">
-                  <h4> {job.title}</h4>
-                </a>
+                <h4> {job.title}</h4>
                 <ul>
                   <li>{job.employeur.fullname}</li>
                   <li>
@@ -47,13 +44,15 @@ const Job = (props) => {
                 </ul>
               </div>
             </div>
+
             <div className="items-link items-link2 f-right">
-              <a href="job_details.html">{job.jobType} </a>
-              <span>{(now - date.getTime() / 1000) / 3600} </span>
+              <Link to={{ pathname: `/jobDetails/${job.id}` }}>{job.jobType} </Link>
+              <span>{new Date(job.createdAt * 1000).toDateString()}</span>
             </div>
             <br />
+
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

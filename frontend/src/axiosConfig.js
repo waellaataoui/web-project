@@ -1,5 +1,5 @@
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8000/api"; // <- api url
+axios.defaults.baseURL = "http://localhost:8000/api"; // <- api url mta3 symfony
 axios.defaults.withCredentials = true; //yab3eth cookies m3a request
 axios.interceptors.response.use(
     function (response) {

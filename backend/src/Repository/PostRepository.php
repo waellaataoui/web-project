@@ -25,14 +25,14 @@ class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[] Returns an array of Post objects
      */
-    public function findByParams($min,  $max, $tag = null, string $location = null, string $category = null, string $jobType = null)
+    public function findByParams($min,  $max, $tag = null, string $location = null, string $category = null, $search = null, $jobType = null)
 
     {
 
         //  dump(strtolower($category));
         // dump(empty($min));
-
         $result = $this->createQueryBuilder('p');
+
         if (!empty($min)) {
             $result = $result->andWhere('p.price >= :min')->setParameter('min', $min);
         }
@@ -42,26 +42,34 @@ class PostRepository extends ServiceEntityRepository
         if (!empty($location)) {
             $result = $result->andWhere('p.location = :loc')->setParameter('loc', strtolower($location));
         }
-        if (!empty($jobType)) {
-            $result = $result->andWhere('p.jobType = :type')->setParameter('type', $jobType);
+        if ((!empty($jobType)) && count($jobType) > 0) {
+            $result = $result->andWhere('p.jobType IN (:type)')->setParameter('type', $jobType);
         }
         if (!empty($category)) {
 
             $result = $result->andWhere('p.category like :cate')->setParameter('cate', '%' . strtolower($category) . '%');
         }
-        if ((!empty($max)) && count($tag) > 0) {
+
+        if (!empty($search)) {
+
+            $result = $result->orWhere('p.title like :search')
+                ->orWhere('p.category like :search')
+                ->orWhere('p.tags like :search')
+                ->setParameter('search', '%' . strtolower($search) . '%');
+        }
+
+        if ((!empty($tag)) && count($tag) > 0) {
             $valueNo = 0;
             foreach ($tag as $value) {
                 $result->andWhere('p.tags like :value' . $valueNo);
                 $result->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
                 $valueNo++;
             }
-            // $result = $result->andWhere('p.tags IN (:tag)')->setParameter('tag', $tag);
-            //$result = $result->andWhere($result->expr()->like('p.tags', ':tag'))->setParameter('tag', '%' . $tag . '%');
         }
         //dump($result->getQuery());
         $result = $result
             ->orderBy('p.price', 'ASC')
+            ->orderBy('p.createdAt', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -70,6 +78,40 @@ class PostRepository extends ServiceEntityRepository
     }
 
 
+
+    public function findOneById($id): ?Post
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @return Post[] Returns an array of Post objects
+     */
+
+    public function findByTags($interest)
+    {
+        $result = $this->createQueryBuilder('p');
+        if ((!empty($interest)) && count($interest) > 0) {
+            $valueNo = 0;
+            foreach ($interest as $value) {
+                $result->orWhere('p.tags like :value' . $valueNo);
+                $result->orWhere('p.category like :value' . $valueNo);
+                $result->orWhere('p.title like :value' . $valueNo);
+                $result->setParameter('value' . $valueNo, '%' . $value . '%', 'string');
+                $valueNo++;
+            }
+        }
+        $result = $result
+            ->orderBy('p.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return $result;
+    }
 
 
 

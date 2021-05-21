@@ -22,15 +22,14 @@
       // ,duplicate:false
     });
   };
- const btn =$('.mobile_menu .btn');
- console.log(btn)
- $('.mobile_menu button.btn').click(function (e) { 
-   e.preventDefault();
-   console.log(e.target.attributes.to)
-        window.location = e.target.attributes.to.value;
+  const btn = $('.mobile_menu .btn');
+  $('.mobile_menu button.btn').click(function (e) {
+    e.preventDefault();
+    console.log(e.target.attributes.to)
+    window.location = e.target.attributes.to.value;
 
-   
- });
+
+  });
 
   /* 3. MainSlider-1 */
   function mainSlider() {

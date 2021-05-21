@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -25,25 +26,86 @@ class PostController extends AbstractFOSRestController
 {
 
     /**
+     * @Route("/postsRecomanded", name="getRecomanded" ,methods={"GET"})
+     *  @return JsonResponse
+     */
+    public function getRecomanded(PostRepository $repository)
+    {
+        $array = [];
+        if ($this->getUser()) { 
+            $array = $this->getUser()->getFieldsOfInterests();
+            $userCV = $this->getUser()->getCv();
+            $userSkills = $userCV -> getFormations();
+            
+            $array += $userSkills;
+            $posts = null;
+            if (!empty($array)) {
+                $posts = $repository->findByTags($array);
+                
+            }
+            
+        }
+        $result = [];
+        foreach ($posts as $post) {
+
+            $result[] = [
+                'id' => $post->getId(),
+                'description' => $post->getDescription(),
+                'title' => $post->getTitle(),
+                'tags' => $post->getTags(),
+                'price' => $post->getPrice(),
+                'category' => $post->getCategory(),
+                'jobType' => $post->getJobType(),
+                'location' => $post->getLocation(),
+                'createdAt' =>  $post->getCreatedAt()->getTimestamp(),
+                'employeur' => [
+                    'id' => $post->getEmployeur()->getId(),
+                    'fullname' => $post->getEmployeur()->getFullName(),
+                    'avatar' => $post->getEmployeur()->getAvatar()
+                ],
+            ];
+        }
+
+         return new JsonResponse($result);
+    }
+
+    /**
      * @Route("/posts", name="getPosts" ,methods={"GET"})
      *  @return JsonResponse
      */
 
 
     public function getPostsAction(Request $request, PostRepository $repository)
-    {
-        $tag = explode(",", $request->query->get('tag'));
-        if ($request->query->get('min') || $request->query->get('max') || $tag || $request->query->get('location') || $request->query->get('category') ||  $request->query->get('jobType'))
+    {   
+
+        $tag = null;
+        $jobType = null;
+        if ($request->query->get('tag')) {
+            $tag = explode(",", $request->query->get('tag'));
+        }
+        if ($request->query->get('jobType'))
+            $jobType =  explode(",", $request->query->get('jobType'));
+
+        if (
+            $request->query->get('min') || $request->query->get('max')
+            || $tag || $request->query->get('location')
+            || $request->query->get('category') ||  $jobType || $request->query->get('search')
+        ) {
             $posts = $repository->findByParams(
                 $request->query->get('min'),
                 $request->query->get('max'),
                 $tag,
                 $request->query->get('location'),
                 $request->query->get('category'),
-                $request->query->get('jobType'),
+                $request->query->get('search'),
+                $jobType
             );
-        else {
-            dump("no filter!");
+            // dump("filters");
+            //dump($request->query->get('min'), $request->query->get('max'), $tag, $request->query->get('location'), $request->query->get('category'), count($jobType) );
+
+        } else {
+            // dump("no filter!");
+
             $posts = $repository->findAll();
         }
 
@@ -71,6 +133,40 @@ class PostController extends AbstractFOSRestController
         return new JsonResponse($result);
     }
 
+
+    /**
+     * @Route("/post/{id}", name="getPostById" ,methods={"GET"})
+     *  @return JsonResponse
+     */
+    public function getPostById(int $id, PostRepository $repository)
+    {
+        $post = null;
+        if ($id) {
+            $post = $repository->findOneById($id);
+            // dump($post);
+        }
+        $result[] = [
+            'id' => $post->getId(),
+            'description' => $post->getDescription(),
+            'title' => $post->getTitle(),
+            'tags' => $post->getTags(),
+            'price' => $post->getPrice(),
+            'category' => $post->getCategory(),
+            'jobType' => $post->getJobType(),
+            'location' => $post->getLocation(),
+            'createdAt' =>  $post->getCreatedAt()->getTimestamp(),
+
+            'employeur' => [
+                'id' => $post->getEmployeur()->getId(),
+                'fullname' => $post->getEmployeur()->getFullName(),
+                'avatar' => $post->getEmployeur()->getAvatar(),
+                'email' => $post->getEmployeur()->getEmail(),
+                'isCompany' => $post->getEmployeur()->getIsCompany(),
+                'phoneNumber' => $post->getEmployeur()->getPhoneNumber()
+            ],
+        ];
+        return new JsonResponse($result);
+    }
 
     /**
      * @Route("/deletepost", name="DeletePostsAction" ,methods={"DELETE"})

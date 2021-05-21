@@ -24,7 +24,7 @@ class CV
      */
     private $owner;
 
-    
+
 
     /**
      * @ORM\OneToMany(targetEntity=Skill::class, mappedBy="cv")
@@ -36,13 +36,17 @@ class CV
      * @ORM\OneToMany(targetEntity=Formation::class, mappedBy="cv")
      */
     private $forma;
-        /**
+    /**
      * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="cv")
      */
     private $exper;
 
     /**
+<<<<<<< HEAD
      * @ORM\OneToMany(targetEntity=Langue::class, mappedBy="cv")
+=======
+     * @ORM\Column(type="array", nullable=true)
+>>>>>>> main
      */
     private $lang;
 
@@ -113,7 +117,7 @@ class CV
 
         return $this;
     }
-        /**
+    /**
      * @return Collection|Experience[]
      */
     public function getExper(): Collection
@@ -142,6 +146,4 @@ class CV
 
         return $this;
     }
-
-
 }

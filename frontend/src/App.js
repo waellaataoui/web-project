@@ -15,7 +15,8 @@ import { useEffect, useState } from "react"
 import AppRouter from "./routers/AppRouter";
 import { useDispatch } from 'react-redux';
 import { setUser } from './store/authSlice'
-
+import Lottie from "lottie-react";
+import spinner from "./assets/loading.json";
 import axios from "axios";
 function App() {
   const [loading, setLoading] = useState(true);
@@ -41,10 +42,12 @@ function App() {
     fetchUser();
 
 
-    const jQuery = document.getElementById("jquery");
+    // const jQuery = document.getElementById("jquery");
     const niceSelect = document.createElement("script");
+    const scrollUp = document.createElement("script");
+    scrollUp.src = "/js/jquery.scrollUp.min.js";
+    document.body.appendChild(scrollUp);
     niceSelect.src = "/js/jquery.nice-select.min.js";
-
     document.body.appendChild(niceSelect);
     const sticky = document.createElement("script");
     sticky.src = "/js/jquery.sticky.js";
@@ -61,9 +64,7 @@ function App() {
     const paroller = document.createElement("script");
     paroller.src = "/js/jquery.paroller.min.js";
     document.body.appendChild(paroller);
-    const scrollUp = document.createElement("script");
-    scrollUp.src = "/js/jquery.scrollUp.min.js";
-    document.body.appendChild(scrollUp);
+
     const onePageNav = document.createElement("script");
     onePageNav.src = "/js/one-page-nav-min.js";
     document.body.appendChild(onePageNav);
@@ -77,16 +78,17 @@ function App() {
 
     const main = document.createElement("script");
     main.src = "/js/main.js";
-    main.defer = true;
+    //  main.defer = true;
     document.body.appendChild(main);
+
     return () => {
-      document.body.removeChild(jQuery);
       document.body.removeChild(niceSelect);
     }
   }, [
+
   ])
   return (
-    (loading) ? <p> loading.. </p> : <>
+    (loading) ? <div className="loading" >  <Lottie animationData={spinner} /></div> : <>
       <AppRouter />
     </>
   );

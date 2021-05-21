@@ -6,6 +6,18 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export class RegisterJobSeeker extends Component {
+  submit = async (e) => {
+    e.preventDefault();
+    // todo: logout user before loggin in again
+
+    try {
+       
+    } catch (error) {
+        console.log(error.response.data);
+        setError(error.response.data.message)
+    }
+
+}
   render() {
     return (
       <div>
@@ -33,7 +45,7 @@ export class RegisterJobSeeker extends Component {
             </div>
             <hr />
             <div className="col-lg-8">
-              <form
+              <form onSubmit={submit} 
                 className="form-contact contact_form"
                 action="contact_process.php"
                 method="post"
@@ -160,3 +172,5 @@ export class RegisterJobSeeker extends Component {
 }
 
 export default RegisterJobSeeker;
+
+

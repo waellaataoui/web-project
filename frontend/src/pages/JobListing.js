@@ -1,40 +1,19 @@
-import React, {useEffect, useState} from 'react'
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from 'react'
 import axios from "axios"
-import Header from "../components/Header"
-import JobFilters from "../components/JobFilters"
 import About from "../assets/img/hero/about.jpg"
 import Jobs from '../components/Jobs'
-
-
-
-
+import { useLocation } from "react-router-dom";
 const JobListing = () => {
-
-    const [data, setData] = useState([])
-
-    var date = new Date('2021-04-29 17:12:50')
-    var now = new Date().getTime() /1000;
-
-    useEffect(() => {
-       
-         Promise.resolve(axios.get("/posts")).then(function(value) {
-             console.log(value.data); // "Success"
-             setData(value.data);
-         }, 
-         function(value) {
-             // not called
-         });
-                     
-    }, [])
-    
-    return(
+    const searchParams = new URLSearchParams(useLocation().search);
+    const query = searchParams.get("query");
+    const location = searchParams.get("location");
+    return (
         <div>
             <header />
             <main>
-    
+
                 <div className="slider-area ">
-                    <div className="single-slider section-overly slider-height2 d-flex align-items-center" style={{backgroundImage: `url(${About}` }}>
+                    <div className="single-slider section-overly slider-height2 d-flex align-items-center" style={{ backgroundImage: `url(${About}` }}>
                         <div className="container">
                             <div className="row">
                                 <div className="col-xl-12">
@@ -46,9 +25,9 @@ const JobListing = () => {
                         </div>
                     </div>
                 </div>
-                       
-                <Jobs></Jobs>
-                
+
+                <Jobs query={query} loc={location} ></Jobs>
+
 
             </main>
         </div>

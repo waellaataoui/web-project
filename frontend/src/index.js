@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import Lottie from "lottie-react";
+import spinner from "./assets/loading.json";
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux'
 import store from './store'
 import "./axiosConfig.js";
+import './i18n';
+
 import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Suspense fallback={<div className="loading" >  <Lottie animationData={spinner} /></div>}>
+
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Suspense>
+
   </React.StrictMode>,
   document.getElementById('root')
 );

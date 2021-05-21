@@ -1,43 +1,82 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import Select from 'react-select'
+
+import { makeStyles } from "@material-ui/core/styles";
+import Slider from "@material-ui/core/Slider";
 
 const JobFilters = (props) => {
   const [min, setMin] = useState("");
   const [max, setMax] = useState("");
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
-  const [jobType, setjobType] = useState({
-    fullTime: 0,
-    partTime: 0,
-    remote: 0,
-    internship: 0,
-  });
-  const seetjobType = (type) => {
-    jobType.type = 1;
-    //getjobtype();
-  };
-  const resetjobType = (type) => {
-    jobType.type = 0;
-    //getjobtype();
+  const [query, setQuery] = useState(props.query || "");
+  const [jobType, setjobType] = useState([
+    { id: 1, value: "Part Time", isChecked: false },
+    { id: 2, value: "Full Time", isChecked: false },
+    { id: 3, value: "Remote", isChecked: false },
+    { id: 4, value: "Internship", isChecked: false }]
+  );
+  const categories = [
+    { "value": "", "label": "All Categories" },
+    { "value": "Web Development", "label": "Web Development" },
+    { "value": "Mobile Development", "label": "Mobile Development" },
+    { "value": "Cyber Security", "label": "Cyber Security" },
+    { "value": "Machine Learning", "label": "Machine Learning" },
+    { "value": "Data Science", "label": "Data Science" },
+    { "value": "Networking", "label": "Networking" },
+    { "value": "Management IT", "label": "Management IT" }]
+  const [typeValue, setTypeValue] = useState("");
+
+  const resetFilters = () => {
+    setCategory("");
+    setLocation("");
+    setMax("");
+    setMin("");
+    setQuery("");
+
+
+  }
+  const updatejobType = (e) => {
+
+    const types = jobType.map(type => {
+      if (type.value === e.target.value)
+        type.isChecked = e.target.checked
+      return type
+    })
+    setjobType(types);
+
   };
 
-  const getjobType = () => {
-    var tab = "";
-    Object.keys(jobType).map((element) => {
-      if (jobType.element == 1) {
-        tab = tab + jobType.element + ",";
-      }
-    });
-    Promise.resolve(axios.get("/posts?jobType=" + tab)).then(
-      function (value) {
-        console.log(value.data); // "Success"
-      },
-    
-    );
-  };
+
+
   useEffect(() => {
-    props.fetchJobs(min, max, category, location);
-  }, [min, max, category, location]);
+    let str = "";
+    jobType.forEach(type => {
+      if (type.isChecked) {
+        str += type.value + ",";
+      }
+    })
+
+    props.fetchJobs(query, min, max, category, location, str);
+  }, [query, min, max, category, location, jobType]);
+
+  // bellow is for filter salary part
+  const useStyles = makeStyles({
+    root: {
+      width: 180,
+    },
+  });
+  const classes = useStyles();
+  const [value, setValue] = useState([20, 37]);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setMin(newValue[0]);
+    setMax(newValue[1]);
+  };
+  function valuetext(value) {
+    return `${value}`;
+  }
+
   return (
     <>
       <div className="row">
@@ -55,7 +94,7 @@ const JobFilters = (props) => {
           </div>
         </div>
       </div>
-
+      <button className="btn" onClick={resetFilters}>reset filters</button>
       <div className="job-category-listing mb-50">
         <div className="single-listing">
           <div className="small-section-tittle2">
@@ -63,78 +102,34 @@ const JobFilters = (props) => {
           </div>
 
           <div className="select-job-items2">
-            <select onChange={(e) => setCategory(e.target.value)} name="select">
-              <option value="">All Category</option>
-              <option value="Web Development">Web Development</option>
-              <option value="Mobile Development">Mobile Development</option>
-              <option value="Cyber Security">Cyber Security</option>
-              <option value="Machine Learning">Machine Learning</option>
-              <option value="Data Science">Data Science</option>
-              <option value="Networking">Networking</option>
-              <option value="Management IT">Management IT</option>
-            </select>
+
+            <Select
+              placeholder="All Categories"
+              onChange={(selected) => setCategory(selected.value)}
+              defaultValue="All Category"
+              options={categories} />
           </div>
 
           <div className="select-Categories pt-80 pb-50">
             <div className="small-section-tittle2">
               <h4>Job Type</h4>
             </div>
-            <label className="container">
-              Full Time
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    seetjobType("fullTime");
-                  } else {
-                    resetjobType("fullTime");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              Part Time
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    seetjobType("partTime");
-                  } else {
-                    resetjobType("partTime");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              Remote
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    seetjobType("remote");
-                  } else {
-                    resetjobType("remote");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              Internship
-              <input
-                type="checkbox"
-                onClick={(event) => {
-                  if (event.target.checked) {
-                    seetjobType("internship");
-                  } else {
-                    resetjobType("internship");
-                  }
-                }}
-              />
-              <span className="checkmark"></span>
-            </label>
+
+            {jobType.map(type => (
+              <div key={type.id} >
+                <label className="container">
+                  {type.value}
+                  <input
+                    type="checkbox"
+                    key={type.id}
+                    onChange={updatejobType}
+                    value={type.value}
+                  />
+                  <span className="checkmark"></span>
+                </label>
+              </div>
+
+            ))}
           </div>
         </div>
 
@@ -179,37 +174,12 @@ const JobFilters = (props) => {
               <option value="Zaghouan">Zaghouan</option>
             </select>
           </div>
-
-          <div className="select-Categories pt-80 pb-50">
-            <div className="small-section-tittle2">
-              <h4>Experience</h4>
-            </div>
-            <label className="container">
-              1-2 Years
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              2-3 Years
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              3-6 Years
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-            <label className="container">
-              6-more..
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-          </div>
         </div>
 
         <div className="single-listing">
           <div className="select-Categories pb-50">
             <div className="small-section-tittle2">
+              <br></br>
               <h4>Posted Within</h4>
             </div>
             <label className="container">
@@ -251,27 +221,31 @@ const JobFilters = (props) => {
             </div>
             <div className="widgets_inner">
               <div className="range_item">
-                <div id="slider-range"></div>
-                <input type="text" className="js-range-slider" value="" />
-                <div className="d-flex align-items-center">
-                  <div className="price_text">
-                    <p>Price :</p>
-                  </div>
-                  <div className="price_value d-flex justify-content-center">
-                    <input
-                      type="text"
-                      className="js-input-from"
-                      id="amount"
-                      readonly
-                    />
-                    <span>to</span>
-                    <input
-                      type="text"
-                      className="js-input-to"
-                      id="amount"
-                      readonly
-                    />
-                  </div>
+                <div className={classes.root}>
+                  <Slider
+                    value={value}
+                    min={0}
+                    max={10000}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    marks={[
+                      {
+                        value: 0,
+                        label: '0$',
+                      },
+                      {
+                        value: 5000,
+                        label: '5k',
+                      },
+                      {
+                        value: 10000,
+                        label: '10k',
+                      },
+
+                    ]}
+                    aria-labelledby="range-slider"
+                    getAriaValueText={valuetext}
+                  />
                 </div>
               </div>
             </div>

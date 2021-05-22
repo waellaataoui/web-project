@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ExperienceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,19 +31,20 @@ class Experience
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=CV::class, inversedBy="experiences")
      */
-    private $dateD;
+    private $cv;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $dateF;
+    private $duree;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=cv::class)
-     */
-    private $cv_id;
+    public function __construct()
+    {
+        $this->exper = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -72,39 +75,59 @@ class Experience
         return $this;
     }
 
-    public function getDateD(): ?string
+    /**
+     * @return Collection|CV[]
+     */
+    public function getExper(): Collection
     {
-        return $this->dateD;
+        return $this->exper;
     }
 
-    public function setDateD(string $dateD): self
+    public function addExper(CV $exper): self
     {
-        $this->dateD = $dateD;
+        if (!$this->exper->contains($exper)) {
+            $this->exper[] = $exper;
+            $exper->setRelation($this);
+        }
 
         return $this;
     }
 
-    public function getDateF(): ?string
+    public function removeExper(CV $exper): self
     {
-        return $this->dateF;
-    }
-
-    public function setDateF(string $dateF): self
-    {
-        $this->dateF = $dateF;
+        if ($this->exper->removeElement($exper)) {
+            // set the owning side to null (unless already changed)
+            if ($exper->getRelation() === $this) {
+                $exper->setRelation(null);
+            }
+        }
 
         return $this;
     }
 
-    public function getCvId(): ?cv
+
+    public function getCv(): ?CV
     {
-        return $this->cv_id;
+        return $this->cv;
     }
 
-    public function setCvId(?cv $cv_id): self
+    public function setCv(?CV $cv): self
     {
-        $this->cv_id = $cv_id;
+        $this->cv = $cv;
 
         return $this;
     }
+
+    public function getDuree(): ?string
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?string $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
 }

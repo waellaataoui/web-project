@@ -1,5 +1,5 @@
 import react from "react";
-import Mail from "../assets/img/icon/form.png"
+import Mail from "../assets/img/icon/form.png";
 const Footer = () => {
   return (
     <div>
@@ -13,8 +13,9 @@ const Footer = () => {
                     <h4>About Us</h4>
                     <div className="footer-pera">
                       <p>
-                        We are a group of motivated students. 
-                        We want to make a solution for Tunisian computer scientist to get best opportunities for job and freelance.
+                        We are a group of motivated students. We want to make a
+                        solution for Tunisian computer scientist to get best
+                        opportunities for job and freelance.
                       </p>
                     </div>
                   </div>
@@ -45,18 +46,25 @@ const Footer = () => {
                   <h4>Important Link</h4>
                   <ul>
                     <li>
-                      <a href="https://www.linkedin.com/in/wiem-sghaier/">Wiem Sghaier</a>
+                      <a href="https://www.linkedin.com/in/wiem-sghaier/">
+                        Wiem Sghaier
+                      </a>
                     </li>
                     <li>
-                      <a href="https://www.linkedin.com/in/waellaataoui/">Wael Lataoui</a>
+                      <a href="https://www.linkedin.com/in/waellaataoui/">
+                        Wael Lataoui
+                      </a>
                     </li>
                     <li>
-                      <a href="https://www.linkedin.com/in/koussay-lahwel-134084152/">Koussay Lahwel</a>
+                      <a href="https://www.linkedin.com/in/koussay-lahwel-134084152/">
+                        Koussay Lahwel
+                      </a>
                     </li>
                     <li>
-                      <a href="https://www.linkedin.com/in/hamida-tlili-b32a4b1a1/">Hamida Tlili</a>
+                      <a href="https://www.linkedin.com/in/hamida-tlili-b32a4b1a1/">
+                        Hamida Tlili
+                      </a>
                     </li>
-                    
                   </ul>
                 </div>
               </div>
@@ -66,9 +74,7 @@ const Footer = () => {
                 <div className="footer-tittle">
                   <h4>Newsletter</h4>
                   <div className="footer-pera footer-pera2">
-                    <p>
-                      Subscribe to our Newsletter to get all the news!
-                    </p>
+                    <p>Subscribe to our Newsletter to get all the news!</p>
                   </div>
                   <div className="footer-form">
                     <div id="mc_embed_signup">
@@ -90,7 +96,6 @@ const Footer = () => {
                             type="submit"
                             name="submit"
                             id="newsletter-submit"
-                            
                             className="email_icon newsletter-submit button-contactForm"
                           >
                             <img src={Mail} alt="" />

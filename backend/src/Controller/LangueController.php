@@ -7,11 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use App\Entity\Langue;
-use App\Form\Langue;
+use App\Form\LangueType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class LangueController extends AbstractController
+class LangueController extends AbstractFOSRestController
 {
     /**
      * @Route("/langue", name="langue")

@@ -33,6 +33,11 @@ class Formation
     private $diplome;
 
     /**
+     * @ORM\ManyToOne(targetEntity=CV::class, inversedBy="fomations")
+     */
+    private $cv;
+
+    /**
      * @ORM\ManyToOne(targetEntity=CV::class, inversedBy="forma")
      */
     public function getId(): ?int
@@ -72,6 +77,18 @@ class Formation
     public function setDiplome(string $diplome): self
     {
         $this->diplome = $diplome;
+
+        return $this;
+    }
+
+    public function getCv(): ?CV
+    {
+        return $this->cv;
+    }
+
+    public function setCv(?CV $cv): self
+    {
+        $this->cv = $cv;
 
         return $this;
     }

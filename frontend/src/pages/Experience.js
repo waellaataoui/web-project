@@ -1,12 +1,29 @@
-import React, { Component } from "react";
-import About from "../assets/img/hero/about.jpg";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { Component, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import About from "../assets/img/hero/about.jpg";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
+const  Experience = () =>{
+  const [poste, setPoste] = useState("");
+  const [description, setDescription] = useState("");
+  const [duree, setDuree] = useState("");
+  const history = useHistory();
+  const submit = async (e) => {
+    e.preventDefault();
+    /*try {
+      const res = await axios.post("/experience", {
+        poste,
+        description,
+        duree,
+      });
+    } catch (error) {
+      console.log(error.response.data);
+      setError(error.response.data.message);
+    }*/
+    history.push("/formation");
 
-export class Formation extends Component {
-  render() {
+  };
     return (
       <div>
         <header />
@@ -30,11 +47,12 @@ export class Formation extends Component {
 
           <div className="row">
             <div className="col-12">
-              <h2 className="contact-title">Put Your Formation</h2>
+              <h2 className="contact-title">Put Your Experience</h2>
             </div>
             <hr />
             <div className="col-lg-8">
               <form
+                onSubmit={submit}
                 className="form-contact contact_form"
                 action="contact_process.php"
                 method="post"
@@ -45,27 +63,29 @@ export class Formation extends Component {
                   <div className="col-12">
                     <div className="form-group">
                       <input
+                      onChange={(e) => setPoste(e.target.value)}
                         className="form-control"
-                        name="diploma"
-                        id="diploma"
+                        name="poste"
+                        id="poste"
                         type="text"
                         onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = 'Enter your diploma'"
-                        placeholder="Enter your diploma"
+                        onblur="this.placeholder = 'Enter your working position'"
+                        placeholder="Enter your working position"
                       />
                     </div>
                   </div>
                   <div className="col-12">
                     <div className="form-group">
-                      <input
+                      <textarea
+                      onChange={(e) => setDescription(e.target.value)}
                         className="form-control w-100"
-                        name="establishment"
-                        id="establishment"
+                        name="description"
+                        id="description"
                         cols={30}
                         rows={9}
                         onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = 'Enter your establishment'"
-                        placeholder=" Enter your establishment"
+                        onblur="this.placeholder = 'Enter description'"
+                        placeholder=" Enter description"
                         defaultValue={""}
                       />
                     </div>
@@ -73,14 +93,15 @@ export class Formation extends Component {
                   <div className="col-sm-6">
                     <div className="form-group">
                       <input
+                      onChange={(e) => setDuree(e.target.value)}
                         className="form-control valid"
-                        name="date"
-                        id="date"
-                        type="date"
+                        name="dureet"
+                        id="duree"
+                        type="text"
                         onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = 'Enter  the date'"
-                        placeholder="Enter the date
-      "
+                        onblur="this.placeholder = 'Enter  start date'"
+                        placeholder="Enter Start date
+"
                       />
                     </div>
                   </div>
@@ -90,17 +111,8 @@ export class Formation extends Component {
                     type="submit"
                     className="button button-contactForm boxed-btn"
                   >
-                    <a href="" className="btn">
+                  
                       Save
-                    </a>
-                  </button>
-                  <button
-                    type="submit"
-                    className="button button-contactForm boxed-btn"
-                  >
-                    <a href="" className="btn">
-                      Add
-                    </a>
                   </button>
                 </div>
               </form>
@@ -112,7 +124,6 @@ export class Formation extends Component {
         </footer>
       </div>
     );
-  }
-}
+  };
 
-export default Formation;
+export default Experience;

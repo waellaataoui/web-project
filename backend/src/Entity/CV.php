@@ -31,34 +31,28 @@ class CV
      */
     private $skills;
 
-
     /**
      * @ORM\OneToMany(targetEntity=Formation::class, mappedBy="cv")
      */
-    private $forma;
+    private $fomations;
+
     /**
      * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="cv")
      */
-    private $exper;
+    private $experiences;
 
     /**
-<<<<<<< HEAD
      * @ORM\OneToMany(targetEntity=Langue::class, mappedBy="cv")
-=======
-     * @ORM\Column(type="array", nullable=true)
->>>>>>> main
      */
-    private $lang;
-
-
+    private $langues;
 
 
     public function __construct()
     {
         $this->skills = new ArrayCollection();
-        $this->forma = new ArrayCollection();
-        $this->lang = new ArrayCollection();
-        $this->exper = new ArrayCollection();
+        $this->fomations = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
+        $this->langues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,30 +111,91 @@ class CV
 
         return $this;
     }
+
     /**
-     * @return Collection|Experience[]
+     * @return Collection|Formation[]
      */
-    public function getExper(): Collection
+    public function getFomations(): Collection
     {
-        return $this->exper;
+        return $this->fomations;
     }
 
-    public function addExp(Experience $exp): self
+    public function addFomation(Formation $fomation): self
     {
-        if (!$this->exper->contains($exp)) {
-            $this->exper[] = $exp;
-            $exp->setCv($this);
+        if (!$this->fomations->contains($fomation)) {
+            $this->fomations[] = $fomation;
+            $fomation->setCv($this);
         }
 
         return $this;
     }
 
-    public function removeExperience(Experience $exp): self
+    public function removeFomation(Formation $fomation): self
     {
-        if ($this->exper->removeElement($exp)) {
+        if ($this->fomations->removeElement($fomation)) {
             // set the owning side to null (unless already changed)
-            if ($exp->getCv() === $this) {
-                $exp->setCv(null);
+            if ($fomation->getCv() === $this) {
+                $fomation->setCv(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Experience[]
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences[] = $experience;
+            $experience->setCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->removeElement($experience)) {
+            // set the owning side to null (unless already changed)
+            if ($experience->getCv() === $this) {
+                $experience->setCv(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Langue[]
+     */
+    public function getLangues(): Collection
+    {
+        return $this->langues;
+    }
+
+    public function addLangue(Langue $langue): self
+    {
+        if (!$this->langues->contains($langue)) {
+            $this->langues[] = $langue;
+            $langue->setCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLangue(Langue $langue): self
+    {
+        if ($this->langues->removeElement($langue)) {
+            // set the owning side to null (unless already changed)
+            if ($langue->getCv() === $this) {
+                $langue->setCv(null);
             }
         }
 

@@ -80,4 +80,16 @@ class EmployerController extends AbstractFOSRestController
             return $this->handleView($this->view($response, Response::HTTP_INTERNAL_SERVER_ERROR));
         }
     }
+    /**
+     * @Route("/employeurs", name="update_employeur", methods={"PUT"})
+     */
+    public function update(Request $request): JsonResponse
+    {
+        $employeur = $this->getUser();
+        $data = json_decode($request->getContent(), true);
+        //this works even if its underlined with red
+        $this->getDoctrine()->getRepository(Employeur::class)->updateEmployeur($employeur, $data);
+
+        return new JsonResponse(['status' => 'customer updated!']);
+    }
 }

@@ -31,24 +31,14 @@ class Experience
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=CV::class, inversedBy="experiences")
      */
-    private $dateD;
+    private $cv;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $dateF;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CV::class, mappedBy="relation", orphanRemoval=true)
-     */
-    private $exper;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=CV::class, inversedBy="RELATION")
-     */
-    private $i;
+    private $duree;
 
     public function __construct()
     {
@@ -85,30 +75,6 @@ class Experience
         return $this;
     }
 
-    public function getDateD(): ?string
-    {
-        return $this->dateD;
-    }
-
-    public function setDateD(string $dateD): self
-    {
-        $this->dateD = $dateD;
-
-        return $this;
-    }
-
-    public function getDateF(): ?string
-    {
-        return $this->dateF;
-    }
-
-    public function setDateF(string $dateF): self
-    {
-        $this->dateF = $dateF;
-
-        return $this;
-    }
-
     /**
      * @return Collection|CV[]
      */
@@ -139,14 +105,27 @@ class Experience
         return $this;
     }
 
-    public function getI(): ?CV
+
+    public function getCv(): ?CV
     {
-        return $this->i;
+        return $this->cv;
     }
 
-    public function setI(?CV $i): self
+    public function setCv(?CV $cv): self
     {
-        $this->i = $i;
+        $this->cv = $cv;
+
+        return $this;
+    }
+
+    public function getDuree(): ?string
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?string $duree): self
+    {
+        $this->duree = $duree;
 
         return $this;
     }

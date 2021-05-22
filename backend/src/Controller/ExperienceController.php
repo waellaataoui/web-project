@@ -11,7 +11,7 @@ use App\Form\ExperienceType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ExperienceController extends AbstractController
+class ExperienceController extends AbstractFOSRestController
 {
     /**
      * @Route("/experience", name="experience")
@@ -21,9 +21,9 @@ class ExperienceController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Experience::class);
         $Experiences = $repository->findall();
-        return $this->handleView($this->view($Experiences )); //returns json
+        return $this->handleView($this->view($Experiences)); //returns json
     }
-        /**
+    /**
      * @Route("/experience ", name="newExperience", methods={"POST"})
      * @return Response
      * @throws \Exception
@@ -31,7 +31,7 @@ class ExperienceController extends AbstractController
     public function postExperienceAction(Request $request)
     {
         $experience = new Experience();
-        $form = $this->createForm(ExperienceType::class, $experience );
+        $form = $this->createForm(ExperienceType::class, $experience);
         $data = json_decode($request->getContent(), true);
         $response = [];
         $form->submit($data);
@@ -46,9 +46,8 @@ class ExperienceController extends AbstractController
             } catch (\Exception $e) {
                 // throw $e;
                 $this->getDoctrine()->getConnection()->rollback();
-            
-         }
-         } else {
+            }
+        } else {
             $errors = [];
             foreach ($form->getErrors(true, true) as $formError) {
                 $errors[] = $formError->getMessage();

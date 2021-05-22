@@ -22,6 +22,11 @@ class Langue
      */
     private $nom;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=CV::class, inversedBy="langues")
+     */
+    private $cv;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,18 @@ class Langue
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getCv(): ?CV
+    {
+        return $this->cv;
+    }
+
+    public function setCv(?CV $cv): self
+    {
+        $this->cv = $cv;
 
         return $this;
     }

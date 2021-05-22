@@ -12,6 +12,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/authSlice";
+import { Link } from "react-router-dom";
 const Home = () => {
   const history = useHistory();
 
@@ -38,14 +39,14 @@ const Home = () => {
     setJobs(res.data);
   };
 
-  const handlecategory=(category)=>{
+  const handlecategory = (category) => {
     // setCategory(category);
     // if (user){
     //   const res = axios.get(`/jobseekerInterest/${category}`);
     // }
     //if (category)
-      //history.push(`/jobListing?category=${category}`); ///3aweni ya wael ma7abetch temchi thezni toul
-  }
+    //history.push(`/jobListing?category=${category}`); ///3aweni ya wael ma7abetch temchi thezni toul
+  };
 
   const setcontent = () => {
     if (user)
@@ -144,85 +145,97 @@ const Home = () => {
             </div>
             <div className="row d-flex justify-contnet-center">
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                <div className="single-services text-center mb-30"  >
+                <div className="single-services text-center mb-30">
                   <div className="services-ion">
                     <span className="flaticon-brain"></span>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("machine learning")}>Machine Learning</a>
+                      <a onClick={handlecategory("machine learning")}>
+                        Machine Learning
+                      </a>
                     </h5>
                     <span>(653)</span>
                   </div>
                 </div>
               </div>
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                <div className="single-services text-center mb-30" >
+                <div className="single-services text-center mb-30">
                   <div className="services-ion">
                     <span className="flaticon-cms"></span>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("web development")}>Web Development</a>
+                      <a onClick={handlecategory("web development")}>
+                        Web Development
+                      </a>
                     </h5>
                     <span>(658)</span>
                   </div>
                 </div>
               </div>
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                <div className="single-services text-center mb-30" >
+                <div className="single-services text-center mb-30">
                   <div className="services-ion">
                     <span className="flaticon-report"></span>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("data science")}>Data Science</a>
+                      <a onClick={handlecategory("data science")}>
+                        Data Science
+                      </a>
                     </h5>
                     <span>(658)</span>
                   </div>
                 </div>
               </div>
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                <div className="single-services text-center mb-30" >
+                <div className="single-services text-center mb-30">
                   <div className="services-ion">
                     <span className="flaticon-app"></span>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("mobile development")}>Mobile Developement</a>
+                      <a onClick={handlecategory("mobile development")}>
+                        Mobile Developement
+                      </a>
                     </h5>
                     <span>(658)</span>
                   </div>
                 </div>
               </div>
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                <div className="single-services text-center mb-30" >
+                <div className="single-services text-center mb-30">
                   <div className="services-ion">
                     <span className="flaticon-helmet"></span>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("cyber security")}>Cyber Security</a>
+                      <a onClick={handlecategory("cyber security")}>
+                        Cyber Security
+                      </a>
                     </h5>
                     <span>(658)</span>
                   </div>
                 </div>
               </div>
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                <div className="single-services text-center mb-30" >
+                <div className="single-services text-center mb-30">
                   <div className="services-ion">
                     <span className="flaticon-high-tech"></span>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("information technology")}>Information Technology</a>
+                      <a onClick={handlecategory("information technology")}>
+                        Information Technology
+                      </a>
                     </h5>
                     <span>(658)</span>
                   </div>
                 </div>
               </div>
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                <div className="single-services text-center mb-30" >
+                <div className="single-services text-center mb-30">
                   <div className="services-ion">
                     <span className="flaticon-real-estate"></span>
                   </div>
@@ -235,13 +248,15 @@ const Home = () => {
                 </div>
               </div>
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                <div className="single-services text-center mb-30" >
+                <div className="single-services text-center mb-30">
                   <div className="services-ion">
                     <span className="flaticon-content"></span>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("management it")}>Management IT</a>
+                      <a onClick={handlecategory("management it")}>
+                        Management IT
+                      </a>
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -272,9 +287,9 @@ const Home = () => {
                     {" "}
                     Make a Difference with Your Verified Resume!
                   </p>
-                  <a href="#" className="border-btn2 border-btn4">
+                  <Link to="/exp" className="border-btn2 border-btn4">
                     Verify Your Skills
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

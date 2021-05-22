@@ -20,8 +20,7 @@ class CVType extends AbstractType
         $builder
             ->add('posteExp', TextType::class)
             ->add('description', TextType::class)
-            ->add('dateD', TextType::class)
-            ->add('dateF', TextType::class)
+         
             ->add('save', SubmitType::class);
     }
     public function configureOptions(OptionsResolver $resolver)

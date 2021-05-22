@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -11,7 +11,7 @@ use App\Form\SkillType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class SkillController extends AbstractController
+class SkillController extends AbstractFOSRestController
 {
     /**
      * @Route("/skill", name="skill")
@@ -21,9 +21,9 @@ class SkillController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Skill::class);
         $skill = $repository->findall();
-        return $this->handleView($this->view($skill )); //returns json
+        return $this->handleView($this->view($skill)); //returns json
     }
-        /**
+    /**
      * @Route("/skill ", name="newSkill", methods={"POST"})
      * @return Response
      * @throws \Exception
@@ -31,7 +31,7 @@ class SkillController extends AbstractController
     public function postSkillAction(Request $request)
     {
         $skills = new Skill();
-        $form = $this->createForm(SkillType::class, $skills );
+        $form = $this->createForm(SkillType::class, $skills);
         $data = json_decode($request->getContent(), true);
         $response = [];
         $form->submit($data);
@@ -46,9 +46,8 @@ class SkillController extends AbstractController
             } catch (\Exception $e) {
                 // throw $e;
                 $this->getDoctrine()->getConnection()->rollback();
-            
-         }
-         } else {
+            }
+        } else {
             $errors = [];
             foreach ($form->getErrors(true, true) as $formError) {
                 $errors[] = $formError->getMessage();

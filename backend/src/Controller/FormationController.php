@@ -11,28 +11,28 @@ use App\Form\FormationType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class FormationController extends AbstractController
+class FormationController extends AbstractFOSRestController
 {
     /**
      * @Route("/formation", name="formation")
-      * @return JsonResponse
+     * @return JsonResponse
 
      */
     public function getFormationAction()
     {
         $repository = $this->getDoctrine()->getRepository(Formation::class);
         $formations = $repository->findall();
-        return $this->handleView($this->view($formations )); //returns json
+        return $this->handleView($this->view($formations)); //returns json
     }
-        /**
+    /**
      * @Route("/formation", name="newFormation", methods={"POST"})
      * @return Response
      * @throws \Exception
      */
     public function postFormationAction(Request $request)
     {
-        $formation = new Formation);
-        $form = $this->createForm(FormationType::class, $formation );
+        $formation = new Formation();
+        $form = $this->createForm(FormationType::class, $formation);
         $data = json_decode($request->getContent(), true);
         $response = [];
         $form->submit($data);
@@ -47,9 +47,8 @@ class FormationController extends AbstractController
             } catch (\Exception $e) {
                 // throw $e;
                 $this->getDoctrine()->getConnection()->rollback();
-            
-         }
-         } else {
+            }
+        } else {
             $errors = [];
             foreach ($form->getErrors(true, true) as $formError) {
                 $errors[] = $formError->getMessage();

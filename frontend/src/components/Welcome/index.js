@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Quiz from '../Quiz'
 import Loader from '../Loader/'
+/*import '../assets/css/sty.css'*/
 
 const Welcome = props => {
 

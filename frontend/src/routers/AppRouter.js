@@ -14,13 +14,15 @@ import JobListing from "../pages/JobListing";
 import JobDetails from "../pages/JobDetails";
 import Experience from "../pages/Experience";
 import StartTest from "../pages/StartTest";
-
+import Levels  from '../components/Header/index';
+import Welcome from '../components/Welcome'
 const AppRouter = () => {
   return (
     <Router>
       <>
         <Header></Header>
         <Switch>
+        <Route exact path="/apliq" component={Welcome} exact={true} />
           <Route path="/" component={Home} exact={true} />
           <Route path="/login" component={Login} />
           <Route path="/recruter" component={RecruterHome} exact={true} />

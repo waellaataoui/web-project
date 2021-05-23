@@ -6,7 +6,6 @@ import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
 import QuizOver from '../QuizOver'
 import { FaChevronRight } from 'react-icons/fa';
-import '../../Style.css';
 toast.configure();
 
 const initialState = {

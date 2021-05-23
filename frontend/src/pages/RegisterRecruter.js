@@ -1,11 +1,11 @@
 import React, { Component, useState } from "react";
-import Header from "../components/Header";
+import HeaderRecruter from "../components/HeaderRecruter";
 import Footer from "../components/Footer";
 import About from "../assets/img/hero/about.jpg";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
-const RegisterJobSeeker = () => {
+const RegisterRecruter = () => {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [username, setUsername] = useState("");
@@ -35,7 +35,6 @@ const RegisterJobSeeker = () => {
 
   return (
     <div>
-      <header />
       <main>
         <div className="slider-area ">
           <div
@@ -190,4 +189,4 @@ const RegisterJobSeeker = () => {
   );
 };
 
-export default RegisterJobSeeker;
+export default RegisterRecruter;

@@ -3,6 +3,8 @@ import axios from "axios"
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { setUser } from "../store/authSlice"
+import Footer from './../components/Footer';
+
 const LoginRecruter = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -36,6 +38,7 @@ const LoginRecruter = () => {
                 <input onChange={(e) => setPassword(e.target.value)} placeholder="password" type="password" ></input>
                 <button type="submit"> login</button>
             </form>
+            <Footer/>
         </div>
     )
 }

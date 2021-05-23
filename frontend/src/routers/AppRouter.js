@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import LoginRecruter from "../pages/LoginRecruter";
 import RecruterHome from "../pages/RecruterHome";
+import RegisterRecruter from "../pages/RegisterRecruter"
 import RegisterJobSeeker from "../pages/RegisterJobSeeker";
 import CreateCV from "../pages/CreateCV";
 import Formation from "../pages/Formation";
@@ -28,6 +29,7 @@ const AppRouter = () => {
           <Route path="/recruter" component={RecruterHome} exact={true} />
           <Route path="/recruter/login" component={LoginRecruter} />
           <Route path="/register" component={RegisterJobSeeker} />
+          <Route path="/recruter/register" component={RegisterRecruter} />
           <Route path="/cv" component={CreateCV} />
           <Route path="/subscription/success" component={SubscriptionSuccess} />
           <Route path="/JobListing" component={JobListing} />

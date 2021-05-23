@@ -8,7 +8,7 @@ const Skills = () => {
   const submit = async (e) => {
     e.preventDefault();
     // todo: logout user before loggin in again
-    
+    history.push("/quiz");
   };
 
   return (

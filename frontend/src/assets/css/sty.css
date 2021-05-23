@@ -28,15 +28,15 @@
 /* MEDIA QUERIES */
 
 /* Google Fonts */
-@import url('https://fonts.googleapis.com/css?family=Anton|Bangers|Carter+One&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Anton|Bangers|Carter+One&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed&display=swap");
 
 :root {
   --white-color: #ffffff;
-  --light-grey-color: #EAE8E8;
+  --light-grey-color: #eae8e8;
   --light-green-color: #1ecc78;
   --green-color: #0cb765;
-  --red-color: #EB1D27;
+  --red-color: #eb1d27;
   --blue-color: #4f78a4;
   --dark-red-color: #d31017;
   --dark-grey-color: #363636;
@@ -45,7 +45,44 @@
 }
 
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+
+h1 {
+  font-family: "Bangers", cursive;
+  font-size: 70px;
+  color: var(--white-color);
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: 6px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+h1 a {
+  color: inherit;
+  text-decoration: none;
+  font-family: "Bangers", cursive;
+}
+
+h1 a:hover {
+  color: inherit;
+}
+
+h2,
+h3 {
+  font-weight: normal;
+  text-align: left;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-repeat: repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 hr {
@@ -77,24 +114,11 @@ main {
 /* WELCOME PAGE */
 .welcomePage {
   background-color: var(--red-color);
-  background-image: url(images/wolverine.png);
   background-repeat: no-repeat;
   background-position: center center;
   display: flex;
   justify-content: space-between;
   height: 500px;
-}
-
-.startingImg {
-  background-image: url(images/xmen.png);
-}
-
-.leftImg {
-  background-image: url(images/wolverine.png), url(images/griffes-gauche.png);
-}
-
-.rightImg {
-  background-image: url(images/wolverine.png), url(images/griffes-droit.png);
 }
 
 .leftBox {
@@ -140,6 +164,10 @@ main {
 /* END TOASTIFY COLOR */
 
 /* FOOTER */
+footer {
+  display: flex;
+  justify-content: center;
+}
 
 .footer-container {
   padding: 20px 0;
@@ -177,7 +205,6 @@ main {
 
 /* SIGNUP - LOGIN - FORGETPASSWORD */
 .signUpLoginBox {
-  background-image: url(images/bg-noise-texture.png);
   background-repeat: repeat;
   -webkit-box-shadow: inset 0px 143px 108px -18px rgba(0, 0, 0, 0.39);
   -moz-box-shadow: inset 0px 143px 108px -18px rgba(0, 0, 0, 0.39);
@@ -193,7 +220,6 @@ main {
 
 .formBoxLeftSignup {
   min-height: 500px;
-  background-image: url(images/ironman.png);
   background-repeat: no-repeat;
   background-position: center center;
   flex: 0 1 50%;
@@ -201,7 +227,6 @@ main {
 
 .formBoxLeftLogin {
   min-height: 500px;
-  background-image: url(images/spiderman.png);
   background-repeat: no-repeat;
   background-position: center center;
   flex: 0 1 50%;
@@ -209,7 +234,6 @@ main {
 
 .formBoxLeftForget {
   min-height: 500px;
-  background-image: url(images/deadpool.png);
   background-repeat: no-repeat;
   background-position: center center;
   flex: 0 1 50%;
@@ -274,8 +298,8 @@ main {
   transition: 0.2s ease-in;
 }
 
-.formContent .inputBox input:focus~label,
-.formContent .inputBox input:valid~label {
+.formContent .inputBox input:focus ~ label,
+.formContent .inputBox input:valid ~ label {
   top: -30px;
   left: 0;
   color: var(--white-color);
@@ -383,6 +407,11 @@ button[disabled]:hover {
   height: 34px;
 }
 
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
 .slider {
   position: absolute;
@@ -392,8 +421,8 @@ button[disabled]:hover {
   right: 0;
   bottom: 0;
   background-color: var(--light-grey-color);
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -404,15 +433,15 @@ button[disabled]:hover {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
-input:checked+.slider {
+input:checked + .slider {
   background-color: var(--red-color);
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -652,7 +681,18 @@ input:checked+.slider:before {
   flex-direction: column;
 }
 
+.modalHeader {
+  background-color: var(--dark-red-color);
+  padding: 15px;
+  color: var(--white-color);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
 
+.modalHeader h2 {
+  margin: 0;
+  color: var(--white-color);
+}
 
 .modalBody {
   padding: 30px 10px;
@@ -749,7 +789,7 @@ input:checked+.slider:before {
 /* MEDIA QUERIES */
 @media screen and (max-width: 540px) {
   .container img {
-    width: 50%;
+    width: 100%;
     height: auto;
   }
 
@@ -769,7 +809,6 @@ input:checked+.slider:before {
 
 @media all and (max-width: 850px) {
   .welcomePage {
-    background-image: none;
     flex-direction: column;
     height: 300px;
     justify-content: center;
@@ -812,8 +851,8 @@ input:checked+.slider:before {
 }
 
 @media screen and (max-width: 1110px) {
-   /* make container full width */
-   .container {
+  /* make container full width */
+  .container {
     flex: 0 1 100%;
   }
 
@@ -827,5 +866,4 @@ input:checked+.slider:before {
   .formBoxRight {
     flex: 0 1 100%;
   }
-
 }

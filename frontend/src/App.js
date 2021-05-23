@@ -10,6 +10,7 @@ import './assets/css/fontawesome-all.min.css'
 import './assets/css/themify-icons.css'
 import './assets/css/slick.css'
 import './assets/css/style.css';
+import './assets/css/sty.css';
 import './assets/css/nice-select.css'
 import { useEffect, useState } from "react"
 import AppRouter from "./routers/AppRouter";

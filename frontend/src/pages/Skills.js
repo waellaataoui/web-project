@@ -1,10 +1,12 @@
 import React, { Component, useState } from "react";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import About from "../assets/img/hero/about.jpg";
 import { Link, useHistory } from "react-router-dom";
+
 import axios from "axios";
 const Skills = () => {
+  const history = useHistory();
+
   const submit = async (e) => {
     e.preventDefault();
     // todo: logout user before loggin in again
@@ -34,15 +36,12 @@ const Skills = () => {
 
         <div className="row">
           <div className="col-12">
-            <h2 className="contact-title">Put Your Skills</h2>
+            <h2 className="text-center contact-title">Put Your Skills</h2>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-12">
             <form
+              onSubmit={submit}
               className="form-contact contact_form"
-              action="contact_process.php"
-              method="post"
-              id="contactForm"
-              noValidate="novalidate"
             >
               <div className="row">
                 <div className="col-12">
@@ -58,21 +57,9 @@ const Skills = () => {
                     />
                   </div>
                 </div>
-                <div className="col-sm-6">
-                  <div className="form-group">
-                    <input
-                      className="form-control valid"
-                      name="laguage"
-                      id="laguage"
-                      type="text"
-                      onfocus="this.placeholder = ''"
-                      onblur="this.placeholder = 'Enter your laguage"
-                      placeholder="Enter your laguage"
-                    />
-                  </div>
-                </div>
+
               </div>
-              <div className="form-group mt-3">
+              <div className=" text-center form-group mt-3">
                 <button
                   type="submit"
                   className="button button-contactForm boxed-btn"

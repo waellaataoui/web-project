@@ -1,21 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Quiz from '../Quiz'
 import Loader from '../Loader/'
-/*import '../assets/css/sty.css'*/
+import "../../assets/css/sty.css";
 
 const Welcome = props => {
-
-    return  (
+    const [loading, setLoading] = useState(true)
+    setTimeout(() => {
+        setLoading(false);
+    }, 1000);
+    return (
         <div>
-        <Loader 
-            loadingMsg={"Authentification ..."}
-            styling={{textAlign: 'center', color: '#FFFFFF'}}
-        />
-        <div className="quiz-bg">
-            <div className="container">
-                <Quiz />
-            </div>
-        </div>
+            {loading && <Loader
+                loadingMsg={"Loading ..."}
+                styling={{ textAlign: 'center' }}
+            />}
+            {!loading && <div className="quiz-bg">
+                <div className="cont">
+                    <Quiz />
+                </div>
+            </div>}
         </div>
     )
 }

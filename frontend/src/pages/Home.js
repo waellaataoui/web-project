@@ -138,7 +138,6 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-12">
                 <div className="section-tittle text-center">
-                  <span>FEATURED TOURS Packages</span>
                   <h2>Browse Categories </h2>
                 </div>
               </div>

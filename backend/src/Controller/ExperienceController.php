@@ -11,6 +11,9 @@ use App\Form\ExperienceType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * @Route("api", name="api_")
+ */
 class ExperienceController extends AbstractFOSRestController
 {
     /**

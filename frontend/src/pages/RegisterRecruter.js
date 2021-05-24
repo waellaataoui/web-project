@@ -29,7 +29,7 @@ const RegisterRecruter = () => {
       history.push("/login");
     } catch (error) {
       console.log(error.response.data);
-   
+
     }
   };
 
@@ -54,14 +54,13 @@ const RegisterRecruter = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            <h2 className="contact-title">Inscription</h2>
+            <h2 className=" text-center contact-title">Register</h2>
           </div>
           <hr />
           <div className="col-lg-8">
             <form
               onSubmit={submit}
               className="form-contact contact_form"
-              action="contact_process.php"
               method="post"
               id="contactForm"
               noValidate="novalidate"
@@ -182,9 +181,7 @@ const RegisterRecruter = () => {
         </div>
       </main>
 
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -60,7 +60,6 @@ const RegisterJobSeeker = () => {
             <form
               onSubmit={submit}
               className="form-contact contact_form"
-              action="contact_process.php"
               method="post"
               id="contactForm"
               noValidate="novalidate"
@@ -181,9 +180,6 @@ const RegisterJobSeeker = () => {
         </div>
       </main>
 
-      <footer>
-        <Footer />
-      </footer>
     </div>
   );
 };

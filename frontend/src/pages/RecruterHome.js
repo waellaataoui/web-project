@@ -10,13 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Footer from './../components/Footer';
 import JobInterview from "../assets/img/recruter/job-interview.jpg"
 
-import Subscriptions from "../components/Subscriptions";
 import Test from "../assets/img/gallery/cv_bg.jpg";
 import Job from "../components/Job";
 import { Link } from "react-router-dom";
 
 const RecruterHome = () => {
-    const history = useHistory();
+  const history = useHistory();
 
   let user = useSelector((state) => state.auth.user);
   let content;
@@ -38,75 +37,69 @@ const RecruterHome = () => {
     { value: "Frontend", label: "Frontend" },
   ];
 
-    const handlelocation = (selectedOption) => {
-        setLocation(selectedOption.value.toLowerCase());
-      };
-    
-      const handlechange = (e) => {
-        setInterest(e.target.value);
-        console.log(e.target.value);
-      };
-    
-      const handleclick = () => {
-        if (user) {
-          const res = axios.get(`/jobseekerInterest/${interest}`);
-        }
-        history.push(`/jobListing?query=${interest}&location=${location}`);
-    };
-    const handlecategory = (category) => {
-        // setCategory(category);
-        // if (user){
-        //   const res = axios.get(`/jobseekerInterest/${category}`);
-        // }
-        //if (category)
-        //history.push(`/jobListing?category=${category}`); ///3aweni ya wael ma7abetch temchi thezni toul
-      };
-    return (
-        <div>
-            <main>
-                <div className="slider-area ">
-                <div
-                    className="single-slider section-overly slider-height2 d-flex align-items-center"
-                    style={{ backgroundImage: `url(${JobInterview}` }}
-                >
-                    <div className="container">
-                <div className="row">
-                  <div className="col-lg-9 col-md-10">
-                    <div className="hero__caption">
-                      <h1 style={{color: "#131459 " }}>{t("titleRecruter")} </h1>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-xl-8">
-                    <form action="#" className="search-box" style={{position: "relative", top:"-30px"}}>
-                      <div className="input-form">
-                        <input
-                          type="text"
-                          placeholder="Job Tittle or keyword"
-                          onChange={handlechange}
-                        />
-                      </div>
-                      <div className="select-form">
-                        <Select
-                          className="react-select"
-                          classNamePrefix="react-select"
-                          placeholder="keywords"
-                          isClearable
-                          options={options}
-                          onChange={handlelocation}
-                        />
-                      </div>
-                      <div className="search-form">
-                        <a onClick={handleclick}>Search</a>
-                      </div>
-                    </form>
+  const handlelocation = (selectedOption) => {
+    setLocation(selectedOption.value.toLowerCase());
+  };
+
+  const handlechange = (e) => {
+    setInterest(e.target.value);
+    console.log(e.target.value);
+  };
+
+
+  const handlecategory = (category) => {
+    // setCategory(category);
+    // if (user){
+    //   const res = axios.get(`/jobseekerInterest/${category}`);
+    // }
+    //if (category)
+  };
+  return (
+    <div>
+      <main>
+        <div className="slider-area ">
+          <div
+            className="single-slider section-overly slider-height2 d-flex align-items-center"
+            style={{ backgroundImage: `url(${JobInterview}` }}
+          >
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-9 col-md-10">
+                  <div className="hero__caption">
+                    <h1 style={{ color: "#eeeeee " }}>{t("titleRecruter")} </h1>
                   </div>
                 </div>
               </div>
+              <div className="row">
+                <div className="col-xl-8">
+                  <form action="#" className="search-box" style={{ position: "relative", top: "-30px" }}>
+                    <div className="input-form">
+                      <input
+                        type="text"
+                        placeholder="skills"
+                        onChange={handlechange}
+                      />
+                    </div>
+                    <div className="select-form">
+                      <Select
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        placeholder="keywords"
+                        isClearable
+                        options={options}
+                        onChange={handlelocation}
+                      />
+                    </div>
+                    <div className="search-form">
+                      <a >Search</a>
+                    </div>
+                  </form>
                 </div>
-                </div>
-                <div className="our-services section-pad-t30">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="our-services section-pad-t30">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
@@ -255,10 +248,9 @@ const RecruterHome = () => {
             <div className="row justify-content-center">
               <div className="col-xl-10">
                 <div className="cv-caption text-center">
-                  <p className="pera1">FEATURED TOURS Packages</p>
                   <p className="pera2">
                     {" "}
-                    choose your wisely your employees
+                    choose wisely your employees
                   </p>
                   <Link to="/exp" className="border-btn2 border-btn4">
                     See more
@@ -414,12 +406,10 @@ const RecruterHome = () => {
             </div>
           </div>
         </div>
-        <div className="subscriptions">
-          <Subscriptions></Subscriptions>
-        </div>
-            </main>
-            <Footer/>
-        </div>
-    )
+
+      </main>
+      <Footer />
+    </div>
+  )
 }
 export default RecruterHome;

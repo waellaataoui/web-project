@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css' 
+import 'react-toastify/dist/ReactToastify.min.css'
 import { QuizMarvel } from '../quizMarvel/'
 import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
@@ -10,18 +10,18 @@ import Footer from "../Footer";
 toast.configure();
 
 const initialState = {
-    quizLevel: 0,
-    maxQuestions: 5,
-    storedQuestions: [],
-    question: null,
-    options: [],
-    idQuestion: 0,
-    btnDisabled: true,
-    userAnswer: null,
-    score: 0,
-    showWelcomeMsg: false,
-    quizEnd: false,
-    percent: null
+  quizLevel: 0,
+  maxQuestions: 5,
+  storedQuestions: [],
+  question: null,
+  options: [],
+  idQuestion: 0,
+  btnDisabled: true,
+  userAnswer: null,
+  score: 0,
+  showWelcomeMsg: false,
+  quizEnd: false,
+  percent: null
 }
 
 const levelNames = ["debutant", "confirme", "expert"];
@@ -178,9 +178,8 @@ class Quiz extends Component {
       return (
         <p
           key={index}
-          className={`answerOptions ${
-            userAnswer === option ? "selected" : null
-          }`}
+          className={`answerOptions ${userAnswer === option ? "selected" : null
+            }`}
           onClick={() => this.submitAnswer(option)}
         >
           <FaChevronRight /> {option}
@@ -203,7 +202,7 @@ class Quiz extends Component {
         <header>
           <div className="banner-container">
             <h1>
-              <a href="/">AssessmentTest</a>
+              <a style={{ color: "black" }} href="/">Quiz</a>
             </h1>
           </div>
         </header>
@@ -223,7 +222,6 @@ class Quiz extends Component {
         </button>
         <p></p>
         <p></p>
-        <Footer />
       </Fragment>
     );
   }

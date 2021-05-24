@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { Link, useHistory } from "react-router-dom";
 import Subscriptions from "../components/Subscriptions";
 
 import Hero from "../assets/img/hero/h1_hero.jpg";
@@ -22,6 +22,8 @@ const Home = () => {
   const { t, i18n } = useTranslation("homePage");
   const [category, setCategory] = useState("");
   const [jobs, setJobs] = useState([]);
+  const [recommanded, setRecommanded] = useState([]);
+
   const [location, setLocation] = useState("");
   const [interest, setInterest] = useState("");
 
@@ -38,6 +40,10 @@ const Home = () => {
     console.log(res.data);
     setJobs(res.data);
   };
+  const fetchRecommanded = async () => {
+    const res = await axios.get(`/postsRecomanded `);
+    console.log(res.data);
+    setRecommanded(res.data);
 
   const handlecategory = (category) => {
     // setCategory(category);
@@ -66,8 +72,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setcontent();
     fetchjobs();
+    if (user) {
+      fetchRecommanded();
+    }
   }, []);
 
   const handlelocation = (selectedOption) => {
@@ -146,13 +154,14 @@ const Home = () => {
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="single-services text-center mb-30">
                   <div className="services-ion">
-                    <span className="flaticon-brain"></span>
+                    <i class="fas fa-brain"></i>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("machine learning")}>
+                      <Link to="/jobListing?category=machine learning">
                         Machine Learning
-                      </a>
+                      </Link>
+
                     </h5>
                     <span>(653)</span>
                   </div>
@@ -161,13 +170,10 @@ const Home = () => {
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="single-services text-center mb-30">
                   <div className="services-ion">
-                    <span className="flaticon-cms"></span>
+                    <i class="fas fa-laptop"></i>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("web development")}>
-                        Web Development
-                      </a>
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -176,13 +182,14 @@ const Home = () => {
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="single-services text-center mb-30">
                   <div className="services-ion">
-                    <span className="flaticon-report"></span>
+                    <i class="fas fa-chart-bar"></i>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("data science")}>
+                      <Link to="/jobListing?category=data science">
                         Data Science
-                      </a>
+                      </Link>
+
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -191,13 +198,14 @@ const Home = () => {
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="single-services text-center mb-30">
                   <div className="services-ion">
-                    <span className="flaticon-app"></span>
+                    <i class="fas fa-mobile-alt"></i>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("mobile development")}>
+                      <Link to="/jobListing?category=mobile development">
                         Mobile Developement
-                      </a>
+                      </Link>
+
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -206,13 +214,15 @@ const Home = () => {
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="single-services text-center mb-30">
                   <div className="services-ion">
-                    <span className="flaticon-helmet"></span>
+                    <i class="fas fa-user-secret"></i>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("cyber security")}>
+                      <Link to="/jobListing?category=cyber security">
                         Cyber Security
-                      </a>
+                      </Link>
+
+             
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -221,13 +231,14 @@ const Home = () => {
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="single-services text-center mb-30">
                   <div className="services-ion">
-                    <span className="flaticon-high-tech"></span>
+                    <i class="fas fa-cogs"></i>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("information technology")}>
+                      <Link to="/jobListing?category=information technology">
                         Information Technology
-                      </a>
+                      </Link>
+
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -236,11 +247,13 @@ const Home = () => {
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="single-services text-center mb-30">
                   <div className="services-ion">
-                    <span className="flaticon-real-estate"></span>
+                    <i class="fab fa-chromecast"></i>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("networking")}>Networking</a>
+                      <Link to="/jobListing?category=networking">
+                        Networking
+                      </Link>
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -249,13 +262,14 @@ const Home = () => {
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="single-services text-center mb-30">
                   <div className="services-ion">
-                    <span className="flaticon-content"></span>
+                    <i class="fas fa-tasks"></i>
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <a onClick={handlecategory("management it")}>
+                      <Link to="/jobListing?category=management it">
                         Management IT
-                      </a>
+                      </Link>
+
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -265,9 +279,9 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-12">
                 <div className="browse-btn2 text-center mt-50">
-                  <a href="job_listing.html" className="border-btn2">
+                  <Link to="/jobListing" className="border-btn2">
                     Browse All Sectors
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -301,15 +315,23 @@ const Home = () => {
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
-                {
-                  //3aweni ya wael
-                }
+                {user ? (
+                  <div className="section-tittle text-center">
+                    <span>Your fit Jobs</span>
+                    <h2>Recomanded Jobs</h2>
+                  </div>
+                ) : (
+                  <div className="section-tittle text-center">
+                    <span>Recent Job</span>
+                    <h2>Featured Jobs</h2>
+                  </div>
+                )}
               </div>
             </div>
 
             <div class="row justify-content-center">
               <div class="col-xl-10">
-                <Job jobs={jobs} />
+                <Job jobs={user ? recommanded : jobs} />
               </div>
             </div>
           </div>
@@ -384,16 +406,15 @@ const Home = () => {
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
                           <img src="" alt="" />
-                          <span>Margaret Lawson</span>
-                          <p>Creative Director</p>
+                          <span>Wiem Sghaier</span>
+                          <p>Software Engineer Student</p>
                         </div>
                       </div>
                       <div className="testimonial-top-cap">
                         <p>
-                          “I am at an age where I just want to be fit and
-                          healthy our bodies are our responsibility! So start
-                          caring for your body and it will care for you. Eat
-                          clean it will care for you and workout hard.”
+                          “Never give up on a dream just because of the time it
+                          will take to accomplish it. The time will pass
+                          anyway.” —Earl Nightingale
                         </p>
                       </div>
                     </div>
@@ -403,16 +424,16 @@ const Home = () => {
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
                           <img src="" alt="" />
-                          <span>Margaret Lawson</span>
-                          <p>Creative Director</p>
+                          <span>Wael Lataoui</span>
+                          <p>Software Engineer Student</p>
                         </div>
                       </div>
                       <div className="testimonial-top-cap">
                         <p>
-                          “I am at an age where I just want to be fit and
-                          healthy our bodies are our responsibility! So start
-                          caring for your body and it will care for you. Eat
-                          clean it will care for you and workout hard.”
+                          “You get to decide where your time goes. You can
+                          either spend it moving forward, or you can spend it
+                          putting out fires. You decide. And if you don’t
+                          decide, others will decide for you.” —Tony Morgan
                         </p>
                       </div>
                     </div>
@@ -422,16 +443,33 @@ const Home = () => {
                       <div className="testimonial-founder  ">
                         <div className="founder-img mb-30">
                           <img src="" alt="" />
-                          <span>Margaret Lawson</span>
-                          <p>Creative Director</p>
+                          <span>Koussay Lahwel</span>
+                          <p>Software Engineer Student</p>
                         </div>
                       </div>
                       <div className="testimonial-top-cap">
                         <p>
-                          “I am at an age where I just want to be fit and
-                          healthy our bodies are our responsibility! So start
-                          caring for your body and it will care for you. Eat
-                          clean it will care for you and workout hard.”
+                          “If you don’t design your own life plan, chances are
+                          you’ll fall into someone else’s plan and guess what
+                          they have planned for you? Not much.” —Jim Rohn
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="single-testimonial text-center">
+                    <div className="testimonial-caption ">
+                      <div className="testimonial-founder  ">
+                        <div className="founder-img mb-30">
+                          <img src="" alt="" />
+                          <span>Hamida Tlili</span>
+                          <p>Software Engineer Student</p>
+                        </div>
+                      </div>
+                      <div className="testimonial-top-cap">
+                        <p>
+                          “Don’t aim for success if you want it, just do what
+                          you love and believe in and it will come naturally.”
+                          —David Frost
                         </p>
                       </div>
                     </div>

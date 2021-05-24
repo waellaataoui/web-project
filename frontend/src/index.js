@@ -10,7 +10,6 @@ import "./axiosConfig.js";
 import './i18n';
 
 import reportWebVitals from './reportWebVitals';
-
 ReactDOM.render(
   <React.StrictMode>
     <Suspense fallback={<div className="loading" >  <Lottie animationData={spinner} /></div>}>

@@ -12,6 +12,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/authSlice";
+import { Link } from "react-router-dom";
 const Home = () => {
   const history = useHistory();
 
@@ -43,6 +44,31 @@ const Home = () => {
     const res = await axios.get(`/postsRecomanded `);
     console.log(res.data);
     setRecommanded(res.data);
+
+  const handlecategory = (category) => {
+    // setCategory(category);
+    // if (user){
+    //   const res = axios.get(`/jobseekerInterest/${category}`);
+    // }
+    //if (category)
+    //history.push(`/jobListing?category=${category}`); ///3aweni ya wael ma7abetch temchi thezni toul
+  };
+
+  const setcontent = () => {
+    if (user)
+      content = (
+        <div className="section-tittle text-center">
+          <span>Your fit Jobs</span>
+          <h2>Recomanded Jobs</h2>
+        </div>
+      );
+    else
+      content = (
+        <div className="section-tittle text-center">
+          <span>Recent Job</span>
+          <h2>Featured Jobs</h2>
+        </div>
+      );
   };
 
   useEffect(() => {
@@ -120,7 +146,6 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-12">
                 <div className="section-tittle text-center">
-                  <span>FEATURED TOURS Packages</span>
                   <h2>Browse Categories </h2>
                 </div>
               </div>
@@ -136,6 +161,7 @@ const Home = () => {
                       <Link to="/jobListing?category=machine learning">
                         Machine Learning
                       </Link>
+
                     </h5>
                     <span>(653)</span>
                   </div>
@@ -148,9 +174,6 @@ const Home = () => {
                   </div>
                   <div className="services-cap">
                     <h5>
-                      <Link to="/jobListing?category=web development">
-                        Web Development
-                      </Link>
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -166,6 +189,7 @@ const Home = () => {
                       <Link to="/jobListing?category=data science">
                         Data Science
                       </Link>
+
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -181,6 +205,7 @@ const Home = () => {
                       <Link to="/jobListing?category=mobile development">
                         Mobile Developement
                       </Link>
+
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -196,6 +221,8 @@ const Home = () => {
                       <Link to="/jobListing?category=cyber security">
                         Cyber Security
                       </Link>
+
+             
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -211,6 +238,7 @@ const Home = () => {
                       <Link to="/jobListing?category=information technology">
                         Information Technology
                       </Link>
+
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -241,6 +269,7 @@ const Home = () => {
                       <Link to="/jobListing?category=management it">
                         Management IT
                       </Link>
+
                     </h5>
                     <span>(658)</span>
                   </div>
@@ -271,9 +300,9 @@ const Home = () => {
                     {" "}
                     Make a Difference with Your Verified Resume!
                   </p>
-                  <a href="#" className="border-btn2 border-btn4">
+                  <Link to="/exp" className="border-btn2 border-btn4">
                     Verify Your Skills
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

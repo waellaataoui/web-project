@@ -7,6 +7,7 @@ const JobListing = () => {
     const searchParams = new URLSearchParams(useLocation().search);
     const query = searchParams.get("query");
     const location = searchParams.get("location");
+    const category = searchParams.get("category");
     return (
         <div>
             <header />
@@ -26,7 +27,7 @@ const JobListing = () => {
                     </div>
                 </div>
 
-                <Jobs query={query} loc={location} ></Jobs>
+                <Jobs query={query} loc={location} categ={category}></Jobs>
 
 
             </main>

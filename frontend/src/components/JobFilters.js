@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Select from 'react-select'
+import Select from "react-select";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
@@ -14,17 +14,19 @@ const JobFilters = (props) => {
     { id: 1, value: "Part Time", isChecked: false },
     { id: 2, value: "Full Time", isChecked: false },
     { id: 3, value: "Remote", isChecked: false },
-    { id: 4, value: "Internship", isChecked: false }]
-  );
+    { id: 4, value: "Internship", isChecked: false },
+    { id: 5, value: "Freelance", isChecked: false },
+  ]);
   const categories = [
-    { "value": "", "label": "All Categories" },
-    { "value": "Web Development", "label": "Web Development" },
-    { "value": "Mobile Development", "label": "Mobile Development" },
-    { "value": "Cyber Security", "label": "Cyber Security" },
-    { "value": "Machine Learning", "label": "Machine Learning" },
-    { "value": "Data Science", "label": "Data Science" },
-    { "value": "Networking", "label": "Networking" },
-    { "value": "Management IT", "label": "Management IT" }]
+    { value: "", label: "All Categories" },
+    { value: "Web Development", label: "Web Development" },
+    { value: "Mobile Development", label: "Mobile Development" },
+    { value: "Cyber Security", label: "Cyber Security" },
+    { value: "Machine Learning", label: "Machine Learning" },
+    { value: "Data Science", label: "Data Science" },
+    { value: "Networking", label: "Networking" },
+    { value: "Freelance", label: "Freelance" },
+  ];
   const [typeValue, setTypeValue] = useState("");
 
   const resetFilters = () => {
@@ -33,29 +35,22 @@ const JobFilters = (props) => {
     setMax("");
     setMin("");
     setQuery("");
-
-
-  }
-  const updatejobType = (e) => {
-
-    const types = jobType.map(type => {
-      if (type.value === e.target.value)
-        type.isChecked = e.target.checked
-      return type
-    })
-    setjobType(types);
-
   };
-
-
+  const updatejobType = (e) => {
+    const types = jobType.map((type) => {
+      if (type.value === e.target.value) type.isChecked = e.target.checked;
+      return type;
+    });
+    setjobType(types);
+  };
 
   useEffect(() => {
     let str = "";
-    jobType.forEach(type => {
+    jobType.forEach((type) => {
       if (type.isChecked) {
         str += type.value + ",";
       }
-    })
+    });
 
     props.fetchJobs(query, min, max, category, location, str);
   }, [query, min, max, category, location, jobType]);
@@ -94,7 +89,9 @@ const JobFilters = (props) => {
           </div>
         </div>
       </div>
-      <button className="btn" onClick={resetFilters}>reset filters</button>
+      <button className="btn" onClick={resetFilters}>
+        reset filters
+      </button>
       <div className="job-category-listing mb-50">
         <div className="single-listing">
           <div className="small-section-tittle2">
@@ -102,12 +99,12 @@ const JobFilters = (props) => {
           </div>
 
           <div className="select-job-items2">
-
             <Select
               placeholder="All Categories"
               onChange={(selected) => setCategory(selected.value)}
               defaultValue="All Category"
-              options={categories} />
+              options={categories}
+            />
           </div>
 
           <div className="select-Categories pt-80 pb-50">
@@ -115,8 +112,8 @@ const JobFilters = (props) => {
               <h4>Job Type</h4>
             </div>
 
-            {jobType.map(type => (
-              <div key={type.id} >
+            {jobType.map((type) => (
+              <div key={type.id}>
                 <label className="container">
                   {type.value}
                   <input
@@ -128,7 +125,6 @@ const JobFilters = (props) => {
                   <span className="checkmark"></span>
                 </label>
               </div>
-
             ))}
           </div>
         </div>
@@ -231,17 +227,16 @@ const JobFilters = (props) => {
                     marks={[
                       {
                         value: 0,
-                        label: '0$',
+                        label: "0$",
                       },
                       {
                         value: 5000,
-                        label: '5k',
+                        label: "5k",
                       },
                       {
                         value: 10000,
-                        label: '10k',
+                        label: "10k",
                       },
-
                     ]}
                     aria-labelledby="range-slider"
                     getAriaValueText={valuetext}
